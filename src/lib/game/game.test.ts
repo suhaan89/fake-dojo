@@ -259,6 +259,7 @@ describe("deck", () => {
   function card(id: string, kind: "forged" | "real", difficulty = 2): DeckCard {
     return {
       id,
+      photo: id,
       kind,
       type: kind === "forged" ? "add_object" : null,
       difficulty: kind === "forged" ? difficulty : null,
@@ -301,6 +302,21 @@ describe("deck", () => {
     const tiny = { ...deck, cards: deck.cards.slice(0, 3) };
     expect(buildSession(tiny, "s")).toHaveLength(3);
     expect(buildSession({ ...deck, cards: [] }, "s")).toEqual([]);
+  });
+
+  it("avoids showing the same photo twice in a session", () => {
+    const shared: Deck = {
+      ...deck,
+      cards: [
+        ...Array.from({ length: 12 }, (_, i) => ({ ...card(`f${i}`, "forged"), photo: `p${i}` })),
+        ...Array.from({ length: 6 }, (_, i) => ({ ...card(`r${i}`, "real"), photo: `p${i}` })),
+      ],
+    };
+    for (const seed of ["a", "b", "c", "d"]) {
+      const session = buildSession(shared, seed);
+      expect(session).toHaveLength(10);
+      expect(new Set(session.map((c) => c.photo)).size).toBe(10);
+    }
   });
 
   it("follows the curated demo order", () => {

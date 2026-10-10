@@ -6,6 +6,8 @@ const NormBoxSchema = z.object({ x: z.number(), y: z.number(), w: z.number(), h:
 
 export const DeckCardSchema = z.object({
   id: z.string().min(1),
+  /** Id of the source photo. Cards made from the same photo share it. */
+  photo: z.string().min(1),
   kind: z.enum(["forged", "real"]),
   type: z.enum(MANIPULATION_TYPES).nullable(),
   difficulty: z.number().int().min(1).max(5).nullable(),
@@ -95,7 +97,28 @@ export function buildSession(deck: Deck, seed: string, size = SESSION_SIZE): Dec
   let forgedCount = Math.min(forged.length, Math.round(total * FORGED_SHARE));
   const realCount = Math.min(real.length, total - forgedCount);
   forgedCount = Math.min(forged.length, total - realCount);
-  return shuffle([...forged.slice(0, forgedCount), ...real.slice(0, realCount)], random);
+
+  // Seeing the same scene twice in one session would give the answer away, so each photo
+  // is used once as long as the deck is large enough. Real cards are picked first because
+  // they are the scarcer kind.
+  const usedPhotos = new Set<string>();
+  const take = (pool: DeckCard[], count: number): DeckCard[] => {
+    const picked: DeckCard[] = [];
+    for (const card of pool) {
+      if (picked.length >= count) break;
+      if (usedPhotos.has(card.photo)) continue;
+      usedPhotos.add(card.photo);
+      picked.push(card);
+    }
+    for (const card of pool) {
+      if (picked.length >= count) break;
+      if (!picked.includes(card)) picked.push(card);
+    }
+    return picked;
+  };
+  const realPicked = take(real, realCount);
+  const forgedPicked = take(forged, forgedCount);
+  return shuffle([...forgedPicked, ...realPicked], random);
 }
 
 /** A forged card for the landing hero: its original and forged image are shown side by side. */
