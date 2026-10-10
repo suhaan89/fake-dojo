@@ -1,5 +1,6 @@
 // Builds the committed training deck from seed/photos/*.
-// Usage: npm run seed [-- --limit N] [-- --dry-run] [-- --allow-mock]
+// Usage: npm run seed [-- --limit N] [-- --dry-run] [-- --concurrency N] [-- --pace SECONDS] [-- --allow-mock]
+// On a free model tier with a low requests-per-minute limit use: --concurrency 1 --pace 40
 //
 // Per photo: prepare, then 1 to 2 forged cards at varied difficulties, balanced across the
 // six manipulation types; about 30% of the photos also become untouched "real" cards.
@@ -23,7 +24,7 @@ const PHOTO_DIR = path.join("seed", "photos");
 const DECK_DIR = path.join("public", "deck");
 const DECK_FILE = path.join(DECK_DIR, "deck.json");
 const DATASET_FILE = path.join("dataset", "manifest.jsonl");
-const CONCURRENCY = 2;
+const DEFAULT_CONCURRENCY = 2;
 const MAX_DECK_BYTES = 25 * 1024 * 1024;
 /** Difficulties cycle through this list so the deck covers the whole range. */
 const DIFFICULTY_CYCLE = [2, 3, 1, 4, 2, 3, 5, 1, 4, 3];
@@ -90,6 +91,8 @@ async function main(): Promise<number> {
   loadEnvFiles();
   const dryRun = flag("--dry-run");
   const limit = Number(option("--limit") ?? Infinity);
+  const concurrency = Math.max(1, Math.min(4, Number(option("--concurrency") ?? DEFAULT_CONCURRENCY) || DEFAULT_CONCURRENCY));
+  const paceMs = Math.max(0, Number(option("--pace") ?? 0) || 0) * 1000;
 
   const files = existsSync(PHOTO_DIR)
     ? (await readdir(PHOTO_DIR)).filter((name) => /\.(jpe?g|png|webp)$/i.test(name)).sort()
@@ -212,6 +215,8 @@ async function main(): Promise<number> {
         avoid: (usedTargets.get(job.photo) ?? []).map((target) => `${target}, it is already used by another card`),
       });
       renders += outcome.renders;
+      // A deck card is published, so it must have passed the verifier (people untouched, plausible).
+      if (!outcome.verdict) throw new ForgeFailure("UPSTREAM", "the verifier did not answer, card not kept");
       counts[outcome.candidate.type]++;
       usedTargets.set(job.photo, [...(usedTargets.get(job.photo) ?? []), outcome.candidate.target_description]);
       await Promise.all([
@@ -254,9 +259,15 @@ async function main(): Promise<number> {
   for (const job of pending) groups.set(job.photo, [...(groups.get(job.photo) ?? []), job]);
   const queue = Array.from(groups.values());
   await Promise.all(
-    Array.from({ length: CONCURRENCY }, async () => {
+    Array.from({ length: concurrency }, async () => {
       for (let group = queue.shift(); group; group = queue.shift()) {
-        for (const job of group) await run(job);
+        for (const job of group) {
+          const started = Date.now();
+          await run(job);
+          // Pacing keeps a run under a provider's requests-per-minute limit.
+          const wait = job.kind === "forged" ? paceMs - (Date.now() - started) : 0;
+          if (wait > 0) await new Promise((resolve) => setTimeout(resolve, wait));
+        }
       }
     }),
   );
