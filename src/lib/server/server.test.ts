@@ -185,10 +185,15 @@ describe("plan validation", () => {
     expect(result.rejected[0].reason).toContain("36.1%");
   });
 
-  it("applies the 30% tolerance", () => {
-    // 3.6% is below 5% but above 5% x 0.7.
-    expect(validateCandidates(plan([candidate({ box_2d: [0, 0, 180, 200] })]), W, H, 2).valid).toHaveLength(1);
-    expect(validateCandidates(plan([candidate({ box_2d: [0, 0, 170, 200] })]), W, H, 2).valid).toHaveLength(0);
+  it("limits the size from above and only rejects regions too small to find", () => {
+    // Real objects are often smaller than the preferred range: 1% at difficulty 2 is accepted.
+    expect(validateCandidates(plan([candidate({ box_2d: [0, 0, 100, 100] })]), W, H, 2).valid).toHaveLength(1);
+    // 13% is the limit at difficulty 2 (10% plus 30% tolerance).
+    expect(validateCandidates(plan([candidate({ box_2d: [0, 0, 360, 360] })]), W, H, 2).valid).toHaveLength(1);
+    expect(validateCandidates(plan([candidate({ box_2d: [0, 0, 370, 370] })]), W, H, 2).valid).toHaveLength(0);
+    const tiny = validateCandidates(plan([candidate({ box_2d: [0, 0, 30, 30] })]), W, H, 2);
+    expect(tiny.valid).toHaveLength(0);
+    expect(tiny.rejected[0].reason).toContain("too small");
   });
 
   it("rejects regions near people, including the 5% margin", () => {

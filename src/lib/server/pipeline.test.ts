@@ -81,7 +81,7 @@ describe("plan step guardrails", () => {
     await expect(planStep(tooBig, { image, ...PLAN_INPUT })).rejects.toMatchObject({ code: "NO_CANDIDATE" });
     expect(seenAvoid).toHaveLength(2);
     expect(seenAvoid[0]).toEqual([]);
-    expect(seenAvoid[1][0]).toContain("must cover 5% to 10%");
+    expect(seenAvoid[1][0]).toContain("may cover at most 10%");
 
     const recovers = withPlan((plan, call) =>
       call === 1 ? { ...plan, candidates: plan.candidates.map((c) => ({ ...c, box_2d: [0, 0, 900, 900] })) } : plan,

@@ -13,7 +13,10 @@ export class AiError extends Error {
   }
 }
 
-export const TIMEOUTS = { plan: 50_000, edit: 55_000, verify: 40_000 } as const;
+export const TIMEOUTS = { plan: 55_000, edit: 55_000, verify: 40_000 } as const;
+/** One vision try may take this long before the next try (possibly on the fallback model) starts. */
+export const VISION_TRY_TIMEOUT = 20_000;
+export const VISION_RETRIES = 4;
 export const MAX_RETRIES = 2;
 const RETRYABLE = new Set([429, 500, 503]);
 
@@ -50,6 +53,8 @@ export interface RetryOptions {
   /** Total time budget for all tries together. */
   timeoutMs: number;
   maxRetries?: number;
+  /** Upper limit for a single try. A try that hits it is retried while the total budget lasts. */
+  tryTimeoutMs?: number;
   baseDelayMs?: number;
   sleep?: (ms: number) => Promise<void>;
   random?: () => number;
@@ -63,13 +68,14 @@ const defaultSleep = (ms: number) => new Promise<void>((resolve) => setTimeout(r
  * backoff with jitter. The deadline covers all tries so a request never outlives its budget.
  */
 export async function callWithRetry<T>(
-  work: (signal: AbortSignal, remainingMs: number) => Promise<T>,
+  work: (signal: AbortSignal, remainingMs: number, attempt: number) => Promise<T>,
   options: RetryOptions,
 ): Promise<T> {
   const {
     label,
     timeoutMs,
     maxRetries = MAX_RETRIES,
+    tryTimeoutMs = Infinity,
     baseDelayMs = 600,
     sleep = defaultSleep,
     random = Math.random,
@@ -80,9 +86,15 @@ export async function callWithRetry<T>(
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
     const remaining = deadline - now();
     if (remaining <= 0) break;
+    const budget = Math.min(remaining, tryTimeoutMs);
     try {
-      return await withTimeout((signal) => work(signal, remaining), remaining, label);
+      return await withTimeout((signal) => work(signal, budget, attempt), budget, label);
     } catch (error) {
+      if (error instanceof AiError && error.kind === "timeout") {
+        // A single slow try may be retried; the loop ends when the total budget is spent.
+        lastError = undefined;
+        continue;
+      }
       lastError = error;
       if (error instanceof AiError) throw error;
       if (!isRetryable(error) || attempt === maxRetries) break;

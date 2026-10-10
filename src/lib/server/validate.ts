@@ -3,7 +3,7 @@ import { KEEP_IDENTICAL } from "../ai/prompts";
 import { CandidateSchema, type Candidate, type Plan } from "../ai/schemas";
 import { isDegeneratePolygon, polygonToPixels, rasterizeBox, rasterizePolygon } from "../cv/polygon";
 import { box2dToPixels, boxArea, boxesIntersect, expandBox, type PixelBox } from "../cv/types";
-import { areaFits, areaRange } from "../game/difficulty";
+import { areaAllowed, areaRange, MIN_AREA_PCT } from "../game/difficulty";
 import { MANIPULATION_TYPES } from "../game/types";
 
 const Difficulty = z.number().int().min(1).max(5);
@@ -90,14 +90,14 @@ export function peopleCoverage(plan: Plan, width: number, height: number): numbe
 
 /**
  * Server-side validation of the planner's candidates: boxes are clamped and converted,
- * the area must fit the difficulty range (30% tolerance), the region must stay clear of
+ * the area must not exceed the difficulty range (30% tolerance) and must be large enough to find, the region must stay clear of
  * people (boxes widened by 5% of the image width) and polygons must not be degenerate.
  */
 export function validateCandidates(plan: Plan, width: number, height: number, difficulty: number): CandidateValidation {
   const people = peopleBoxes(plan, width, height).map((box) =>
     expandBox(box, Math.round(width * PEOPLE_MARGIN), width, height),
   );
-  const [minPct, maxPct] = areaRange(difficulty);
+  const maxPct = areaRange(difficulty)[1];
   const order = plan.candidates.map((_, index) => index);
   const chosen = Math.round(plan.chosen_index);
   if (chosen > 0 && chosen < order.length) {
@@ -121,10 +121,13 @@ export function validateCandidates(plan: Plan, width: number, height: number, di
       rejected.push({ index, reason: "the region is empty" });
       continue;
     }
-    if (!areaFits(areaPct, difficulty)) {
+    if (!areaAllowed(areaPct, difficulty)) {
       rejected.push({
         index,
-        reason: `the region covers ${areaPct.toFixed(1)}% of the image but must cover ${minPct}% to ${maxPct}%`,
+        reason:
+          areaPct < MIN_AREA_PCT
+            ? `the region covers only ${areaPct.toFixed(2)}% of the image, which is too small to find`
+            : `the region covers ${areaPct.toFixed(1)}% of the image but may cover at most ${maxPct}%`,
       });
       continue;
     }

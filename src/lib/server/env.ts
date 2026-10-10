@@ -6,6 +6,8 @@ export type ImageProviderName = "gemini" | "seedream";
 export interface ServerEnv {
   apiKey: string | null;
   visionModel: string;
+  /** Used for a vision call after the main vision model failed once (overload, slow answer). */
+  visionFallbackModel: string;
   /** Gemini image model, used when imageProvider is "gemini". */
   geminiImageModel: string;
   /** Thinking level for planning and verifying. The vision model rejects "minimal". */
@@ -27,6 +29,7 @@ export interface ServerEnv {
 }
 
 export const DEFAULT_VISION_MODEL = "gemini-3.8-flash";
+export const DEFAULT_VISION_FALLBACK_MODEL = "gemini-3.5-flash";
 export const DEFAULT_IMAGE_MODEL = "gemini-nano-banana-2.1";
 export const DEFAULT_SEEDREAM_MODEL = "seedream-4-0-250828";
 export const DEFAULT_ARK_BASE_URL = "https://ark.ap-southeast.bytepluses.com/api/v3";
@@ -76,6 +79,7 @@ export function readEnv(source: EnvSource = process.env): ServerEnv {
   return {
     apiKey,
     visionModel: text(source.GEMINI_VISION_MODEL) ?? DEFAULT_VISION_MODEL,
+    visionFallbackModel: text(source.GEMINI_VISION_FALLBACK_MODEL) ?? DEFAULT_VISION_FALLBACK_MODEL,
     geminiImageModel,
     visionThinking: thinking(source.GEMINI_VISION_THINKING, "low"),
     imageThinking: thinking(source.GEMINI_IMAGE_THINKING),

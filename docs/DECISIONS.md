@@ -27,3 +27,6 @@ One line per non-obvious decision, newest at the bottom.
 - M4: Classroom reveals automatically when the 10 second countdown ends; Space reveals early and Right arrow reveals or moves on.
 - M4: An empty `public/deck/deck.json` is committed until the photos arrive, so the deck modes show a clear empty state instead of a 404.
 - Post M6: Added Seedream 4.0 on BytePlus ModelArk as an optional image editor (`IMAGE_PROVIDER=seedream`) because Suhan wants to use its free quota. Gemini still reads, plans and verifies. The edit is requested at 1.5x size (Seedream minimum is 1280x720 pixels) and scaled back by the existing resize step. SynthID statements in the UI now appear only when Gemini makes the image.
+- First real runs: `gemini-3.8-flash` rejects thinking level "minimal", so vision calls use "low" (configurable).
+- First real runs: the free Gemini tier answers many calls with 503 or stalls. One vision try is limited to 20 s, later tries go to `GEMINI_VISION_FALLBACK_MODEL` (gemini-3.5-flash), and an overloaded main model is skipped for 90 s.
+- First real runs: the planner picks real objects that cover 0.2% to 1.5% of the image, far below the brief's ranges, which made the server reject whole plans. The upper end of each range stays a hard limit; the lower end is now a preference and only regions under 0.15% are rejected as too small to find.

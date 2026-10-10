@@ -29,7 +29,7 @@ Rules:
 - If the image is a sensitive document (ID, receipt, chat screenshot, news article, medical or legal document) or is mostly a person, set refuse to true and explain briefly in refuse_reason. Otherwise set refuse to false and refuse_reason to an empty string.
 - List every person you can see in safety.people_boxes, even small or partly hidden ones. Use an empty list if there are none.
 - The edit must be photorealistic and physically plausible: scale, perspective, lighting direction and shadows must fit the scene.
-- Difficulty ${difficulty} of 5: the edit region (box_2d) must cover ${minPct}% to ${maxPct}% of the image area. Size the box to the region that will change, including any shadow or reflection that has to change with it.
+- Difficulty ${difficulty} of 5: the edit region (box_2d) should cover ${minPct}% to ${maxPct}% of the image area. It must never cover more than ${maxPct}% or less than 0.2%. Prefer targets near that size, but a smaller real object is fine if nothing bigger fits. Size the box to the region that will change, including any shadow or reflection that has to change with it.
 - Higher difficulty means a subtler change. At difficulty 4 and 5 prefer small text, shadow or attribute changes.
 - Allowed manipulation types: remove_object, add_object, replace_object, alter_text (only if legible text exists), change_attribute (color, material or state), lighting_shadow (a shadow or reflection).
 - Preferred manipulation types with weights (higher means the player needs more practice): ${formatWeights(weights)}.

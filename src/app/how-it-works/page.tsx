@@ -190,7 +190,7 @@ export default function HowItWorksPage() {
                   <tr key={level} className="border-b border-line">
                     <th scope="row" className="py-2 font-normal">{level}</th>
                     <td className="py-2">
-                      {AREA_RANGES[level][0]}% to {AREA_RANGES[level][1]}%
+                      up to {AREA_RANGES[level][1]}%
                     </td>
                     <td className="py-2">
                       {level <= 2 ? "left in, JPEG 95" : level === 3 ? "weakened, JPEG 90" : "hidden, noise and JPEG 85"}

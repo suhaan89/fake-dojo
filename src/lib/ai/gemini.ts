@@ -3,8 +3,12 @@ import type { ServerEnv } from "../server/env";
 import { outputImage, outputText, type InteractionLike } from "./output";
 import { editorPrompt, plannerPrompt, verifierPrompt } from "./prompts";
 import type { AIProvider, EditInput, EditOutput, PlanInput, PlanOutput, VerifyInput, VerifyOutput } from "./provider";
-import { AiError, callWithRetry, statusOf, TIMEOUTS } from "./retry";
+import { AiError, callWithRetry, statusOf, TIMEOUTS, VISION_RETRIES, VISION_TRY_TIMEOUT } from "./retry";
 import { modelSchema, parsePlan, parseVerify, PlanSchema, VerifySchema } from "./schemas";
+
+/** How long the main vision model is skipped after it failed or stalled. */
+const PRIMARY_COOLDOWN_MS = 90_000;
+let primaryCooldownUntil = 0;
 
 const REST_URL = "https://generativelanguage.googleapis.com/v1beta/interactions";
 
@@ -48,8 +52,33 @@ export class GeminiProvider implements AIProvider {
     return callWithRetry((signal, remaining) => this.create(params, signal, remaining), { label, timeoutMs });
   }
 
+  /**
+   * A vision call. The first try uses the main vision model, later tries the fallback model,
+   * so a provider-side overload of one model does not stop the forge. After the main model
+   * failed or stalled it is skipped for a short while, which saves a slow first try per call.
+   */
   private async json(label: string, timeoutMs: number, params: Params): Promise<string> {
-    const interaction = await this.call(label, timeoutMs, params);
+    const interaction = await callWithRetry(
+      async (signal, remaining, attempt) => {
+        const primary = attempt < 1 && Date.now() >= primaryCooldownUntil;
+        if (!primary) {
+          return this.create({ ...params, model: this.env.visionFallbackModel }, signal, remaining);
+        }
+        const coolDown = () => {
+          primaryCooldownUntil = Date.now() + PRIMARY_COOLDOWN_MS;
+        };
+        signal.addEventListener("abort", coolDown, { once: true });
+        try {
+          return await this.create({ ...params, model: this.env.visionModel }, signal, remaining);
+        } catch (error) {
+          coolDown();
+          throw error;
+        } finally {
+          signal.removeEventListener("abort", coolDown);
+        }
+      },
+      { label, timeoutMs, tryTimeoutMs: VISION_TRY_TIMEOUT, maxRetries: VISION_RETRIES, baseDelayMs: 500 },
+    );
     const text = outputText(interaction);
     if (!text) throw new AiError("bad_output", `${label} returned no text`);
     return text;

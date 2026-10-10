@@ -10,6 +10,17 @@ export const AREA_RANGES: Record<Difficulty, readonly [number, number]> = {
 };
 
 export const AREA_TOLERANCE = 0.3;
+/** Below this share of the image an edit is too small to find at 1024 px. */
+export const MIN_AREA_PCT = 0.15;
+
+/**
+ * Server rule for a planned region. The upper end of the difficulty range is a hard limit
+ * (with tolerance). The lower end is only a preference: real objects such as a sign or a
+ * cup are often far smaller than the range, and a smaller edit is harder, never easier.
+ */
+export function areaAllowed(areaPct: number, difficulty: number, tolerance = AREA_TOLERANCE): boolean {
+  return areaPct >= MIN_AREA_PCT && areaPct <= areaRange(difficulty)[1] * (1 + tolerance);
+}
 export const START_DIFFICULTY: Difficulty = 2;
 /** Lab tools are offered during the hunt from this difficulty upward. */
 export const LAB_TOOLS_FROM: Difficulty = 3;
