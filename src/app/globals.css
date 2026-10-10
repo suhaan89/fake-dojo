@@ -1,0 +1,154 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f6f4ef;
+  --paper-deep: #ece8df;
+  --card: #fbfaf7;
+  --ink: #121212;
+  --ink-soft: #55524b;
+  --line: #d9d5cc;
+  --edited: #e5484d;
+  --edited-ink: #b3262b;
+  --real: #1f7a5a;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-deep: var(--paper-deep);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-edited: var(--edited);
+  --color-edited-ink: var(--edited-ink);
+  --color-real: var(--real);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0 1.1rem;
+    border: 1px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+    font-weight: 500;
+    font-size: 0.95rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 120ms ease, color 120ms ease;
+  }
+  .btn:hover:not(:disabled) {
+    background: #2b2a27;
+  }
+  .btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  .btn-quiet {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--line);
+  }
+  .btn-quiet:hover:not(:disabled) {
+    background: var(--paper-deep);
+    border-color: var(--ink);
+  }
+  .btn-real {
+    background: var(--real);
+    border-color: var(--real);
+    color: #fff;
+  }
+  .btn-real:hover:not(:disabled) {
+    background: #18634a;
+  }
+  .btn-edited {
+    background: var(--edited-ink);
+    border-color: var(--edited-ink);
+    color: #fff;
+  }
+  .btn-edited:hover:not(:disabled) {
+    background: #971f24;
+  }
+  .panel {
+    border: 1px solid var(--line);
+    background: var(--card);
+  }
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .mono {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@keyframes fd-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fd-rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fd-fade-in 500ms ease both;
+}
+
+.rise {
+  animation: fd-rise 260ms ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
