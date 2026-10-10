@@ -33,22 +33,22 @@ Source of truth: `docs/BUILD_BRIEF.md`. Decisions: `docs/DECISIONS.md`. Next.js 
 - API errors: `{ error: { code, message } }` with codes RATE_LIMITED, LIVE_DISABLED, UPSTREAM, TIMEOUT, UNSAFE, NO_CANDIDATE, BAD_INPUT.
 - Image math is pure TypeScript on `{ width, height, data: Uint8ClampedArray }` RGBA in `src/lib/cv` and `src/lib/forensics`. Server uses sharp for decode and encode, browser uses canvas.
 - Import sharp only in server modules that need it (`src/lib/server/*`, scripts).
+- The forge loop lives in `src/lib/forge/run.ts` and runs against a transport (HTTP in the browser, direct in scripts).
+- Render and verify need the signed ticket from the plan route (`src/lib/server/ticket.ts`).
 - Game logic in `src/lib/game` is pure and unit-tested. Profile lives in localStorage `fakedojo.profile.v1`, always in try/catch.
 - Design: paper #F6F4EF, ink #121212, hairline #D9D5CC, red #E5484D for edited, green #1F7A5A for real. Geist Sans and Geist Mono. No gradients, glows, glass, emoji, sparkle icons, "+50" badges or dot separators.
 - Tests sit next to the code as `*.test.ts`.
 
 ## Milestones
-- [x] M0 Scaffold
-- [ ] M1 Core logic: cv, forensics, game modules with tests
-- [ ] M2 AI layer: providers, schemas, prompts, routes, rate limiting, smoke script
-- [ ] M3 Forge UI end to end
-- [ ] M4 Deck: seed script, Daily Dojo, Classroom, landing hero
-- [ ] M5 Progression, profile, How it works, polish, accessibility
-- [ ] M6 Docs and release
+- [x] M0 Scaffold, M1 Core logic, M2 AI layer (mock verified), M3 Forge UI, M4 Deck modes, M5 Profile and polish, M6 Docs
+- [ ] Real-key smoke test: `npm run smoke -- <photo>`. The Gemini request shape is untested against the live API.
+- [ ] Real deck: `npm run seed`, check cards by eye, commit `public/deck` (currently an empty deck.json).
+- [ ] Open items in `docs/QA.md`, then stretch goals (brief section 19) only if everything else is done.
 
-Current milestone: M1.
+Current state: feature complete in mock mode. Blocked on the human for key, photos and push.
 
 ## Waiting on the human (brief section 18)
+- Push is rejected by GitHub (GH007, private email). No history rewrite: he must allow the push in GitHub email settings.
 - `GEMINI_API_KEY` with billing in `.env.local`
 - 15 to 25 own photos in `seed/photos/`
-- Vercel deploy, demo video, submission
+- Vercel deploy, `docs/screenshot.png`, live URL and video link in README.md and DEVPOST.md, submission

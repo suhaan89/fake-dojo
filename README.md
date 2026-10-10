@@ -1,10 +1,109 @@
 # Fake Dojo
 
-Train your eye for AI fakes. On your own photos.
+**Train your eye for AI fakes. On your own photos.**
 
-Built during Banana Hacks 2026 (Oct 10 to 11, 2026) by Suhan Nawaz.
+Built during Banana Hacks 2026 (Oct 10 to 11, 2026) by Suhan Nawaz. Theme: "image everything".
 
-An AI agent forges one subtle, realistic edit into a real photo. You hunt for it. Then a forensic reveal shows exactly which pixels changed, how a careful eye could have caught it, and what forensic tools would have shown.
+| | |
+| --- | --- |
+| Live URL | _to be filled in by Suhan after the Vercel deploy_ |
+| Demo video | _to be filled in by Suhan after the upload_ |
+| Screenshot | _to be added by Suhan as `docs/screenshot.png` once the deck is seeded_ |
+
+> When AI can image everything, seeing is no longer believing. Fake Dojo turns image AI against itself to train the human eye.
+
+## The problem
+
+Anyone can edit any photo in seconds now. Media literacy is still taught with a handful of static examples that people memorize. Companies train their staff with simulated phishing mails, but nobody trains people with simulated image fakes, and certainly not with personal, adaptive ones.
+
+## What it does
+
+An AI agent forges one subtle, realistic edit into a real photo: your own, or one from the built-in deck. You hunt for it. Then a forensic reveal shows exactly which pixels changed, how a careful eye could have caught it, and what forensic tools would have shown. The dojo tracks which kinds of manipulation fool you and makes the next forgery target them.
+
+- **Forge** (live): upload or shoot a photo, watch the agent timeline (redacted so it does not spoil the answer), then hunt with zoom, pan and a loupe. Two guesses, an optional hint.
+- **Daily Dojo**: ten cards, about 70% forged and 30% untouched. Call each one Real or Edited, then locate the edit for bonus points. Zero API calls.
+- **Classroom**: projector mode. Huge image, a 10 second countdown so the class can vote by raising hands, then a big reveal with the tell. Space reveals, Right arrow moves on, F toggles fullscreen. No accounts, nothing stored.
+- **Profile**: belts from White to Black, a radar chart of the six manipulation types, recent rounds.
+
+First real users: Suhan leads the AI club at his high school in Germany (students from grade 8, weekly sessions on using AI wisely and responsibly). Classroom mode is built for exactly that.
+
+## How it works
+
+```mermaid
+flowchart LR
+  A[Browser: prepare photo<br/>crop, resize, strip EXIF] --> B[Vision model:<br/>read scene, plan 3 candidates]
+  B --> C{Server: validate<br/>size, people, polygon}
+  C -- none valid --> B
+  C -- ok --> D[Image model:<br/>edit the photo]
+  D --> E[Server: register,<br/>tone match, feathered composite]
+  E --> F[Server: diff vs original<br/>= exact answer mask + heatmap]
+  F -- no change or misaligned --> D
+  F --> G[Vision model: verify<br/>applied, artifacts, people untouched]
+  G -- rejected --> D
+  G -- accepted --> H[Hunt, then forensic reveal]
+```
+
+The client runs the forge as three calls (`/api/forge/plan`, `/render`, `/verify`), so each request stays far below serverless limits and the UI shows real progress with measured durations.
+
+1. **Prepare** (browser): apply EXIF orientation, center-crop to the nearest aspect ratio the image model supports, resize to a 1024 px long edge, re-encode as JPEG. This removes EXIF data including GPS before anything is uploaded.
+2. **Plan** (vision model, structured JSON output): scene summary, people boxes, up to 20 objects, three diverse candidate edits with region, polygon, a precise edit instruction, a tell and a non-spoiling hint.
+3. **Validate** (server): boxes are clamped; the region must fit the difficulty's area range; it must stay at least 5% of the image width away from every detected person; polygons must not be degenerate. If no candidate survives, the planner is asked once more with the rejection reasons.
+4. **Forge** (image model): the full photo plus one instruction, same aspect ratio requested.
+5. **Composite** (server, pure TypeScript in `src/lib/cv`): resize to the original size, find the integer shift (up to 8 px, coarse then fine) that best registers the model output to the original in a 24 px ring around the region, match tone per channel from that ring, then blend only the planned region through a dilated, Gaussian-feathered mask.
+6. **Measure**: luma difference between original and composite, 3x3 box blur, threshold at 10/255, morphological opening. The result is the answer key. It is exact because we composited the image ourselves. A changed area below 0.1% means the edit was not applied and triggers a retry.
+7. **Verify** (vision model): compares original and forgery. Safety flags (a person altered, anything inappropriate) always discard the result. Quality flags trigger a retry with a stricter instruction or the next candidate. At most three image calls per forge. Every rejection is shown openly in the agent log.
+8. **Post-process by difficulty**: levels 1 and 2 are saved at JPEG quality 95, so the pasted region still compresses differently and ELA can find it. Level 3 uses quality 90. Levels 4 and 5 add faint global noise and quality 85, which hides most forensic traces. The reveal explains this.
+
+### Adaptive training
+
+- Points: 100 x difficulty for a hit on the first guess, 60 x on the second, minus 30 for the hint and 20 per lab tool. A correct Real or Edited call is worth 50.
+- Skill per type is the mean of Beta(1 + hits, 1 + misses). One minus that mean, normalized, is the weight the planner receives.
+- Difficulty starts at 2, goes up after two hits in a row and down after a miss.
+- Everything lives in `localStorage` under `fakedojo.profile.v1`. The app keeps working when storage is blocked.
+
+## Forensic methods
+
+All three are implemented from scratch on raw pixel arrays (`src/lib/forensics`) and run in a Web Worker, with a main-thread fallback. No image-processing library is used in the browser.
+
+- **ELA (error level analysis)**: re-encode as JPEG quality 0.90, take the per-channel absolute difference, amplify 20x. Areas saved a different number of times compress differently.
+- **Noise residual**: luma minus its 3x3 median, then the standard deviation over 8x8 blocks, on a hand-written color ramp. Generated patches are often smoother or noisier than their surroundings.
+- **Edges**: Sobel gradient magnitude. Shows seams and unnaturally clean edges.
+- **Loupe**: a 3x magnifier that follows the pointer or finger.
+
+Forensics give clues, not proof. The app says so wherever a lens is shown.
+
+## Safety and ethics
+
+A forgery trainer is net positive for the same reason phishing simulations are: people learn to resist a trick by meeting it in a safe place, and here the answer is always shown right after. The guardrails are enforced in code, not only in prompts:
+
+- **People are never edited.** The planner is instructed so, the server rejects any region near a detected person, and the verifier's `people_altered` flag discards a result.
+- **Sensitive documents are refused**: IDs, receipts, chat screenshots, news articles, medical and legal documents, and photos that are mostly a person.
+- **Nothing is stored.** Images exist in memory for the length of a request. Production logs hold a route name, a status code and timings only.
+- **EXIF and GPS are stripped** in the browser before upload.
+- **No download of live forgeries.** There is no save or share feature for forged images. The committed deck is made only from Suhan's own harmless scenes.
+- **The API is not an open image editor.** The plan route issues a signed ticket that binds the photo to the instructions the server validated. The render and verify routes reject anything else.
+- **SynthID**: images produced by the Gemini image model carry an invisible watermark.
+- **Cost and abuse limits**: per-IP hourly limit, global daily cap, and a kill switch.
+
+## Tech stack
+
+- Next.js 16 (App Router), React 19, TypeScript (strict), Tailwind CSS 4
+- `@google/genai` (Gemini Interactions API), `zod` 4, `sharp`
+- Vitest (138 tests), `tsx` for scripts
+- No UI kit, no chart library, no state library, no database, no accounts
+
+## Models used
+
+| Role | Model | Notes |
+| --- | --- | --- |
+| Reading, planning, verifying | `gemini-3.8-flash` | structured JSON output, minimal thinking |
+| Image editing | `gemini-nano-banana-2.1` (Nano Banana 2.1) | 1K output, same aspect ratio as the input |
+
+Both ids are configurable through environment variables and are read in exactly one place, `src/lib/server/env.ts`.
+
+## Running cost
+
+One forge is one image output (about 0.034 USD) plus two cheap vision calls. A retry adds one more image output, with a hard limit of three per forge. Daily Dojo, Classroom and the landing page cost nothing: they run from the committed deck.
 
 ## Run locally
 
@@ -12,10 +111,84 @@ An AI agent forges one subtle, realistic edit into a real photo. You hunt for it
 npm install && npm run dev
 ```
 
-Mock mode works without an API key. For live forging, copy `.env.example` to `.env.local` and set `GEMINI_API_KEY`.
+Without an API key the app runs in **mock mode**: a deterministic offline provider replaces Gemini, so the whole pipeline (compositing, measuring, scoring, reveal, lenses) can be tried for free. The UI shows a "Mock mode" label.
+
+For live forging, copy `.env.example` to `.env.local` and set `GEMINI_API_KEY` (a key with billing enabled).
+
+| Command | What it does |
+| --- | --- |
+| `npm run dev` / `build` / `start` | Next.js |
+| `npm run typecheck`, `npm test`, `npm run lint` | quality gates |
+| `npm run smoke -- <photo> [--difficulty 1..5]` | plan, render and verify from Node; writes `tmp/smoke/`; prints timings and estimated cost |
+| `npm run seed [-- --limit N] [-- --dry-run]` | builds the deck from `seed/photos/*` |
+
+### Seeding the deck
+
+1. Put 15 to 25 photos into `seed/photos/` (scenes without recognizable faces, readable license plates or anything private).
+2. `npm run seed -- --dry-run` shows the plan and the estimated cost.
+3. `npm run seed` writes `public/deck/<id>/original.jpg`, `forged.jpg`, `mask.png`, `heat.png` and `public/deck/deck.json`. It is resumable and runs two photos at a time.
+4. Commit `public/deck`.
+
+The seed run also writes `dataset/manifest.jsonl` (image, original, mask, type, difficulty): a pixel-exact labeled forgery-localization dataset as a research by-product. The manifest points at the deck files, so no second copy of the images is kept.
+
+For a reproducible demo, `/?demo=1` and `/dojo?seed=demo` use a fixed card order. Add an optional `"demoOrder": ["card-id", ...]` array to `deck.json` to curate it.
+
+### Deploying on Vercel
+
+1. Push this repository to GitHub.
+2. In Vercel choose **Add New, Project** and import the repository. The framework preset is detected as Next.js; keep the defaults.
+3. Under **Environment Variables** add `GEMINI_API_KEY` and, if you want values other than the defaults, the other variables from `.env.example`.
+4. Deploy. Open `/api/health`: it should report `"liveForge": true` and `"mock": false`.
+5. To pause live forging at any time, set `LIVE_FORGE_ENABLED=false` and redeploy. The deck modes keep working.
+
+Route handlers run on the Node.js runtime with `maxDuration = 60`.
+
+## Project structure
+
+```
+src/app/                 pages: / forge dojo classroom profile how-it-works
+src/app/api/             health, forge/plan, forge/render, forge/verify
+src/components/          ImageStage, BeforeAfterSlider, AgentTimeline, LensSwitcher, Hunt, Reveal, ...
+src/lib/ai/              provider interface, Gemini and mock providers, prompts, schemas, retry, output
+src/lib/cv/              polygon, mask, blur, align, tone, composite, diff (pure TypeScript)
+src/lib/forensics/       ELA, noise residual, Sobel, color ramp, worker client
+src/lib/forge/           the agent loop (plan, render, verify, retries) and shared API types
+src/lib/game/            scoring, belts, Beta skill model, difficulty, deck, seeded RNG, tells
+src/lib/image/           crop math, browser and Node image preparation
+src/lib/server/          env, rate limit, signed tickets, validation, codec, pipeline, errors
+src/workers/             forensics worker
+scripts/                 smoke.ts, seed-deck.ts
+docs/                    BUILD_BRIEF.md, DECISIONS.md, QA.md
+```
+
+## Limitations
+
+- Rate limits and ticket use counts live in the memory of one server instance. On a platform with several instances the effective limits are per instance. The kill switch is the hard stop.
+- Alignment handles integer shifts of up to 8 px. Scaling or rotation drift of the image model is caught by the retry, not corrected.
+- People detection relies on the vision model. The margin, the verifier flag and the composite mask are three layers on top, but none of them is a formal guarantee.
+- The forensic lenses are teaching tools. They are not a detector and can be fooled, which the higher difficulty levels demonstrate on purpose.
+- The verifier is a model too. If it is unreachable, the forgery is used with the planner's own tell and the log says so.
+
+## What's next
+
+- Teacher dashboards with class-level weak spots, still without student accounts
+- C2PA provenance: show and explain content credentials next to the forensic lenses
+- A browser extension that turns any image on the web into a training round
+- More manipulation types (weather, time of day, reflections, perspective)
+- Training a small forgery-localization model on the generated dataset and comparing it against the ELA baseline
+
+## Credits and licenses
+
+- [Next.js](https://nextjs.org) and [React](https://react.dev) (MIT)
+- [Tailwind CSS](https://tailwindcss.com) (MIT)
+- [Google Gen AI SDK `@google/genai`](https://github.com/googleapis/js-genai) (Apache-2.0)
+- [zod](https://zod.dev) (MIT)
+- [sharp](https://sharp.pixelplumbing.com) (Apache-2.0), built on libvips (LGPL)
+- [Vitest](https://vitest.dev) (MIT), [tsx](https://tsx.is) (MIT), [TypeScript](https://www.typescriptlang.org) (Apache-2.0), [ESLint](https://eslint.org) (MIT)
+- [Geist](https://vercel.com/font) Sans and Mono (SIL Open Font License)
+- Gemini API by Google: `gemini-3.8-flash` and `gemini-nano-banana-2.1`
+- Photos in the deck: by Suhan Nawaz
 
 ## AI disclosure
 
-Claude Code wrote most of the code under Suhan's direction. Gemini models run at runtime.
-
-The full write-up (pipeline, forensic methods, safety, credits) is added as the build progresses during the hackathon.
+Claude Code wrote most of the code under Suhan's direction. Gemini models run at runtime: a vision model reads, plans and verifies, and an image model performs the edits. All code was written and committed during the hacking window.
