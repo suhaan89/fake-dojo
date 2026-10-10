@@ -74,7 +74,7 @@ export class GeminiProvider implements AIProvider {
 
   async edit(input: EditInput): Promise<EditOutput> {
     const params = (mimeType: string): Params => ({
-      model: this.env.imageModel,
+      model: this.env.geminiImageModel,
       input: [
         { type: "text", text: editorPrompt(input.candidate.edit_instruction, input.attempt) },
         jpeg(input.image),

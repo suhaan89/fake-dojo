@@ -441,8 +441,10 @@ export function ForgeClient() {
           </Reveal>
           <AgentTimeline entries={timeline} revealed title="Agent log" />
           <p className="text-sm leading-relaxed text-ink-soft">
-            Live forgeries are not offered for download and are gone when you leave this page. Images made by the Gemini
-            image model also carry an invisible SynthID watermark.
+            Live forgeries are not offered for download and are gone when you leave this page.
+            {live.state === "ready" && live.health.models.image.startsWith("gemini")
+              ? " Images made by the Gemini image model also carry an invisible SynthID watermark."
+              : ""}
           </p>
         </div>
       ) : null}

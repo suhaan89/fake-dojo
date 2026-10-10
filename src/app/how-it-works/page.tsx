@@ -262,7 +262,9 @@ export default function HowItWorksPage() {
             ["Location data never leaves your device", "The browser re-encodes your photo through a canvas before upload, which removes EXIF data including GPS coordinates."],
             ["No download of live forgeries", "The app has no save or share button for forged images, and a forgery is gone when you leave the page."],
             ["The API is not an open image editor", "Edits can only be rendered with a signed ticket that binds the request to the photo and to the instructions the server itself validated."],
-            ["Watermarked at the source", "Images produced by the Gemini image model carry an invisible SynthID watermark."],
+            ...(env.imageProvider === "gemini"
+              ? [["Watermarked at the source", "Images produced by the Gemini image model carry an invisible SynthID watermark."]]
+              : []),
             ["Spending is capped", "Live forging is limited per address and per day, and one switch turns it off. The deck modes keep working without any model."],
           ].map(([title, text]) => (
             <li key={title}>
@@ -283,8 +285,8 @@ export default function HowItWorksPage() {
           <dl className="mono text-[13px]">
             <div className="flex justify-between gap-4 border-b border-line py-2"><dt className="text-ink-soft">Vision, planning, verification</dt><dd>{env.visionModel}</dd></div>
             <div className="flex justify-between gap-4 border-b border-line py-2"><dt className="text-ink-soft">Image editing</dt><dd>{env.imageModel}</dd></div>
-            <div className="flex justify-between gap-4 border-b border-line py-2"><dt className="text-ink-soft">API</dt><dd>Gemini Interactions API</dd></div>
-            <div className="flex justify-between gap-4 border-b border-line py-2"><dt className="text-ink-soft">Cost per image call</dt><dd>about {IMAGE_COST_USD} USD</dd></div>
+            <div className="flex justify-between gap-4 border-b border-line py-2"><dt className="text-ink-soft">APIs</dt><dd>{env.imageProvider === "seedream" ? "Gemini Interactions, BytePlus ModelArk" : "Gemini Interactions API"}</dd></div>
+            <div className="flex justify-between gap-4 border-b border-line py-2"><dt className="text-ink-soft">Cost per image call</dt><dd>{env.imageProvider === "seedream" ? "free quota, then per image" : `about ${IMAGE_COST_USD} USD`}</dd></div>
             <div className="flex justify-between gap-4 border-b border-line py-2"><dt className="text-ink-soft">Image calls per forge</dt><dd>1 to 3</dd></div>
           </dl>
           <div className="text-sm leading-relaxed text-ink-soft">

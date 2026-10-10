@@ -10,7 +10,7 @@ import { emptyProfile, weaknessWeights } from "../src/lib/game/progression";
 import { prepareBuffer } from "../src/lib/image/prepare-node";
 import { readEnv } from "../src/lib/server/env";
 import { getProvider } from "../src/lib/server/pipeline";
-import { directTransport, estimateCost, loadEnvFiles, syntheticPhoto, usd } from "./lib/node-forge";
+import { costLine, directTransport, loadEnvFiles, syntheticPhoto } from "./lib/node-forge";
 
 async function main(): Promise<number> {
   loadEnvFiles();
@@ -24,7 +24,7 @@ async function main(): Promise<number> {
   console.log(
     provider.name === "mock"
       ? "Provider: mock (no network, no cost)"
-      : `Provider: gemini (vision ${env.visionModel}, image ${env.imageModel}, thinking ${env.imageThinking})`,
+      : `Provider: vision ${env.visionModel}, image ${env.imageModel} via ${env.imageProvider}`,
   );
   if (!photo) console.log("No photo given, using a synthetic test image.");
 
@@ -80,7 +80,7 @@ async function main(): Promise<number> {
   console.log(`Target:      ${outcome.candidate.target_description}`);
   console.log(`Changed:     ${outcome.stats.changedPct}% of the pixels, mean delta ${outcome.stats.meanDelta}`);
   console.log(`Total time:  ${(outcome.totalMs / 1000).toFixed(1)} s with ${outcome.renders} image call(s)`);
-  console.log(`Est. cost:   ${usd(estimateCost(outcome.renders, outcome.mock))} for images, plus about a cent for the vision calls`);
+  console.log(`Est. cost:   ${costLine(outcome.renders, outcome.mock, env.imageProvider)}`);
   console.log(`Output:      ${dir}`);
   return 0;
 }

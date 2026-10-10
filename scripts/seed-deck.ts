@@ -11,14 +11,13 @@ import { mkdir, readdir, readFile, rm, stat, writeFile } from "node:fs/promises"
 import path from "node:path";
 import { editSummary } from "../src/lib/ai/prompts";
 import { ForgeFailure, runForge } from "../src/lib/forge/run";
-import { IMAGE_COST_USD } from "../src/lib/forge/types";
 import { DeckSchema, type Deck, type DeckCard } from "../src/lib/game/deck";
 import { MANIPULATION_TYPES, type ManipulationType } from "../src/lib/game/types";
 import type { PreparedImage } from "../src/lib/image/crop";
 import { prepareBuffer } from "../src/lib/image/prepare-node";
 import { readEnv } from "../src/lib/server/env";
 import { getProvider } from "../src/lib/server/pipeline";
-import { directTransport, estimateCost, loadEnvFiles, usd } from "./lib/node-forge";
+import { costLine, directTransport, loadEnvFiles } from "./lib/node-forge";
 
 const PHOTO_DIR = path.join("seed", "photos");
 const DECK_DIR = path.join("public", "deck");
@@ -134,10 +133,10 @@ async function main(): Promise<number> {
 
   const pending = jobs.filter((job) => !existing.has(job.id)).slice(0, limit);
   const forgedPending = pending.filter((job) => job.kind === "forged").length;
-  console.log(`Provider: ${provider.name}${provider.name === "gemini" ? ` (${env.visionModel}, ${env.imageModel})` : ""}`);
+  console.log(`Provider: ${provider.name}${provider.name === "gemini" ? ` (${env.visionModel}, ${env.imageModel} via ${env.imageProvider})` : ""}`);
   console.log(`Photos: ${files.length}. Planned cards: ${jobs.length}. Already in the deck: ${jobs.length - jobs.filter((j) => !existing.has(j.id)).length}. To do now: ${pending.length}.`);
   console.log(
-    `Estimated cost: ${usd(estimateCost(forgedPending, provider.name === "mock"))} to ${usd(estimateCost(forgedPending * 3, provider.name === "mock"))} (${IMAGE_COST_USD} USD per image call, 1 to 3 calls per forged card).`,
+    `Image calls: ${forgedPending} to ${forgedPending * 3} (1 to 3 per forged card). At most: ${costLine(forgedPending * 3, provider.name === "mock", env.imageProvider)}.`,
   );
   if (dryRun) {
     for (const job of pending) {
@@ -285,7 +284,7 @@ async function main(): Promise<number> {
   console.log(`Done: ${done} card(s) written, ${failed} failed. Run the command again to retry failed cards.`);
   console.log(`Deck: ${deck.cards.length} cards (${forgedTotal} forged, ${deck.cards.length - forgedTotal} real), ${(bytes / 1024 / 1024).toFixed(1)} MB in ${DECK_DIR}`);
   console.log(`Types: ${MANIPULATION_TYPES.map((type) => `${type} ${counts[type]}`).join(", ")}`);
-  console.log(`Actual cost: ${usd(estimateCost(renders, provider.name === "mock"))} for ${renders} image call(s), plus about a cent per card for the vision calls.`);
+  console.log(`Actual cost: ${costLine(renders, provider.name === "mock", env.imageProvider)}.`);
   console.log(`Dataset manifest: ${DATASET_FILE} (${lines.length} labeled images)`);
   if (bytes > MAX_DECK_BYTES) console.log("Warning: the deck is larger than 25 MB. Remove some cards before committing.");
   return 0;

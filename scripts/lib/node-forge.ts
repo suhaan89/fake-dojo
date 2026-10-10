@@ -42,6 +42,15 @@ export function estimateCost(renders: number, mock: boolean): number {
   return mock ? 0 : renders * IMAGE_COST_USD;
 }
 
+/** One line describing what the image calls cost with the configured provider. */
+export function costLine(renders: number, mock: boolean, imageProvider: "gemini" | "seedream"): string {
+  if (mock) return "nothing, the mock provider makes no model calls";
+  if (imageProvider === "seedream") {
+    return `${renders} Seedream image call(s) on BytePlus ModelArk: free while the free quota lasts, check the console for the price after that`;
+  }
+  return `${usd(estimateCost(renders, false))} for ${renders} image call(s) at about ${IMAGE_COST_USD} USD each`;
+}
+
 export function usd(value: number): string {
   return `${value.toFixed(3)} USD`;
 }

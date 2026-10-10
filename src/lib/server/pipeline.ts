@@ -1,5 +1,6 @@
 import { GeminiProvider } from "../ai/gemini";
 import { MockProvider } from "../ai/mock";
+import { SeedreamEditor, SeedreamForgeProvider } from "../ai/seedream";
 import type { AIProvider } from "../ai/provider";
 import type { Candidate } from "../ai/schemas";
 import { findAlignment, shiftImage } from "../cv/align";
@@ -22,7 +23,9 @@ import { avoidFromRejections, MOSTLY_PEOPLE, peopleCoverage, validateCandidates 
 export const RING_WIDTH = 24;
 
 export function getProvider(env: ServerEnv = readEnv()): AIProvider {
-  return env.mock ? new MockProvider() : new GeminiProvider(env);
+  if (env.mock) return new MockProvider();
+  const gemini = new GeminiProvider(env);
+  return env.imageProvider === "seedream" ? new SeedreamForgeProvider(gemini, new SeedreamEditor(env)) : gemini;
 }
 
 export interface PlanStepInput {

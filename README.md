@@ -89,7 +89,7 @@ A forgery trainer is net positive for the same reason phishing simulations are: 
 
 - Next.js 16 (App Router), React 19, TypeScript (strict), Tailwind CSS 4
 - `@google/genai` (Gemini Interactions API), `zod` 4, `sharp`
-- Vitest (138 tests), `tsx` for scripts
+- Vitest (146 tests), `tsx` for scripts
 - No UI kit, no chart library, no state library, no database, no accounts
 
 ## Models used
@@ -99,7 +99,19 @@ A forgery trainer is net positive for the same reason phishing simulations are: 
 | Reading, planning, verifying | `gemini-3.8-flash` | structured JSON output, minimal thinking |
 | Image editing | `gemini-nano-banana-2.1` (Nano Banana 2.1) | 1K output, same aspect ratio as the input |
 
-Both ids are configurable through environment variables and are read in exactly one place, `src/lib/server/env.ts`.
+All ids are configurable through environment variables and are read in exactly one place, `src/lib/server/env.ts`.
+
+### Optional: Seedream as the image editor
+
+The edit step can run on Seedream 4.0 (ByteDance, through BytePlus ModelArk) instead of the Gemini image model. Reading, planning and verifying stay on Gemini.
+
+```
+IMAGE_PROVIDER=seedream
+ARK_API_KEY=...
+SEEDREAM_MODEL=seedream-4-0-250828
+```
+
+Seedream needs a larger canvas than our 1024 px working size, so the edit is requested at 1.5 times the size and scaled back before registration and compositing. Seedream output carries no SynthID watermark; the other guardrails are unchanged.
 
 ## Running cost
 
@@ -113,7 +125,7 @@ npm install && npm run dev
 
 Without an API key the app runs in **mock mode**: a deterministic offline provider replaces Gemini, so the whole pipeline (compositing, measuring, scoring, reveal, lenses) can be tried for free. The UI shows a "Mock mode" label.
 
-For live forging, copy `.env.example` to `.env.local` and set `GEMINI_API_KEY` (a key with billing enabled).
+For live forging, copy `.env.example` to `.env.local` and set `GEMINI_API_KEY`. The Gemini image model needs a key with billing enabled. With `IMAGE_PROVIDER=seedream` the Gemini key is only used for the vision calls and `ARK_API_KEY` pays for the edits.
 
 | Command | What it does |
 | --- | --- |
@@ -187,6 +199,7 @@ docs/                    BUILD_BRIEF.md, DECISIONS.md, QA.md
 - [Vitest](https://vitest.dev) (MIT), [tsx](https://tsx.is) (MIT), [TypeScript](https://www.typescriptlang.org) (Apache-2.0), [ESLint](https://eslint.org) (MIT)
 - [Geist](https://vercel.com/font) Sans and Mono (SIL Open Font License)
 - Gemini API by Google: `gemini-3.8-flash` and `gemini-nano-banana-2.1`
+- Optional: Seedream 4.0 by ByteDance through BytePlus ModelArk
 - Photos in the deck: by Suhan Nawaz
 
 ## AI disclosure
