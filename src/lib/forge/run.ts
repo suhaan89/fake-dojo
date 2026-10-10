@@ -204,7 +204,7 @@ export async function runForge(transport: ForgeTransport, options: ForgeOptions)
         if (failure.code === "ABORTED") throw failure;
         lastFailure = failure;
         settle(forge, "failed", now() - renderStarted, [
-          `Attempt ${renders} failed: ${failure.message} ${more ? nextMove : ""}`.trim(),
+          `Attempt ${renders} failed: ${failure.message} ${more ? "Trying again." : ""}`.trim(),
         ]);
         // Limits and switched-off forging will not get better by retrying.
         if (failure.code === "RATE_LIMITED" || failure.code === "LIVE_DISABLED" || failure.code === "BAD_INPUT") {

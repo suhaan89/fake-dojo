@@ -164,6 +164,24 @@ describe("forge routes with the mock provider", () => {
     }
   });
 
+  it("answers RATE_LIMITED before any model call when the limits are used up", async () => {
+    process.env.MOCK_AI = "false";
+    process.env.GEMINI_API_KEY = "test-key-that-is-never-sent";
+    process.env.LIVE_FORGE_PER_IP_PER_HOUR = "0";
+    const limited = await plan(post("/api/forge/plan", { image, difficulty: 2 }));
+    expect(limited.status).toBe(429);
+    expect(limited.headers.get("retry-after")).toBeTruthy();
+    const body = (await limited.json()) as ApiErrorBody;
+    expect(body.error.code).toBe("RATE_LIMITED");
+    expect(body.error.message).toContain("Daily Dojo");
+
+    process.env.LIVE_FORGE_PER_IP_PER_HOUR = "5";
+    process.env.LIVE_FORGE_DAILY_CAP = "0";
+    const capped = await plan(post("/api/forge/plan", { image, difficulty: 2 }));
+    expect(capped.status).toBe(429);
+    expect(((await capped.json()) as ApiErrorBody).error.message).toContain("today");
+  });
+
   it("answers LIVE_DISABLED when the kill switch is off or the key is missing in production", async () => {
     process.env.LIVE_FORGE_ENABLED = "false";
     const off = await plan(post("/api/forge/plan", { image, difficulty: 2 }));
