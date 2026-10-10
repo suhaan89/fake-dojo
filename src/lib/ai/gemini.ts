@@ -6,9 +6,10 @@ import type { AIProvider, EditInput, EditOutput, PlanInput, PlanOutput, VerifyIn
 import { AiError, callWithRetry, statusOf, TIMEOUTS, VISION_RETRIES, VISION_TRY_TIMEOUT } from "./retry";
 import { modelSchema, parsePlan, parseVerify, PlanSchema, VerifySchema } from "./schemas";
 
-/** How long the main vision model is skipped after it failed or stalled. */
-const PRIMARY_COOLDOWN_MS = 90_000;
-let primaryCooldownUntil = 0;
+/** How long a vision model is skipped after an overload or after its quota ran out. */
+const OVERLOAD_REST_MS = 90_000;
+const QUOTA_REST_MS = 60 * 60_000;
+const restingUntil = new Map<string, number>();
 
 const REST_URL = "https://generativelanguage.googleapis.com/v1beta/interactions";
 
@@ -52,32 +53,38 @@ export class GeminiProvider implements AIProvider {
     return callWithRetry((signal, remaining) => this.create(params, signal, remaining), { label, timeoutMs });
   }
 
+  /** Vision models in the order they should be tried right now, skipping ones that are resting. */
+  private visionOrder(): string[] {
+    const now = Date.now();
+    const all = [this.env.visionModel, ...this.env.visionFallbackModels];
+    const unique = all.filter((id, index) => all.indexOf(id) === index);
+    const awake = unique.filter((id) => (restingUntil.get(id) ?? 0) <= now);
+    return awake.length ? awake : unique;
+  }
+
   /**
-   * A vision call. The first try uses the main vision model, later tries the fallback model,
-   * so a provider-side overload of one model does not stop the forge. After the main model
-   * failed or stalled it is skipped for a short while, which saves a slow first try per call.
+   * A vision call. Each try uses the next model in line, so an overloaded or exhausted model
+   * does not stop the forge. A model that failed or stalled rests for a while: 90 seconds
+   * after an overload, an hour after its quota ran out.
    */
   private async json(label: string, timeoutMs: number, params: Params): Promise<string> {
+    const order = this.visionOrder();
     const interaction = await callWithRetry(
       async (signal, remaining, attempt) => {
-        const primary = attempt < 1 && Date.now() >= primaryCooldownUntil;
-        if (!primary) {
-          return this.create({ ...params, model: this.env.visionFallbackModel }, signal, remaining);
-        }
-        const coolDown = () => {
-          primaryCooldownUntil = Date.now() + PRIMARY_COOLDOWN_MS;
-        };
-        signal.addEventListener("abort", coolDown, { once: true });
+        const model = order[Math.min(attempt, order.length - 1)];
+        const rest = (ms: number) => restingUntil.set(model, Date.now() + ms);
+        const onAbort = () => rest(OVERLOAD_REST_MS);
+        signal.addEventListener("abort", onAbort, { once: true });
         try {
-          return await this.create({ ...params, model: this.env.visionModel }, signal, remaining);
+          return await this.create({ ...params, model }, signal, remaining);
         } catch (error) {
-          coolDown();
+          rest(statusOf(error) === 429 ? QUOTA_REST_MS : OVERLOAD_REST_MS);
           throw error;
         } finally {
-          signal.removeEventListener("abort", coolDown);
+          signal.removeEventListener("abort", onAbort);
         }
       },
-      { label, timeoutMs, tryTimeoutMs: VISION_TRY_TIMEOUT, maxRetries: VISION_RETRIES, baseDelayMs: 500 },
+      { label, timeoutMs, tryTimeoutMs: VISION_TRY_TIMEOUT, maxRetries: VISION_RETRIES, baseDelayMs: 300 },
     );
     const text = outputText(interaction);
     if (!text) throw new AiError("bad_output", `${label} returned no text`);

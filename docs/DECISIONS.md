@@ -30,3 +30,5 @@ One line per non-obvious decision, newest at the bottom.
 - First real runs: `gemini-3.8-flash` rejects thinking level "minimal", so vision calls use "low" (configurable).
 - First real runs: the free Gemini tier answers many calls with 503 or stalls. One vision try is limited to 20 s, later tries go to `GEMINI_VISION_FALLBACK_MODEL` (gemini-3.5-flash), and an overloaded main model is skipped for 90 s.
 - First real runs: the planner picks real objects that cover 0.2% to 1.5% of the image, far below the brief's ranges, which made the server reject whole plans. The upper end of each range stays a hard limit; the lower end is now a preference and only regions under 0.15% are rejected as too small to find.
+- First real runs: vision calls rotate through `GEMINI_VISION_MODEL` and `GEMINI_VISION_FALLBACK_MODELS`; a model rests 90 s after an overload and an hour after a quota error. The free Gemini tier allows about 20 requests per model per day, which is not enough to seed a deck or run a demo.
+- Seedream 4.0 on BytePlus works with the request shape in `src/lib/ai/seedream.ts` (verified with three real forges).
