@@ -45,3 +45,7 @@ next-env.d.ts
 /.claude/
 /tmp/
 /dataset/
+
+# source photos stay local; the deck in public/deck holds the published versions
+/seed/photos/*
+!/seed/photos/README.md
