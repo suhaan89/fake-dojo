@@ -57,3 +57,11 @@ export function verifierPrompt(type: ManipulationType, editInstruction: string):
   return `Image 1 is an original photo. Image 2 is an edited version of it. The intended edit was: ${type}: ${editInstruction}
 Judge strictly and fill every field: was the edit applied, does it match the intent, are artifacts visible (seams, smudges, warped lines, mismatched lighting), was any person altered, is anything inappropriate, plausibility 1-5, obviousness 1-5, the single best tell for a careful viewer in one sentence, and a vague hint that does not reveal the location precisely. Leave artifact_notes empty if there are no artifacts.`;
 }
+
+/** The edit instruction as one readable sentence for the reveal, without the boilerplate ending. */
+export function editSummary(editInstruction: string): string {
+  const cut = editInstruction.indexOf("Keep everything else");
+  const core = (cut >= 0 ? editInstruction.slice(0, cut) : editInstruction).replace(/\s+/g, " ").trim();
+  if (!core) return "";
+  return /[.!?]$/.test(core) ? core : `${core}.`;
+}

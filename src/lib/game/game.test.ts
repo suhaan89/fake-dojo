@@ -266,6 +266,7 @@ describe("deck", () => {
       height: 768,
       scene: "a test scene",
       target_description: kind === "forged" ? "the cup on the left" : "",
+      description: kind === "forged" ? "A cup was added on the left." : "",
       tell: kind === "forged" ? "its shadow points the wrong way" : "",
       hint: kind === "forged" ? "look at the table" : "",
       changeBox: kind === "forged" ? { x: 0.1, y: 0.1, w: 0.1, h: 0.1 } : null,

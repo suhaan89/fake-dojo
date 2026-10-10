@@ -114,6 +114,41 @@ body {
   }
 }
 
+/* Redaction: a solid ink bar. On reveal the text appears and the bar slides away. */
+.redacted-bar {
+  display: inline-block;
+  height: 1.05em;
+  vertical-align: -0.18em;
+  background: var(--ink);
+}
+
+.redacted-open {
+  position: relative;
+  display: inline-block;
+  text-decoration: underline;
+  text-decoration-color: var(--edited);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.redacted-open::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform-origin: right center;
+  animation: fd-unredact 700ms cubic-bezier(0.6, 0, 0.2, 1) 150ms both;
+}
+
+@keyframes fd-unredact {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
 @keyframes fd-fade-in {
   from {
     opacity: 0;

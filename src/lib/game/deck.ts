@@ -13,6 +13,8 @@ export const DeckCardSchema = z.object({
   height: z.number().int().positive(),
   scene: z.string(),
   target_description: z.string(),
+  /** One sentence saying what was changed. Empty for real photos. */
+  description: z.string(),
   tell: z.string(),
   hint: z.string(),
   changeBox: NormBoxSchema.nullable(),
