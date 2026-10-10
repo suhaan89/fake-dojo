@@ -84,7 +84,7 @@ export function Reveal({
             }
           />
           <p className="text-sm leading-relaxed text-ink-soft">
-            The red heatmap is the ground truth: every pixel that differs from your original. It is exact, because the
+            The red heatmap is the ground truth: every pixel that differs from the original. It is exact, because the
             edit was composited into the original by our own code and then measured.
           </p>
           <LensSwitcher value={lenses.lens} onChange={lenses.select} busy={lenses.busy} label="Forensic lens" />

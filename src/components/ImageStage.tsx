@@ -281,7 +281,7 @@ export function ImageStage({
   const zoomed = view.scale > 1.001;
 
   return (
-    <div className={className}>
+    <div className={className} style={{ maxWidth: `calc(76vh * ${width / height})` }}>
       <div
         ref={frameRef}
         role="group"
@@ -345,10 +345,8 @@ export function ImageStage({
                 transform: `translate(-50%, -50%) scale(${inverse})`,
               }}
             >
-              <div
-                className={`flex h-9 w-9 items-center justify-center rounded-full border-2 ${MARKER_STYLE[marker.result]}`}
-              >
-                <span className="mono text-[11px] font-semibold text-ink">{index + 1}</span>
+              <div className={`flex h-9 w-9 items-center justify-center rounded-full border-2 ${MARKER_STYLE[marker.result]}`}>
+                <span className="h-1.5 w-1.5 rounded-full bg-ink" />
               </div>
             </div>
           ))}
