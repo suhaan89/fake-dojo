@@ -18,3 +18,11 @@ One line per non-obvious decision, newest at the bottom.
 - M2: The verifier's verdict is turned into accept or reject by `judge()`: safety flags always reject; visible artifacts are tolerated only at difficulty 1 and 2.
 - M2: If the image model rejects PNG output with HTTP 400, the edit is retried once asking for JPEG (the SDK types list JPEG only, the docs list both).
 - M2: A blur fast path computes only the bounding box of non-zero input; masks and change maps are sparse and this cut compositing time by about 5x.
+- M3: Hunt markers are plain rings with a dot, not numbered badges, to follow the design rule against circled-number badges.
+- M3: Forensic lenses run in a Web Worker (ELA re-encodes through OffscreenCanvas) with the same functions as a main-thread fallback; results are cached per image as object URLs.
+- M4: The landing hero shows the original and the forged version of the same deck card side by side. Same scene, one difference, and the heatmap reveal needs no API call.
+- M4: Deck cards carry a `photo` id and a session never shows two cards of the same photo while the deck is large enough, because seeing a scene twice gives the answer away.
+- M4: The seed script refuses to build a deck with the mock provider unless `--allow-mock` is passed (UI testing only). A mock deck would be fake data presented as real.
+- M4: Deck images are served without a burned-in label because a visible label would give away the Real or Edited call. The app offers no way to save or share a card; the deck consists of Suhan's own harmless scenes.
+- M4: Classroom reveals automatically when the 10 second countdown ends; Space reveals early and Right arrow reveals or moves on.
+- M4: An empty `public/deck/deck.json` is committed until the photos arrive, so the deck modes show a clear empty state instead of a 404.
