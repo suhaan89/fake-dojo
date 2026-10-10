@@ -63,7 +63,7 @@ export class GeminiProvider implements AIProvider {
         jpeg(input.image),
       ],
       response_format: { type: "text", mime_type: "application/json", schema: modelSchema(PlanSchema) },
-      generation_config: { thinking_level: "minimal" },
+      generation_config: { thinking_level: this.env.visionThinking },
     });
     try {
       return parsePlan(text);
@@ -113,7 +113,7 @@ export class GeminiProvider implements AIProvider {
         jpeg(input.forged),
       ],
       response_format: { type: "text", mime_type: "application/json", schema: modelSchema(VerifySchema) },
-      generation_config: { thinking_level: "minimal" },
+      generation_config: { thinking_level: this.env.visionThinking },
     });
     try {
       return parseVerify(text);

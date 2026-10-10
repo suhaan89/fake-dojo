@@ -17,6 +17,8 @@ export function loadEnvFiles(): void {
 
 function wrap<T>(work: Promise<T>): Promise<T> {
   return work.catch((error: unknown) => {
+    // Scripts run on the developer's machine, so the provider's own error text is shown here.
+    if (error instanceof AiError) console.error(`  provider detail: ${error.message}`);
     const api = error instanceof ApiError || error instanceof AiError ? toApiError(error) : null;
     if (api) throw new ForgeFailure(api.code, api.message);
     throw error;

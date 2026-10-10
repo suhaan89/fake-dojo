@@ -38,6 +38,10 @@ export function toApiError(error: unknown): ApiError {
     if (error.kind === "timeout") return new ApiError("TIMEOUT", "The model took too long to answer. Please try again.");
     if (error.kind === "blocked") return new ApiError("UPSTREAM", "The image model returned no image for this edit.");
     if (error.kind === "bad_output") return new ApiError("UPSTREAM", "The model answered in an unexpected format.");
+    // A rejected key or a model that is not activated will not recover by retrying.
+    if (error.status === 401 || error.status === 403 || error.status === 404) {
+      return new ApiError("LIVE_DISABLED", "Live forging is not set up correctly right now. Try the Daily Dojo.");
+    }
     if (error.status === 429) return new ApiError("UPSTREAM", "The model provider is rate limiting us right now.");
     return new ApiError("UPSTREAM", "The model provider returned an error.");
   }

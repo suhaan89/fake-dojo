@@ -1,6 +1,6 @@
 // The only place that reads model ids and server configuration from the environment.
 
-export type ThinkingLevel = "minimal" | "medium" | "high";
+export type ThinkingLevel = "minimal" | "low" | "medium" | "high";
 export type ImageProviderName = "gemini" | "seedream";
 
 export interface ServerEnv {
@@ -8,6 +8,8 @@ export interface ServerEnv {
   visionModel: string;
   /** Gemini image model, used when imageProvider is "gemini". */
   geminiImageModel: string;
+  /** Thinking level for planning and verifying. The vision model rejects "minimal". */
+  visionThinking: ThinkingLevel;
   imageThinking: ThinkingLevel;
   /** Which service performs the image edit. Reading, planning and verifying always use Gemini. */
   imageProvider: ImageProviderName;
@@ -48,9 +50,9 @@ function positiveInt(value: string | undefined, fallback: number): number {
   return Number.isFinite(n) && n >= 0 ? n : fallback;
 }
 
-function thinking(value: string | undefined): ThinkingLevel {
+function thinking(value: string | undefined, fallback: ThinkingLevel = "medium"): ThinkingLevel {
   const v = text(value)?.toLowerCase();
-  return v === "minimal" || v === "high" ? v : "medium";
+  return v === "minimal" || v === "low" || v === "medium" || v === "high" ? v : fallback;
 }
 
 /** Names of the keys that are still missing for live forging. */
@@ -75,6 +77,7 @@ export function readEnv(source: EnvSource = process.env): ServerEnv {
     apiKey,
     visionModel: text(source.GEMINI_VISION_MODEL) ?? DEFAULT_VISION_MODEL,
     geminiImageModel,
+    visionThinking: thinking(source.GEMINI_VISION_THINKING, "low"),
     imageThinking: thinking(source.GEMINI_IMAGE_THINKING),
     imageProvider,
     arkApiKey,

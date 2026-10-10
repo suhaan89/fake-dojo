@@ -13,7 +13,7 @@ export class AiError extends Error {
   }
 }
 
-export const TIMEOUTS = { plan: 25_000, edit: 55_000, verify: 25_000 } as const;
+export const TIMEOUTS = { plan: 50_000, edit: 55_000, verify: 40_000 } as const;
 export const MAX_RETRIES = 2;
 const RETRYABLE = new Set([429, 500, 503]);
 
