@@ -7,4 +7,5 @@ One line per non-obvious decision, newest at the bottom.
 - M0: Removed `cacheComponents` and `partialPrefetching` from the generated `next.config.ts`. The app is client-heavy and has no cached data, so the classic rendering model is simpler and less risky for a weekend build.
 - M0: `@types/node` raised to 22 because vitest 5 requires it as a peer. Runtime target stays Node 20 or newer.
 - M0: `sharp` is listed in `serverExternalPackages` so its native binary is never bundled.
+- M0: The remote already held a one-commit stub of `docs/BUILD_BRIEF.md`. Joined both histories with a merge commit (no rebase, no force push) and kept the full brief.
 - M0: Without a key, development uses the MockProvider automatically; production without a key reports live forging as unavailable instead of faking results.
