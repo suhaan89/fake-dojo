@@ -19,25 +19,62 @@ export function gaussianBlur(src: Float32Array, width: number, height: number, s
   const radius = (kernel.length - 1) / 2;
   const tmp = new Float32Array(src.length);
   const out = new Float32Array(src.length);
+
+  // Masks and change maps are mostly zero. Only the bounding box of the non-zero input,
+  // grown by the kernel radius, can receive a non-zero result, so only that part is computed.
+  let bx0 = width;
+  let by0 = height;
+  let bx1 = -1;
+  let by1 = -1;
   for (let y = 0; y < height; y++) {
     const row = y * width;
     for (let x = 0; x < width; x++) {
+      if (src[row + x] !== 0) {
+        if (x < bx0) bx0 = x;
+        if (x > bx1) bx1 = x;
+        if (y < by0) by0 = y;
+        if (y > by1) by1 = y;
+      }
+    }
+  }
+  if (bx1 < 0) return out;
+  // Edge clamping repeats border values, so a box touching a border must keep its full extent.
+  const x0 = Math.max(0, bx0 - radius);
+  const x1 = Math.min(width - 1, bx1 + radius);
+  const y0 = Math.max(0, by0 - radius);
+  const y1 = Math.min(height - 1, by1 + radius);
+
+  for (let y = by0; y <= by1; y++) {
+    const row = y * width;
+    for (let x = x0; x <= x1; x++) {
       let acc = 0;
-      for (let k = -radius; k <= radius; k++) {
-        const xx = x + k < 0 ? 0 : x + k >= width ? width - 1 : x + k;
-        acc += src[row + xx] * kernel[k + radius];
+      if (x - radius >= 0 && x + radius < width) {
+        const base = row + x - radius;
+        for (let k = 0; k < kernel.length; k++) acc += src[base + k] * kernel[k];
+      } else {
+        for (let k = -radius; k <= radius; k++) {
+          const xx = x + k < 0 ? 0 : x + k >= width ? width - 1 : x + k;
+          acc += src[row + xx] * kernel[k + radius];
+        }
       }
       tmp[row + x] = acc;
     }
   }
-  for (let y = 0; y < height; y++) {
-    for (let x = 0; x < width; x++) {
+  for (let y = y0; y <= y1; y++) {
+    const row = y * width;
+    const interior = y - radius >= 0 && y + radius < height;
+    for (let x = x0; x <= x1; x++) {
       let acc = 0;
-      for (let k = -radius; k <= radius; k++) {
-        const yy = y + k < 0 ? 0 : y + k >= height ? height - 1 : y + k;
-        acc += tmp[yy * width + x] * kernel[k + radius];
+      if (interior) {
+        let idx = (y - radius) * width + x;
+        for (let k = 0; k < kernel.length; k++, idx += width) acc += tmp[idx] * kernel[k];
+      } else {
+        for (let k = -radius; k <= radius; k++) {
+          const yy = y + k < 0 ? 0 : y + k >= height ? height - 1 : y + k;
+          acc += tmp[yy * width + x] * kernel[k + radius];
+        }
       }
-      out[y * width + x] = acc;
+      out[row + x] = acc;
     }
   }
   return out;
