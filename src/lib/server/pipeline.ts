@@ -1,3 +1,4 @@
+import { ArkVision } from "../ai/ark-vision";
 import { GeminiProvider } from "../ai/gemini";
 import { MockProvider } from "../ai/mock";
 import { SeedreamEditor, SeedreamForgeProvider } from "../ai/seedream";
@@ -24,8 +25,10 @@ export const RING_WIDTH = 24;
 
 export function getProvider(env: ServerEnv = readEnv()): AIProvider {
   if (env.mock) return new MockProvider();
-  const gemini = new GeminiProvider(env);
-  return env.imageProvider === "seedream" ? new SeedreamForgeProvider(gemini, new SeedreamEditor(env)) : gemini;
+  if (env.visionProvider === "gemini" && env.imageProvider === "gemini") return new GeminiProvider(env);
+  const vision = env.visionProvider === "ark" ? new ArkVision(env) : new GeminiProvider(env);
+  const editor = env.imageProvider === "seedream" ? new SeedreamEditor(env) : new GeminiProvider(env);
+  return new SeedreamForgeProvider(vision, editor);
 }
 
 export interface PlanStepInput {

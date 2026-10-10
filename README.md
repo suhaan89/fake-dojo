@@ -101,9 +101,9 @@ A forgery trainer is net positive for the same reason phishing simulations are: 
 
 All ids are configurable through environment variables and are read in exactly one place, `src/lib/server/env.ts`.
 
-### Optional: Seedream as the image editor
+### Optional: models on BytePlus ModelArk
 
-The edit step can run on Seedream 4.0 (ByteDance, through BytePlus ModelArk) instead of the Gemini image model. Reading, planning and verifying stay on Gemini.
+The edit step can run on Seedream 4.0 (ByteDance, through BytePlus ModelArk) instead of the Gemini image model.
 
 ```
 IMAGE_PROVIDER=seedream
@@ -112,6 +112,15 @@ SEEDREAM_MODEL=seedream-4-0-250828
 ```
 
 Seedream needs a larger canvas than our 1024 px working size, so the edit is requested at 1.5 times the size and scaled back before registration and compositing. Seedream output carries no SynthID watermark; the other guardrails are unchanged.
+
+Reading, planning and verifying can move to a ModelArk vision model as well. It gets the same prompts and schemas, and its answers pass the same server-side validation.
+
+```
+VISION_PROVIDER=ark
+ARK_VISION_MODEL=seed-2-0-lite-260428
+```
+
+With both switches set, the app runs on the Ark key alone.
 
 ## Running cost
 
@@ -125,7 +134,7 @@ npm install && npm run dev
 
 Without an API key the app runs in **mock mode**: a deterministic offline provider replaces Gemini, so the whole pipeline (compositing, measuring, scoring, reveal, lenses) can be tried for free. The UI shows a "Mock mode" label.
 
-For live forging, copy `.env.example` to `.env.local` and set `GEMINI_API_KEY`. The Gemini image model needs a key with billing enabled. With `IMAGE_PROVIDER=seedream` the Gemini key is only used for the vision calls and `ARK_API_KEY` pays for the edits.
+For live forging, copy `.env.example` to `.env.local` and set `GEMINI_API_KEY`. The Gemini image model needs a key with billing enabled. With `IMAGE_PROVIDER=seedream` the Gemini key is only used for the vision calls and `ARK_API_KEY` pays for the edits. With `VISION_PROVIDER=ark` on top, no Gemini key is needed.
 
 | Command | What it does |
 | --- | --- |

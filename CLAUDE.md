@@ -28,7 +28,7 @@ Source of truth: `docs/BUILD_BRIEF.md`. Decisions: `docs/DECISIONS.md`. Next.js 
 - Gate after every milestone: typecheck, test, build all green, then commit and push.
 
 ## Conventions
-- Model ids are read only in `src/lib/server/env.ts`. `IMAGE_PROVIDER=seedream` plus `ARK_API_KEY` moves the edit step to Seedream on BytePlus (`src/lib/ai/seedream.ts`); vision stays on Gemini.
+- Model ids are read only in `src/lib/server/env.ts`. `IMAGE_PROVIDER=seedream` plus `ARK_API_KEY` moves the edit step to Seedream on BytePlus (`src/lib/ai/seedream.ts`). `VISION_PROVIDER=ark` moves plan and verify to a ModelArk vision model (`src/lib/ai/ark-vision.ts`, not yet verified live).
 - Route handlers: `export const runtime = "nodejs"` and `export const maxDuration = 60`.
 - API errors: `{ error: { code, message } }` with codes RATE_LIMITED, LIVE_DISABLED, UPSTREAM, TIMEOUT, UNSAFE, NO_CANDIDATE, BAD_INPUT.
 - Image math is pure TypeScript on `{ width, height, data: Uint8ClampedArray }` RGBA in `src/lib/cv` and `src/lib/forensics`. Server uses sharp for decode and encode, browser uses canvas.
@@ -49,6 +49,6 @@ Current state: feature complete in mock mode. Blocked on the human for key, phot
 
 ## Waiting on the human (brief section 18)
 - Push is rejected by GitHub (GH007, private email). No history rewrite: he must allow the push in GitHub email settings.
-- `.env.local`: `GEMINI_API_KEY` (free tier is enough for vision) and, for Seedream, `IMAGE_PROVIDER=seedream` and `ARK_API_KEY`
+- `.env.local`: `GEMINI_API_KEY` (free tier allows only about 20 vision calls per model per day) and, for Seedream, `IMAGE_PROVIDER=seedream` and `ARK_API_KEY`
 - 15 to 25 own photos in `seed/photos/`
 - Vercel deploy, `docs/screenshot.png`, live URL and video link in README.md and DEVPOST.md, submission

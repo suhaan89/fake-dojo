@@ -285,7 +285,10 @@ export default function HowItWorksPage() {
           <dl className="mono text-[13px]">
             <div className="flex justify-between gap-4 border-b border-line py-2"><dt className="text-ink-soft">Vision, planning, verification</dt><dd>{env.visionModel}</dd></div>
             <div className="flex justify-between gap-4 border-b border-line py-2"><dt className="text-ink-soft">Image editing</dt><dd>{env.imageModel}</dd></div>
-            <div className="flex justify-between gap-4 border-b border-line py-2"><dt className="text-ink-soft">APIs</dt><dd>{env.imageProvider === "seedream" ? "Gemini Interactions, BytePlus ModelArk" : "Gemini Interactions API"}</dd></div>
+            <div className="flex justify-between gap-4 border-b border-line py-2"><dt className="text-ink-soft">APIs</dt><dd>{[
+              env.visionProvider === "gemini" || env.imageProvider === "gemini" ? "Gemini Interactions" : null,
+              env.visionProvider === "ark" || env.imageProvider === "seedream" ? "BytePlus ModelArk" : null,
+            ].filter(Boolean).join(", ")}</dd></div>
             <div className="flex justify-between gap-4 border-b border-line py-2"><dt className="text-ink-soft">Cost per image call</dt><dd>{env.imageProvider === "seedream" ? "free quota, then per image" : `about ${IMAGE_COST_USD} USD`}</dd></div>
             <div className="flex justify-between gap-4 border-b border-line py-2"><dt className="text-ink-soft">Image calls per forge</dt><dd>1 to 3</dd></div>
           </dl>

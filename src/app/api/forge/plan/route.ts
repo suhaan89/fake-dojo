@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     const { candidates, ...plan } = await planStep(getProvider(env), body);
     const response: PlanResponse = {
       ...plan,
-      ticket: issueTicket(env.apiKey, body.image, candidates),
+      ticket: issueTicket(env.signingKey, body.image, candidates),
       candidate: candidates[0],
       alternates: candidates.slice(1),
     };

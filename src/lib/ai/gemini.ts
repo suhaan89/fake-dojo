@@ -56,7 +56,7 @@ export class GeminiProvider implements AIProvider {
   /** Vision models in the order they should be tried right now, skipping ones that are resting. */
   private visionOrder(): string[] {
     const now = Date.now();
-    const all = [this.env.visionModel, ...this.env.visionFallbackModels];
+    const all = [this.env.geminiVisionModel, ...this.env.visionFallbackModels];
     const unique = all.filter((id, index) => all.indexOf(id) === index);
     const awake = unique.filter((id) => (restingUntil.get(id) ?? 0) <= now);
     return awake.length ? awake : unique;
@@ -93,7 +93,7 @@ export class GeminiProvider implements AIProvider {
 
   async plan(input: PlanInput): Promise<PlanOutput> {
     const text = await this.json("Planning", TIMEOUTS.plan, {
-      model: this.env.visionModel,
+      model: this.env.geminiVisionModel,
       input: [
         { type: "text", text: plannerPrompt(input) },
         jpeg(input.image),
@@ -142,7 +142,7 @@ export class GeminiProvider implements AIProvider {
 
   async verify(input: VerifyInput): Promise<VerifyOutput> {
     const text = await this.json("Checking realism", TIMEOUTS.verify, {
-      model: this.env.visionModel,
+      model: this.env.geminiVisionModel,
       input: [
         { type: "text", text: verifierPrompt(input.candidate.type, input.candidate.edit_instruction) },
         jpeg(input.original),

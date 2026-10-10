@@ -2,10 +2,21 @@
 
 export type ThinkingLevel = "minimal" | "low" | "medium" | "high";
 export type ImageProviderName = "gemini" | "seedream";
+export type VisionProviderName = "gemini" | "ark";
+export type ArkThinking = "disabled" | "enabled" | "auto" | "off";
 
 export interface ServerEnv {
   apiKey: string | null;
+  /** Which service reads, plans and verifies. */
+  visionProvider: VisionProviderName;
+  /** The vision model that is actually in use. */
   visionModel: string;
+  /** Gemini vision model, used when visionProvider is "gemini". */
+  geminiVisionModel: string;
+  /** Vision model on BytePlus ModelArk, used when visionProvider is "ark". */
+  arkVisionModel: string;
+  /** Sent as the thinking type to the Ark vision model. "off" leaves the field out. */
+  arkVisionThinking: ArkThinking;
   /** Tried in order for a vision call after the main vision model failed (overload, slow answer, quota). */
   visionFallbackModels: string[];
   /** Gemini image model, used when imageProvider is "gemini". */
@@ -13,9 +24,11 @@ export interface ServerEnv {
   /** Thinking level for planning and verifying. The vision model rejects "minimal". */
   visionThinking: ThinkingLevel;
   imageThinking: ThinkingLevel;
-  /** Which service performs the image edit. Reading, planning and verifying always use Gemini. */
+  /** Which service performs the image edit. */
   imageProvider: ImageProviderName;
   arkApiKey: string | null;
+  /** Key material for signing forge tickets: whichever provider key is present. */
+  signingKey: string | null;
   arkBaseUrl: string;
   seedreamModel: string;
   /** The image model that is actually in use. */
@@ -32,6 +45,7 @@ export const DEFAULT_VISION_MODEL = "gemini-3.8-flash";
 export const DEFAULT_VISION_FALLBACK_MODELS = "gemini-3.5-flash,gemini-3.7-flash";
 export const DEFAULT_IMAGE_MODEL = "gemini-nano-banana-2.1";
 export const DEFAULT_SEEDREAM_MODEL = "seedream-4-0-250828";
+export const DEFAULT_ARK_VISION_MODEL = "seed-2-0-lite-260428";
 export const DEFAULT_ARK_BASE_URL = "https://ark.ap-southeast.bytepluses.com/api/v3";
 
 type EnvSource = Record<string, string | undefined>;
@@ -59,11 +73,20 @@ function thinking(value: string | undefined, fallback: ThinkingLevel = "medium")
 }
 
 /** Names of the keys that are still missing for live forging. */
-export function missingKeys(env: Pick<ServerEnv, "apiKey" | "arkApiKey" | "imageProvider">): string[] {
+export function missingKeys(
+  env: Pick<ServerEnv, "apiKey" | "arkApiKey" | "imageProvider" | "visionProvider">,
+): string[] {
   const missing: string[] = [];
-  if (!env.apiKey) missing.push("GEMINI_API_KEY");
-  if (env.imageProvider === "seedream" && !env.arkApiKey) missing.push("ARK_API_KEY");
+  const needsGemini = env.visionProvider === "gemini" || env.imageProvider === "gemini";
+  const needsArk = env.visionProvider === "ark" || env.imageProvider === "seedream";
+  if (needsGemini && !env.apiKey) missing.push("GEMINI_API_KEY");
+  if (needsArk && !env.arkApiKey) missing.push("ARK_API_KEY");
   return missing;
+}
+
+function arkThinking(value: string | undefined): ArkThinking {
+  const v = text(value)?.toLowerCase();
+  return v === "enabled" || v === "auto" || v === "off" ? v : "disabled";
 }
 
 export function readEnv(source: EnvSource = process.env): ServerEnv {
@@ -73,12 +96,19 @@ export function readEnv(source: EnvSource = process.env): ServerEnv {
   const mockRequested = flag(source.MOCK_AI, false);
   const imageProvider: ImageProviderName =
     text(source.IMAGE_PROVIDER)?.toLowerCase() === "seedream" ? "seedream" : "gemini";
+  const visionProvider: VisionProviderName = text(source.VISION_PROVIDER)?.toLowerCase() === "ark" ? "ark" : "gemini";
+  const geminiVisionModel = text(source.GEMINI_VISION_MODEL) ?? DEFAULT_VISION_MODEL;
+  const arkVisionModel = text(source.ARK_VISION_MODEL) ?? DEFAULT_ARK_VISION_MODEL;
   const geminiImageModel = text(source.GEMINI_IMAGE_MODEL) ?? DEFAULT_IMAGE_MODEL;
   const seedreamModel = text(source.SEEDREAM_MODEL) ?? DEFAULT_SEEDREAM_MODEL;
-  const keysMissing = missingKeys({ apiKey, arkApiKey, imageProvider }).length > 0;
+  const keysMissing = missingKeys({ apiKey, arkApiKey, imageProvider, visionProvider }).length > 0;
   return {
     apiKey,
-    visionModel: text(source.GEMINI_VISION_MODEL) ?? DEFAULT_VISION_MODEL,
+    visionProvider,
+    visionModel: visionProvider === "ark" ? arkVisionModel : geminiVisionModel,
+    geminiVisionModel,
+    arkVisionModel,
+    arkVisionThinking: arkThinking(source.ARK_VISION_THINKING),
     visionFallbackModels: (text(source.GEMINI_VISION_FALLBACK_MODELS) ?? DEFAULT_VISION_FALLBACK_MODELS)
       .split(",")
       .map((id) => id.trim())
@@ -88,6 +118,7 @@ export function readEnv(source: EnvSource = process.env): ServerEnv {
     imageThinking: thinking(source.GEMINI_IMAGE_THINKING),
     imageProvider,
     arkApiKey,
+    signingKey: apiKey ?? arkApiKey,
     arkBaseUrl: (text(source.ARK_BASE_URL) ?? DEFAULT_ARK_BASE_URL).replace(/\/+$/, ""),
     seedreamModel,
     imageModel: imageProvider === "seedream" ? seedreamModel : geminiImageModel,

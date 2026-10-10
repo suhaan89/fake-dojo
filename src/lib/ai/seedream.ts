@@ -73,13 +73,13 @@ export class SeedreamEditor {
   }
 }
 
-/** Gemini reads, plans and verifies; Seedream performs the edit. */
+/** One service reads, plans and verifies; another performs the edit. */
 export class SeedreamForgeProvider implements AIProvider {
   readonly name = "gemini" as const;
 
   constructor(
     private readonly vision: Pick<AIProvider, "plan" | "verify">,
-    private readonly editor: SeedreamEditor,
+    private readonly editor: Pick<AIProvider, "edit">,
   ) {}
 
   plan(input: PlanInput): Promise<PlanOutput> {

@@ -44,7 +44,7 @@ export function requireTicket(
   candidate: Candidate,
   purpose: "render" | "verify",
 ): void {
-  const check = redeemTicket(env.apiKey, ticket, image, candidate, purpose);
+  const check = redeemTicket(env.signingKey, ticket, image, candidate, purpose);
   if (check.ok) return;
   if (check.reason === "spent") {
     throw new ApiError("RATE_LIMITED", "This forge has used all of its attempts. Start a new one.");
