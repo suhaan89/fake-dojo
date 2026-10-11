@@ -8,7 +8,7 @@ Target length 2:45 to 2:50. Hard limit 3:00. Record at 1920 x 1080, browser zoom
 - Open three tabs: `/?demo=1`, `/forge`, `/classroom?seed=demo`.
 - On `/profile` press "Reset profile", then play two forge rounds badly on purpose (miss two text edits) so the radar has a visible weak spot. Leave the profile like that.
 - Have one own photo ready on the desktop: a scene with several objects and a sign with text, no people.
-- Do one full dry run. A forge takes 20 to 45 s; the waiting part is cut in the edit (marked below).
+- Do one full dry run. A forge takes 40 to 90 s; the waiting part is cut in the edit (marked below).
 - Know where the edit is on the hero card and on the first classroom card.
 
 ## Script
@@ -97,7 +97,7 @@ The reveal appears.
 
 Press F to leave fullscreen, open "How it works", show the pipeline diagram.
 
-> "Gemini 3.8 Flash reads and plans. Nano Banana 2.1 forges. Our own compositing makes the answer key pixel-exact. The forensics are written from scratch. And people are never edited: that is enforced in code, three times."
+> "Seed 2.0 Lite reads and plans. Seedream 4.0 forges. Our own compositing makes the answer key pixel-exact. The forensics are written from scratch. And people are never edited: that is enforced in code, three times."
 
 ### 2:40 to 2:50 Close
 

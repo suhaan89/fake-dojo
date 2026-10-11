@@ -9,7 +9,7 @@ Source of truth: `docs/BUILD_BRIEF.md`. Decisions: `docs/DECISIONS.md`. Next.js 
 - Public repo. Never commit secrets. `.env*` is ignored except `.env.example`.
 - Never ask for the API key in chat. The human edits `.env.local` himself.
 - Credit every library, API, model and photo source in README.md.
-- AI disclosure in README.md and DEVPOST.md (Claude Code wrote most code under Suhan's direction, Gemini at runtime).
+- AI disclosure in README.md and DEVPOST.md (Claude Code wrote most code under Suhan's direction, Seed 2.0 Lite and Seedream 4.0 on BytePlus ModelArk at runtime, Gemini optional).
 - No accounts, no database, no auth. No placeholders: no TODO comments, dead buttons, lorem ipsum or fake data.
 - People are never edited. Sensitive documents are refused. No download of live forgeries.
 - Talk to the human in German, short, no em-dashes. Code, comments, UI copy and docs in English.

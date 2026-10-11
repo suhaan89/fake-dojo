@@ -82,13 +82,13 @@ A forgery trainer is net positive for the same reason phishing simulations are: 
 - **EXIF and GPS are stripped** in the browser before upload.
 - **No download of live forgeries.** There is no save or share feature for forged images. The committed deck is made only from Suhan's own harmless scenes.
 - **The API is not an open image editor.** The plan route issues a signed ticket that binds the photo to the instructions the server validated. The render and verify routes reject anything else.
-- **SynthID**: images produced by the Gemini image model carry an invisible watermark.
+- **Watermark**: Seedream output carries no SynthID watermark. Only images made by the optional Gemini image model carry one.
 - **Cost and abuse limits**: per-IP hourly limit, global daily cap, and a kill switch.
 
 ## Tech stack
 
 - Next.js 16 (App Router), React 19, TypeScript (strict), Tailwind CSS 4
-- `@google/genai` (Gemini Interactions API), `zod` 4, `sharp`
+- BytePlus ModelArk over HTTP for the live models, `@google/genai` (Gemini Interactions API) for the optional Gemini provider, `zod` 4, `sharp`
 - Vitest (146 tests), `tsx` for scripts
 - No UI kit, no chart library, no state library, no database, no accounts
 
@@ -96,31 +96,28 @@ A forgery trainer is net positive for the same reason phishing simulations are: 
 
 | Role | Model | Notes |
 | --- | --- | --- |
-| Reading, planning, verifying | `gemini-3.8-flash` | structured JSON output, minimal thinking |
-| Image editing | `gemini-nano-banana-2.1` (Nano Banana 2.1) | 1K output, same aspect ratio as the input |
+| Reading, planning, verifying | Seed 2.0 Lite (`seed-2-0-lite-260428`) | JSON answers, checked by the same schemas and server-side validation |
+| Image editing | Seedream 4.0 (`seedream-4-0-250828`) | requested at 1.5 times the working size, same aspect ratio as the input |
 
-All ids are configurable through environment variables and are read in exactly one place, `src/lib/server/env.ts`.
+Both run through BytePlus ModelArk. All ids are configurable through environment variables and are read in exactly one place, `src/lib/server/env.ts`.
 
-### Optional: models on BytePlus ModelArk
-
-The edit step can run on Seedream 4.0 (ByteDance, through BytePlus ModelArk) instead of the Gemini image model.
+### Live setup: models on BytePlus ModelArk
 
 ```
-IMAGE_PROVIDER=seedream
 ARK_API_KEY=...
+VISION_PROVIDER=ark
+ARK_VISION_MODEL=seed-2-0-lite-260428
+IMAGE_PROVIDER=seedream
 SEEDREAM_MODEL=seedream-4-0-250828
 ```
 
-Seedream needs a larger canvas than our 1024 px working size, so the edit is requested at 1.5 times the size and scaled back before registration and compositing. Seedream output carries no SynthID watermark; the other guardrails are unchanged.
-
-Reading, planning and verifying can move to a ModelArk vision model as well. It gets the same prompts and schemas, and its answers pass the same server-side validation.
-
-```
-VISION_PROVIDER=ark
-ARK_VISION_MODEL=seed-2-0-lite-260428
-```
-
 With both switches set, the app runs on the Ark key alone.
+
+Seedream needs a larger canvas than our 1024 px working size, so the edit is requested at 1.5 times the size and scaled back before registration and compositing.
+
+### Optional: Gemini as provider
+
+Each step can run on Gemini instead. Without `VISION_PROVIDER=ark` the vision calls go to `gemini-3.8-flash`, and without `IMAGE_PROVIDER=seedream` the edit goes to `gemini-nano-banana-2.1` (Nano Banana 2.1). Both need `GEMINI_API_KEY`. The Gemini models get the same prompts and schemas, and the guardrails are unchanged. Images made by the Gemini image model carry an invisible SynthID watermark.
 
 ## Running cost
 
@@ -132,9 +129,9 @@ One forge is one image output (about 0.034 USD) plus two cheap vision calls. A r
 npm install && npm run dev
 ```
 
-Without an API key the app runs in **mock mode**: a deterministic offline provider replaces Gemini, so the whole pipeline (compositing, measuring, scoring, reveal, lenses) can be tried for free. The UI shows a "Mock mode" label.
+Without an API key the app runs in **mock mode**: a deterministic offline provider replaces the models, so the whole pipeline (compositing, measuring, scoring, reveal, lenses) can be tried for free. The UI shows a "Mock mode" label.
 
-For live forging, copy `.env.example` to `.env.local` and set `GEMINI_API_KEY`. The Gemini image model needs a key with billing enabled. With `IMAGE_PROVIDER=seedream` the Gemini key is only used for the vision calls and `ARK_API_KEY` pays for the edits. With `VISION_PROVIDER=ark` on top, no Gemini key is needed.
+For live forging, copy `.env.example` to `.env.local` and set `ARK_API_KEY`, `VISION_PROVIDER=ark` and `IMAGE_PROVIDER=seedream`. No Gemini key is needed then. For the optional Gemini provider set `GEMINI_API_KEY` instead; the Gemini image model needs a key with billing enabled.
 
 | Command | What it does |
 | --- | --- |
@@ -158,7 +155,7 @@ For a reproducible demo, `/?demo=1` and `/dojo?seed=demo` use a fixed card order
 
 1. Push this repository to GitHub.
 2. In Vercel choose **Add New, Project** and import the repository. The framework preset is detected as Next.js; keep the defaults.
-3. Under **Environment Variables** add `GEMINI_API_KEY` and, if you want values other than the defaults, the other variables from `.env.example`.
+3. Under **Environment Variables** add `ARK_API_KEY`, `VISION_PROVIDER=ark`, `ARK_VISION_MODEL=seed-2-0-lite-260428` and `IMAGE_PROVIDER=seedream`, plus any other variables from `.env.example` you want to change.
 4. Deploy. Open `/api/health`: it should report `"liveForge": true` and `"mock": false`.
 5. To pause live forging at any time, set `LIVE_FORGE_ENABLED=false` and redeploy. The deck modes keep working.
 
@@ -170,7 +167,7 @@ Route handlers run on the Node.js runtime with `maxDuration = 60`.
 src/app/                 pages: / forge dojo classroom profile how-it-works
 src/app/api/             health, forge/plan, forge/render, forge/verify
 src/components/          ImageStage, BeforeAfterSlider, AgentTimeline, LensSwitcher, Hunt, Reveal, ...
-src/lib/ai/              provider interface, Gemini and mock providers, prompts, schemas, retry, output
+src/lib/ai/              provider interface, ModelArk vision, Seedream, Gemini and mock providers, prompts, schemas, retry, output
 src/lib/cv/              polygon, mask, blur, align, tone, composite, diff (pure TypeScript)
 src/lib/forensics/       ELA, noise residual, Sobel, color ramp, worker client
 src/lib/forge/           the agent loop (plan, render, verify, retries) and shared API types
@@ -208,8 +205,8 @@ docs/                    BUILD_BRIEF.md, DECISIONS.md, QA.md
 - [sharp](https://sharp.pixelplumbing.com) (Apache-2.0), built on libvips (LGPL)
 - [Vitest](https://vitest.dev) (MIT), [tsx](https://tsx.is) (MIT), [TypeScript](https://www.typescriptlang.org) (Apache-2.0), [ESLint](https://eslint.org) (MIT)
 - [Geist](https://vercel.com/font) Sans and Mono (SIL Open Font License)
-- Gemini API by Google: `gemini-3.8-flash` and `gemini-nano-banana-2.1`
-- Seedream 4.0 and Seed 2.0 Lite by ByteDance through BytePlus ModelArk
+- Seed 2.0 Lite and Seedream 4.0 by ByteDance through BytePlus ModelArk (the live models)
+- Gemini API by Google: `gemini-3.8-flash` and `gemini-nano-banana-2.1` (optional provider)
 - Photos in the deck: cards named `photo-…` are by Suhan Nawaz. Cards named `web-…` use photos from Wikimedia Commons that their authors released into the public domain (CC0):
 
 | Deck id | Photo | Author | License |
@@ -230,4 +227,4 @@ docs/                    BUILD_BRIEF.md, DECISIONS.md, QA.md
 
 ## AI disclosure
 
-Claude Code wrote most of the code under Suhan's direction. Gemini models run at runtime: a vision model reads, plans and verifies, and an image model performs the edits. All code was written and committed during the hacking window.
+Claude Code wrote most of the code under Suhan's direction. At runtime Seed 2.0 Lite reads, plans and verifies and Seedream 4.0 performs the edits, both through BytePlus ModelArk. Gemini is an optional provider. All code was written and committed during the hacking window.

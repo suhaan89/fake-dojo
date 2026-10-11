@@ -298,8 +298,9 @@ export default function HowItWorksPage() {
               in Geist Sans and Geist Mono. Deck photos by Suhan Nawaz and, for the cards named web, public-domain photos from Wikimedia Commons (listed in the README).
             </p>
             <p className="mt-3">
-              AI disclosure: Claude Code wrote most of the code under Suhan&apos;s direction. Gemini models run at
-              runtime. Built during Banana Hacks 2026, October 10 to 11, 2026.
+              AI disclosure: Claude Code wrote most of the code under Suhan&apos;s direction. At runtime Seed 2.0 Lite
+              plans and verifies and Seedream 4.0 edits, both through BytePlus ModelArk. Gemini is an optional
+              provider. Built during Banana Hacks 2026, October 10 to 11, 2026.
             </p>
             <p className="mt-3">
               <a href={GITHUB_URL} className="inline-flex min-h-[44px] items-center text-ink underline underline-offset-4" rel="noreferrer">

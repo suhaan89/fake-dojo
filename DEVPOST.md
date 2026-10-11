@@ -22,7 +22,7 @@ You bring a photo. An agent reads the scene, plans one small edit, forges it and
 
 ### How we built it
 
-Next.js, TypeScript and the Gemini Interactions API. Gemini 3.8 Flash plans and verifies with structured JSON output. Nano Banana 2.1 performs the edit. The core is our own computer vision in pure TypeScript: the model output is registered to the original by shift search, tone-matched from a ring around the region, and blended through a feathered mask. Because we composite ourselves, the difference to the original is an exact answer key. ELA, noise residual and Sobel lenses are written from scratch and run in a Web Worker.
+Next.js, TypeScript and BytePlus ModelArk. Seed 2.0 Lite plans and verifies with JSON answers that the server validates. Seedream 4.0 performs the edit. Gemini is an optional provider. The core is our own computer vision in pure TypeScript: the model output is registered to the original by shift search, tone-matched from a ring around the region, and blended through a feathered mask. Because we composite ourselves, the difference to the original is an exact answer key. ELA, noise residual and Sobel lenses are written from scratch and run in a Web Worker.
 
 ### Challenges
 
@@ -42,8 +42,8 @@ Teacher dashboards, C2PA provenance, a browser extension, more manipulation type
 
 ## Built with
 
-Next.js, React, TypeScript, Tailwind CSS, Google Gen AI SDK, Gemini 3.8 Flash, Nano Banana 2.1 (Gemini image model), zod, sharp, Vitest, Web Workers, Canvas API, Vercel
+Next.js, React, TypeScript, Tailwind CSS, BytePlus ModelArk, Seed 2.0 Lite, Seedream 4.0, Google Gen AI SDK (optional Gemini provider), zod, sharp, Vitest, Web Workers, Canvas API, Vercel
 
 ## AI disclosure
 
-Claude Code wrote most of the code under Suhan's direction. Gemini models run at runtime (vision for planning and verification, image model for the edits). All code was written during the hacking window.
+Claude Code wrote most of the code under Suhan's direction. At runtime Seed 2.0 Lite plans and verifies and Seedream 4.0 performs the edits, both through BytePlus ModelArk. Gemini is an optional provider. All code was written during the hacking window.

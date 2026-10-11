@@ -20,7 +20,7 @@ One forge is one image output, about 0.034 USD, plus two cheap vision calls. Ret
 
 ### 5. What happens to my photos?
 
-They are cropped, resized and stripped of EXIF and GPS in your browser. The prepared image is sent to our server and to the Gemini API for the forge, held in memory for that request and never written to disk or a database. Server logs contain timings and status codes only. Your score lives in your browser's local storage.
+They are cropped, resized and stripped of EXIF and GPS in your browser. The prepared image is sent to our server and to BytePlus ModelArk for the forge, held in memory for that request and never written to disk or a database. Server logs contain timings and status codes only. Your score lives in your browser's local storage.
 
 ### 6. How is this more than an API wrapper?
 
@@ -36,7 +36,7 @@ Image models repaint the whole picture. Colors drift a little, the frame moves b
 
 ### 9. How do you stop misuse?
 
-Three layers for people: the planner is told never to touch them, the server rejects any region within 5% of the image width of a detected person, and a verifier discards results where a person changed. Sensitive documents are refused before any edit. Text edits are limited to neutral content. The render route only accepts instructions the server validated and signed. Outputs carry Google's SynthID watermark. And there is no download button.
+Three layers for people: the planner is told never to touch them, the server rejects any region within 5% of the image width of a detected person, and a verifier discards results where a person changed. Sensitive documents are refused before any edit. Text edits are limited to neutral content. The render route only accepts instructions the server validated and signed. And there is no download button.
 
 ### 10. What would you build next?
 
@@ -52,4 +52,4 @@ Yes, and you can see it. Each manipulation type has a skill estimate, the mean o
 
 ### 13. What did AI write and what did you do?
 
-Claude Code wrote most of the code under my direction: I defined the product, the pipeline, the rules and the design, reviewed the result, took the photos and tested it with real forgeries. Gemini models run at runtime. This is disclosed in the README and here.
+Claude Code wrote most of the code under my direction: I defined the product, the pipeline, the rules and the design, reviewed the result, took the photos and tested it with real forgeries. At runtime Seed 2.0 Lite plans and verifies and Seedream 4.0 edits, both through BytePlus ModelArk. Gemini is an optional provider. This is disclosed in the README and here.

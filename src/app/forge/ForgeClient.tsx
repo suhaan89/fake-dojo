@@ -357,7 +357,7 @@ export function ForgeClient() {
             <AgentTimeline entries={timeline} revealed={false} />
             <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-ink-soft">
               <p aria-live="off">
-                Elapsed <Elapsed running /> , usually 20 to 45 s
+                Elapsed <Elapsed running /> , usually 40 to 90 s
               </p>
               <button type="button" className="btn btn-quiet" onClick={cancel}>
                 Cancel
