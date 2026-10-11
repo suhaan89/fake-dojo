@@ -45,10 +45,8 @@ Source of truth: `docs/BUILD_BRIEF.md`. Decisions: `docs/DECISIONS.md`. Next.js 
 - [x] Real deck: 30 cards (23 forged, 7 real) from 20 photos, each checked by eye. Weak cards are removed from deck.json and their folder; `npm run seed` then retries them.
 - [ ] Open items in `docs/QA.md`, then stretch goals (brief section 19) only if everything else is done.
 
-Current state: feature complete in mock mode. Blocked on the human for key, photos and push.
+Current state: feature complete, real deck committed, live forging runs on the Ark key alone (`VISION_PROVIDER=ark`, `IMAGE_PROVIDER=seedream`).
 
 ## Waiting on the human (brief section 18)
-- Push is rejected by GitHub (GH007, private email). No history rewrite: he must allow the push in GitHub email settings.
-- `.env.local`: `GEMINI_API_KEY` (free tier allows only about 20 vision calls per model per day) and, for Seedream, `IMAGE_PROVIDER=seedream` and `ARK_API_KEY`
-- 15 to 25 own photos in `seed/photos/`
-- Vercel deploy, `docs/screenshot.png`, live URL and video link in README.md and DEVPOST.md, submission
+- Vercel deploy with `ARK_API_KEY`, `VISION_PROVIDER=ark`, `ARK_VISION_MODEL`, `IMAGE_PROVIDER=seedream`
+- `docs/screenshot.png`, live URL and video link in README.md and DEVPOST.md, demo video, submission
