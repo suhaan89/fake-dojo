@@ -30,7 +30,7 @@ Image models repaint the whole picture, so a naive diff lights up everywhere. Re
 
 ### Accomplishments
 
-A self-correcting agent loop whose rejected attempts are visible. A redacted agent log that un-redacts on reveal. 138 tests. A labeled forgery-localization dataset as a by-product of the deck.
+A self-correcting agent loop whose rejected attempts are visible. A redacted agent log that un-redacts on reveal. 159 tests. A labeled forgery-localization dataset as a by-product of the deck.
 
 ### What we learned
 

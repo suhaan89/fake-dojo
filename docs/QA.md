@@ -4,7 +4,7 @@ Status on Oct 10, 2026. "Mock" means checked with the MockProvider; items that n
 
 ## Checked
 
-- [x] `npm run typecheck`, `npm run lint`, `npm test` (146 tests), `npm run build` are green.
+- [x] `npm run typecheck`, `npm run lint`, `npm test` (159 tests), `npm run build` are green.
 - [x] Forge end to end in the browser (mock): upload, timeline, hunt with one miss and one hit, reveal, points stored in the profile.
 - [x] Agent timeline: durations shown, plan redacted during forging and hunt, unredacted after the reveal. Before the reveal the secret text is not in the DOM.
 - [x] Reveal: heatmap overlay toggle, change box, before and after slider, ELA, noise and edge lenses computed through the worker and cached.

@@ -24,7 +24,7 @@ They are cropped, resized and stripped of EXIF and GPS in your browser. The prep
 
 ### 6. How is this more than an API wrapper?
 
-The models are two steps of seven. Ours are: server-side plan validation with geometry checks against people, shift-search registration, ring-based tone matching, masked compositing, the change map with morphology, difficulty-dependent trace hiding, three forensic lenses from scratch in a Web Worker, a Beta-distribution skill model, a self-correcting retry loop, and signed tickets that stop the API from being used as an open image editor. 138 tests cover it.
+The models are two steps of seven. Ours are: server-side plan validation with geometry checks against people, shift-search registration, ring-based tone matching, masked compositing, the change map with morphology, difficulty-dependent trace hiding, three forensic lenses from scratch in a Web Worker, a Beta-distribution skill model, a self-correcting retry loop, and signed tickets that stop the API from being used as an open image editor. 159 tests cover it.
 
 ### 7. Who will use it after the weekend?
 

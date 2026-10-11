@@ -89,7 +89,7 @@ A forgery trainer is net positive for the same reason phishing simulations are: 
 
 - Next.js 16 (App Router), React 19, TypeScript (strict), Tailwind CSS 4
 - BytePlus ModelArk over HTTP for the live models, `@google/genai` (Gemini Interactions API) for the optional Gemini provider, `zod` 4, `sharp`
-- Vitest (146 tests), `tsx` for scripts
+- Vitest (159 tests), `tsx` for scripts
 - No UI kit, no chart library, no state library, no database, no accounts
 
 ## Models used
