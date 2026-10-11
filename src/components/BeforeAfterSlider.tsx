@@ -57,8 +57,13 @@ export function BeforeAfterSlider({
           className="pointer-events-none absolute inset-0 h-full w-full"
           style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
         />
-        <span className="label pointer-events-none absolute left-2 top-2 bg-paper/90 px-2 py-1 text-ink">{beforeLabel}</span>
-        <span className="label pointer-events-none absolute right-2 top-2 bg-paper/90 px-2 py-1 text-ink">{afterLabel}</span>
+        {/* A label is shown only while its side of the wipe is actually visible. */}
+        {position > 14 ? (
+          <span className="label pointer-events-none absolute left-2 top-2 bg-paper/90 px-2 py-1 text-ink">{beforeLabel}</span>
+        ) : null}
+        {position < 86 ? (
+          <span className="label pointer-events-none absolute right-2 top-2 bg-paper/90 px-2 py-1 text-ink">{afterLabel}</span>
+        ) : null}
         <div
           aria-hidden
           className="pointer-events-none absolute bottom-0 top-0 w-0.5 bg-paper shadow-[0_0_0_1px_rgba(18,18,18,0.6)]"
@@ -72,7 +77,7 @@ export function BeforeAfterSlider({
         </div>
       </div>
       <label className="mt-2 flex items-center gap-3 text-sm text-ink-soft">
-        <span className="shrink-0">{beforeLabel}</span>
+        <span className="shrink-0">{afterLabel}</span>
         <input
           type="range"
           min={0}
@@ -80,10 +85,10 @@ export function BeforeAfterSlider({
           step={1}
           value={Math.round(position)}
           onChange={(event) => setPosition(Number(event.target.value))}
-          aria-label={`Comparison position, ${beforeLabel} on the left, ${afterLabel} on the right`}
+          aria-label={`Comparison position. All the way left shows only the ${afterLabel} image, all the way right only the ${beforeLabel} image.`}
           className="h-11 w-full accent-[#121212]"
         />
-        <span className="shrink-0">{afterLabel}</span>
+        <span className="shrink-0">{beforeLabel}</span>
       </label>
     </div>
   );
