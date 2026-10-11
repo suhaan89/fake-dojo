@@ -73,7 +73,10 @@ export function ForgeClient() {
     let cancelled = false;
     loadDeck().then(
       (deck) => {
-        if (!cancelled) setSamples(deck.cards.slice(0, 6));
+        // One sample per source photo: several cards share a photo and would show the same picture twice.
+        const seen = new Set<string>();
+        const unique = deck.cards.filter((card) => (seen.has(card.photo) ? false : (seen.add(card.photo), true)));
+        if (!cancelled) setSamples(unique.slice(0, 6));
       },
       () => {},
     );
