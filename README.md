@@ -22,7 +22,7 @@ An AI agent forges one subtle, realistic edit into a real photo: your own, or on
 
 - **Forge** (live): upload or shoot a photo, watch the agent timeline (redacted so it does not spoil the answer), then hunt with zoom, pan and a loupe. Two guesses, an optional hint.
 - **Daily Dojo**: ten cards, about 70% forged and 30% untouched. Call each one Real or Edited, then locate the edit for bonus points. Zero API calls.
-- **Classroom**: projector mode. Huge image, a 10 second countdown so the class can vote by raising hands, then a big reveal with the tell. Space reveals, Right arrow moves on, F toggles fullscreen. No accounts, nothing stored.
+- **Classroom**: projector mode. Huge image, a 10 second countdown so the class can vote by raising hands, then a big reveal with the tell. Space reveals, Right arrow moves on, F toggles fullscreen. With "Vote by camera" the laptop camera counts raised hands: left half of the picture votes Real, right half votes Edited, the box lights up while hands are up, and after the countdown the class learns whether its majority was right. Hand detection runs in the browser (MediaPipe Hand Landmarker); video never leaves the device. No accounts, nothing stored.
 - **Profile**: belts from White to Black, a radar chart of the six manipulation types, recent rounds.
 
 First real users: Suhan leads the AI club at his high school in Germany (students from grade 8, weekly sessions on using AI wisely and responsibly). Classroom mode is built for exactly that.
@@ -204,11 +204,12 @@ docs/                    BUILD_BRIEF.md, DECISIONS.md, QA.md
 - [Tailwind CSS](https://tailwindcss.com) (MIT)
 - [Google Gen AI SDK `@google/genai`](https://github.com/googleapis/js-genai) (Apache-2.0)
 - [zod](https://zod.dev) (MIT)
+- [MediaPipe Tasks Vision](https://github.com/google-ai-edge/mediapipe) and its Hand Landmarker model by Google (Apache-2.0), used for the camera vote in Classroom
 - [sharp](https://sharp.pixelplumbing.com) (Apache-2.0), built on libvips (LGPL)
 - [Vitest](https://vitest.dev) (MIT), [tsx](https://tsx.is) (MIT), [TypeScript](https://www.typescriptlang.org) (Apache-2.0), [ESLint](https://eslint.org) (MIT)
 - [Geist](https://vercel.com/font) Sans and Mono (SIL Open Font License)
 - Gemini API by Google: `gemini-3.8-flash` and `gemini-nano-banana-2.1`
-- Optional: Seedream 4.0 by ByteDance through BytePlus ModelArk
+- Seedream 4.0 and Seed 2.0 Lite by ByteDance through BytePlus ModelArk
 - Photos in the deck: by Suhan Nawaz
 
 ## AI disclosure

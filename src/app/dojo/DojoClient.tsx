@@ -134,7 +134,8 @@ export function DojoClient() {
     scrollTop();
   };
 
-  const running = results.reduce((sum, r) => sum + r.points, 0);
+  // During the hunt the points for the correct call are already won.
+  const running = results.reduce((sum, r) => sum + r.points, 0) + (stage.name === "hunt" ? CALL_POINTS : 0);
   const images = card ? cardImages(card) : null;
   const last = index + 1 >= session.length;
 

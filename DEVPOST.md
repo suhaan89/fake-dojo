@@ -18,7 +18,7 @@ I lead the AI club at my high school in Germany. We talk about using AI wisely, 
 
 ### What it does
 
-You bring a photo. An agent reads the scene, plans one small edit, forges it and checks its own work. You see only the forged image and get two taps to find the edit. The reveal shows a pixel-exact heatmap, a before and after slider, the tell, and three forensic lenses. Points, belts and a skill radar track six manipulation types, and the next forgery leans toward your weakest one. Daily Dojo and Classroom mode run from a pre-forged deck with zero API calls.
+You bring a photo. An agent reads the scene, plans one small edit, forges it and checks its own work. You see only the forged image and get two taps to find the edit. The reveal shows a pixel-exact heatmap, a before and after slider, the tell, and three forensic lenses. Points, belts and a skill radar track six manipulation types, and the next forgery leans toward your weakest one. Daily Dojo and Classroom mode run from a pre-forged deck with zero API calls. In Classroom the camera counts raised hands on the device, so a whole class can vote Real or Edited without touching anything.
 
 ### How we built it
 

@@ -294,7 +294,7 @@ export default function HowItWorksPage() {
           </dl>
           <div className="text-sm leading-relaxed text-ink-soft">
             <p>
-              Built with Next.js, React, TypeScript, Tailwind CSS, the Google Gen AI SDK, zod, sharp and Vitest. Type set
+              Built with Next.js, React, TypeScript, Tailwind CSS, the Google Gen AI SDK, MediaPipe Hand Landmarker, zod, sharp and Vitest. Type set
               in Geist Sans and Geist Mono. Deck photos by Suhan Nawaz.
             </p>
             <p className="mt-3">

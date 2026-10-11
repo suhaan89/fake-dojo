@@ -67,6 +67,8 @@ export function useHandVote() {
       if (!video) throw new Error("no video element");
       video.srcObject = stream;
       await video.play();
+      // The first detection compiles the model and can take seconds. Do it before the vote starts.
+      detector.detect(video, performance.now());
 
       let last = 0;
       const loop = (now: number) => {
