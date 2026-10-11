@@ -6,7 +6,7 @@ Built during Banana Hacks 2026 (Oct 10 to 11, 2026) by Suhan Nawaz. Theme: "imag
 
 | | |
 | --- | --- |
-| Live URL | _to be filled in by Suhan after the Vercel deploy_ |
+| Live URL | https://fake-dojo.vercel.app |
 | Demo video | _to be filled in by Suhan after the upload_ |
 | Screenshot | _to be added by Suhan as `docs/screenshot.png` once the deck is seeded_ |
 

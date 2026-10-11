@@ -3,7 +3,7 @@
 **Tagline:** Train your eye for AI fakes. On your own photos.
 
 **GitHub:** https://github.com/suhaan89/fake-dojo
-**Live URL:** _to be filled in by Suhan_
+**Live URL:** https://fake-dojo.vercel.app
 **Video:** _to be filled in by Suhan_
 
 ## Description (one paragraph)
