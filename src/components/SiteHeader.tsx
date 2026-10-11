@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Logo } from "@/components/Logo";
 import { ScoreHud } from "@/components/ScoreHud";
 
 const LINKS = [
@@ -22,7 +23,7 @@ export function SiteHeader() {
           href="/"
           className="flex min-h-[44px] items-center gap-2 text-[1.05rem] font-semibold tracking-tight"
         >
-          <span aria-hidden className="inline-block h-3 w-3 bg-edited" />
+          <Logo />
           Fake Dojo
         </Link>
         <nav aria-label="Main" className="-mx-2 flex flex-wrap items-center text-sm">

@@ -27,22 +27,11 @@ export function isLive(live: LiveState): boolean {
 }
 
 export function StatusPill({ live }: { live: LiveState }) {
-  let dot = "bg-line";
-  let text = "Checking the forge";
-  if (live.state === "ready" && live.health.liveForge) {
-    dot = "bg-real";
-    text = "Live forge online";
-  } else if (live.state !== "checking") {
-    dot = "bg-edited";
-    text = "Live forge resting, try the Daily Dojo";
-  }
+  const resting = live.state !== "checking" && !isLive(live);
   const mock = live.state === "ready" && live.health.mock;
   return (
     <span className="inline-flex flex-wrap items-center gap-2" role="status">
-      <span className="inline-flex min-h-[28px] items-center gap-2 border border-line bg-card px-2.5 text-[13px]">
-        <span aria-hidden className={`h-2 w-2 rounded-full ${dot}`} />
-        {text}
-      </span>
+      {resting ? <span className="text-[13px] text-ink-soft">Live forge resting, try the Daily Dojo</span> : null}
       {mock ? (
         <span className="mono inline-flex min-h-[28px] items-center border border-ink px-2 text-[11px] uppercase tracking-wider">
           Mock mode

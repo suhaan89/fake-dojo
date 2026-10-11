@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { DeckNotice } from "@/components/DeckNotice";
+import { Logo } from "@/components/Logo";
 import { useDeck } from "@/components/useDeck";
 import { useHandVote } from "@/components/useHandVote";
 import { Verdict } from "@/components/Verdict";
@@ -172,7 +173,7 @@ export function ClassroomClient() {
       </div>
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-2 sm:px-6">
         <div className="flex items-center gap-3">
-          <span aria-hidden className="inline-block h-3 w-3 bg-edited" />
+          <Logo />
           <span className="font-semibold tracking-tight">Fake Dojo Classroom</span>
           {session.length && !finished ? (
             <span className="mono text-sm text-ink-soft">
