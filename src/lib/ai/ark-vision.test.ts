@@ -88,6 +88,14 @@ describe("Ark vision", () => {
     expect(bodies[0].messages[0].content).toHaveLength(3);
   });
 
+  it("asks once more when the plan does not match the schema", async () => {
+    const plan = await new MockProvider().plan(PLAN_INPUT);
+    let calls = 0;
+    const vision = new ArkVision(ENV, async () => (++calls === 1 ? answer('{"scene_summary":"x"}') : answer(JSON.stringify(plan))));
+    expect((await vision.plan(PLAN_INPUT)).candidates.length).toBeGreaterThan(0);
+    expect(calls).toBe(2);
+  });
+
   it("reports unusable answers and provider errors", async () => {
     const prose = new ArkVision(ENV, async () => answer("I cannot help with that."));
     await expect(prose.plan(PLAN_INPUT)).rejects.toMatchObject({ kind: "bad_output" });

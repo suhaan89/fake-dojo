@@ -85,11 +85,18 @@ export class ArkVision {
   }
 
   async plan(input: PlanInput): Promise<PlanOutput> {
-    const text = await this.json("Planning", TIMEOUTS.plan, plannerPrompt(input), modelSchema(PlanSchema), [input.image]);
-    try {
-      return parsePlan(text);
-    } catch {
-      throw new AiError("bad_output", "The planner returned a plan that does not match the schema");
+    const started = Date.now();
+    // Without schema-bound output the model sometimes drops a field. One fresh answer usually fixes it.
+    for (let attempt = 0; ; attempt++) {
+      const remaining = TIMEOUTS.plan - (Date.now() - started);
+      const text = await this.json("Planning", remaining, plannerPrompt(input), modelSchema(PlanSchema), [input.image]);
+      try {
+        return parsePlan(text);
+      } catch {
+        if (attempt >= 1 || TIMEOUTS.plan - (Date.now() - started) < 15_000) {
+          throw new AiError("bad_output", "The planner returned a plan that does not match the schema");
+        }
+      }
     }
   }
 

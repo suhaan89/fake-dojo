@@ -26,6 +26,8 @@ export function plannerPrompt({ difficulty, weights, avoid }: PlannerPromptInput
 Rules:
 - Never involve people. Do not edit, add, remove or touch any person, face, body, clothing or anything a person holds. Keep the edit region at least 5% of the image width away from any person.
 - Never create harmful, sexual, violent, political, defamatory or hateful content. Text edits only with neutral content such as numbers, opening hours, prices or generic words.
+- Never edit brand names, logos, flags, national or religious symbols, or pictures of people such as portraits, posters and statues.
+- The change must be clearly visible when the original and the edit are compared side by side. Do not plan edits that only shift, dim or soften a shadow or reflection slightly.
 - If the image is a sensitive document (ID, receipt, chat screenshot, news article, medical or legal document) or is mostly a person, set refuse to true and explain briefly in refuse_reason. Otherwise set refuse to false and refuse_reason to an empty string.
 - List every person you can see in safety.people_boxes, even small or partly hidden ones. Use an empty list if there are none.
 - The edit must be photorealistic and physically plausible: scale, perspective, lighting direction and shadows must fit the scene.

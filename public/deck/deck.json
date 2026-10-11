@@ -1,5 +1,799 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-10T02:30:00.000Z",
-  "cards": []
+  "generatedAt": "2026-10-11T08:23:09.958Z",
+  "cards": [
+    {
+      "id": "photo-01-6e29f9-f1",
+      "photo": "photo-01-6e29f9",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 2,
+      "width": 768,
+      "height": 1024,
+      "scene": "A modern angular glass shopping center (MyZeil) stands over a paved public plaza, lined with trees, street lamps, bicycles, and pedestrians under an overcast sky.",
+      "target_description": "The foliage of the third tree from the left in the row of plaza trees next to the building",
+      "description": "Change the foliage color of the third tree from the left in the plaza tree row from its current dark green to a subtle autumnal yellow-green, matching the existing lighting and leaf texture.",
+      "tell": "The third tree from the left in the plaza row has distinct yellow autumnal foliage that differs from the consistent dark green of all other adjacent trees.",
+      "hint": "Look at the line of trees along the left side of the paved plaza.",
+      "changeBox": {
+        "x": 0.3046875,
+        "y": 0.4970703125,
+        "w": 0.23307291666666666,
+        "h": 0.2158203125
+      },
+      "stats": {
+        "changedPct": 2.84,
+        "meanDelta": 31.5
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      },
+      "createdAt": "2026-10-11T07:51:43.355Z"
+    },
+    {
+      "id": "photo-02-5374fd-real",
+      "photo": "photo-02-5374fd",
+      "kind": "real",
+      "type": null,
+      "difficulty": null,
+      "width": 768,
+      "height": 1024,
+      "scene": "",
+      "target_description": "",
+      "description": "",
+      "tell": "",
+      "hint": "",
+      "changeBox": null,
+      "stats": null,
+      "verify": null,
+      "createdAt": "2026-10-11T07:53:07.029Z"
+    },
+    {
+      "id": "photo-03-0a5f98-f1",
+      "photo": "photo-03-0a5f98",
+      "kind": "forged",
+      "type": "alter_text",
+      "difficulty": 4,
+      "width": 768,
+      "height": 1024,
+      "scene": "Night city street corner with a multi-story Boutique Hotel Germania building, adjacent structures, parked cars, lit storefronts, streetlights, and distant pedestrians.",
+      "target_description": "The glowing 'GERMANIA' text on the hotel facade below the BOUTIQUE HOTEL sign",
+      "description": "Change the glowing neon 'GERMANIA' text on the building facade to read 'GERMANY' while keeping the same glowing yellow neon style, font, and surrounding horizontal line decorations.",
+      "tell": "The neon text between the horizontal line decorations has been changed from 'GERMANIA' to 'GERMANY'.",
+      "hint": "Look at the lower glowing text on the left corner building facade.",
+      "changeBox": {
+        "x": 0.3255208333333333,
+        "y": 0.64453125,
+        "w": 0.19401041666666666,
+        "h": 0.0439453125
+      },
+      "stats": {
+        "changedPct": 0.43,
+        "meanDelta": 47.9
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      },
+      "createdAt": "2026-10-11T07:53:07.192Z"
+    },
+    {
+      "id": "photo-03-0a5f98-f2",
+      "photo": "photo-03-0a5f98",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 2,
+      "width": 768,
+      "height": 1024,
+      "scene": "Night street corner view of a lit multi-story Boutique Hotel Germania building, with ground floor shopfronts, parked cars, and distant pedestrians under a dark hazy sky.",
+      "target_description": "the small red car parked between the black van and black sedan along the hotel curb",
+      "description": "Change the color of the parked red compact car from red to a muted dark blue, matching the lighting and gloss of adjacent parked vehicles.",
+      "tell": "The small compact parked car between the dark van and the next sedan has been changed from red to dark blue.",
+      "hint": "Look at the row of parked cars along the hotel curb.",
+      "changeBox": {
+        "x": 0.5638020833333334,
+        "y": 0.884765625,
+        "w": 0.16276041666666666,
+        "h": 0.1083984375
+      },
+      "stats": {
+        "changedPct": 0.44,
+        "meanDelta": 30.1
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      },
+      "createdAt": "2026-10-11T07:54:25.330Z"
+    },
+    {
+      "id": "photo-04-ab3d9f-f1",
+      "photo": "photo-04-ab3d9f",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 3,
+      "width": 768,
+      "height": 1024,
+      "scene": "A long narrow institutional hallway with two-tone yellow and white walls, exposed overhead pipes, ceiling fluorescent lights, doorways, a bulletin board, and a wall-mounted fire extinguisher.",
+      "target_description": "The leftmost yellow panel on the left wall bulletin board",
+      "description": "Change the color of the leftmost yellow bulletin board panel from bright yellow to solid light blue, matching the matte flat texture of the existing red panels on the same board.",
+      "tell": "The leftmost panel of the wall bulletin board is a solid light blue instead of the original bright yellow.",
+      "hint": "Look at the bulletin board mounted on the left wall.",
+      "changeBox": {
+        "x": 0.3059895833333333,
+        "y": 0.5732421875,
+        "w": 0.10286458333333333,
+        "h": 0.1806640625
+      },
+      "stats": {
+        "changedPct": 0.55,
+        "meanDelta": 34.5
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      },
+      "createdAt": "2026-10-11T07:55:11.744Z"
+    },
+    {
+      "id": "photo-05-fdbb16-f2",
+      "photo": "photo-05-fdbb16",
+      "kind": "forged",
+      "type": "remove_object",
+      "difficulty": 1,
+      "width": 768,
+      "height": 1024,
+      "scene": "Elevated overlook view of a fast-flowing river valley with tour boats, dense forest, distant city buildings, a stone wall in the right foreground, and a partly cloudy sky.",
+      "target_description": "the yellow construction crane near the building under construction on the right side of the valley",
+      "description": "Remove the yellow construction crane from the right side of the valley near the building under construction, and fill the resulting space with consistent forest foliage and distant hillside that matches the surrounding environment.",
+      "tell": "The yellow construction crane remains partially visible next to the right side stone wall, with mismatched texture on the adjacent wall segment.",
+      "hint": "Look near the lower right valley, near the construction site.",
+      "changeBox": {
+        "x": 0.7122395833333334,
+        "y": 0.5947265625,
+        "w": 0.15234375,
+        "h": 0.267578125
+      },
+      "stats": {
+        "changedPct": 1.56,
+        "meanDelta": 25.1
+      },
+      "verify": {
+        "plausibility": 2,
+        "obviousness": 4
+      },
+      "createdAt": "2026-10-11T07:56:49.469Z"
+    },
+    {
+      "id": "photo-05-fdbb16-real",
+      "photo": "photo-05-fdbb16",
+      "kind": "real",
+      "type": null,
+      "difficulty": null,
+      "width": 768,
+      "height": 1024,
+      "scene": "",
+      "target_description": "",
+      "description": "",
+      "tell": "",
+      "hint": "",
+      "changeBox": null,
+      "stats": null,
+      "verify": null,
+      "createdAt": "2026-10-11T07:58:23.280Z"
+    },
+    {
+      "id": "photo-07-811586-f1",
+      "photo": "photo-07-811586",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 3,
+      "width": 768,
+      "height": 1024,
+      "scene": "A row of luxury cars is parked in an asphalt lot in front of a long two-story industrial building with open tilt windows under a clear bright blue sky.",
+      "target_description": "the bright blue parked sports car between the two black sports cars in the front row",
+      "description": "Change the body color of the middle blue Maserati sports car from bright glossy blue to matte dark gray, matching the finish and lighting of the adjacent dark gray SUV, while keeping all other car details, reflections, and its cast shadow consistent with the bright sun.",
+      "tell": "The middle sports car that was originally bright blue is now dark gray, matching the adjacent gray vehicle's finish.",
+      "hint": "Look at the middle of the front row of parked cars.",
+      "changeBox": {
+        "x": 0.24348958333333334,
+        "y": 0.5859375,
+        "w": 0.3932291666666667,
+        "h": 0.169921875
+      },
+      "stats": {
+        "changedPct": 1.31,
+        "meanDelta": 27.5
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      },
+      "createdAt": "2026-10-11T07:57:13.829Z"
+    },
+    {
+      "id": "photo-07-811586-f2",
+      "photo": "photo-07-811586",
+      "kind": "forged",
+      "type": "remove_object",
+      "difficulty": 2,
+      "width": 768,
+      "height": 1024,
+      "scene": "Sunny parking lot outside a long industrial-style building with open awning windows, lined with parked luxury cars under a clear deep blue sky.",
+      "target_description": "the white vertical parking sign standing between the parked cars and the building wall",
+      "description": "Remove the vertical white parking sign between the row of parked cars and the building wall, seamlessly fill the resulting space with matching gray building wall, asphalt parking surface and existing car reflections.",
+      "tell": "The vertical white parking sign present in the original image between the parked cars and building wall is absent in the edited version.",
+      "hint": "Look near the center of the parked car row.",
+      "changeBox": {
+        "x": 0.5364583333333334,
+        "y": 0.55859375,
+        "w": 0.09505208333333333,
+        "h": 0.08984375
+      },
+      "stats": {
+        "changedPct": 0.27,
+        "meanDelta": 96.9
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 1
+      },
+      "createdAt": "2026-10-11T07:58:19.309Z"
+    },
+    {
+      "id": "photo-09-5242c0-f2",
+      "photo": "photo-09-5242c0",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 4,
+      "width": 768,
+      "height": 1024,
+      "scene": "Modern museum interior with a tall grey display wall covered in rows of small framed portraits, glass arched ceiling, curved concrete upper level, and visitors near the entrance doors.",
+      "target_description": "small empty lit display niche on the lower left section of the portrait wall",
+      "description": "Change the warm off-white interior color of the leftmost empty lit display niche on the lower display wall to match the cool grey tone of the surrounding wall panel, while keeping the frame border identical to adjacent niches.",
+      "tell": "The leftmost lower display niche interior is now cool grey rather than the warm off-white tone present in the original image.",
+      "hint": "Look at the row of empty display niches along the bottom edge of the large portrait wall.",
+      "changeBox": {
+        "x": 0.06770833333333333,
+        "y": 0.91796875,
+        "w": 0.14713541666666666,
+        "h": 0.08203125
+      },
+      "stats": {
+        "changedPct": 0.48,
+        "meanDelta": 23.3
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      },
+      "createdAt": "2026-10-11T07:59:58.548Z"
+    },
+    {
+      "id": "photo-09-5242c0-real",
+      "photo": "photo-09-5242c0",
+      "kind": "real",
+      "type": null,
+      "difficulty": null,
+      "width": 768,
+      "height": 1024,
+      "scene": "",
+      "target_description": "",
+      "description": "",
+      "tell": "",
+      "hint": "",
+      "changeBox": null,
+      "stats": null,
+      "verify": null,
+      "createdAt": "2026-10-11T08:00:48.350Z"
+    },
+    {
+      "id": "photo-10-bdc09b-f1",
+      "photo": "photo-10-bdc09b",
+      "width": 768,
+      "height": 1024,
+      "createdAt": "2026-10-11T08:17:25.614Z",
+      "kind": "forged",
+      "type": "replace_object",
+      "difficulty": 2,
+      "scene": "A sunlit grassy pasture with several cows, a line of mixed trees at the treeline, and a bright blue sky with wispy clouds. A wire fence runs along the foreground edge.",
+      "target_description": "the light brown cow walking left across the sunlit pasture",
+      "description": "Replace the solid light brown walking cow in the middle of the sunlit pasture with a brown-and-white patterned cow matching the coloration of the standing cow to its right, keeping the same walking pose, lighting, and grass shadow.",
+      "tell": "The walking middle cow has added brown-and-white patterning with slight edge rendering inconsistencies not present on the original solid light brown cow.",
+      "hint": "Look at the cows in the middle of the sunlit grass.",
+      "changeBox": {
+        "x": 0.3098958333333333,
+        "y": 0.5322265625,
+        "w": 0.19661458333333334,
+        "h": 0.1103515625
+      },
+      "stats": {
+        "changedPct": 1.7,
+        "meanDelta": 50.2
+      },
+      "verify": {
+        "plausibility": 4,
+        "obviousness": 2
+      }
+    },
+    {
+      "id": "photo-11-49d529-f1",
+      "photo": "photo-11-49d529",
+      "width": 1024,
+      "height": 768,
+      "createdAt": "2026-10-11T08:18:09.528Z",
+      "kind": "forged",
+      "type": "remove_object",
+      "difficulty": 3,
+      "scene": "Elevated sunny view of Schönbrunn Palace, with a foreground reflecting pool, tree-lined promenade, distant Vienna cityscape, rolling hills and a bright blue sky with scattered clouds.",
+      "target_description": "The distinct fluffy white cumulus cloud in the top right corner of the sky",
+      "description": "Remove the distinct fluffy white cumulus cloud located in the top right section of the sky, seamlessly blending the area to match the surrounding clear bright blue sky and thin cirrus streaks.",
+      "tell": "The fluffy white cumulus cloud present in the top right sky of the original image is no longer visible in the edited image, replaced by matching clear blue sky and thin cirrus streaks.",
+      "hint": "Look in the upper part of the sky, toward the right side.",
+      "changeBox": {
+        "x": 0.6025390625,
+        "y": 0,
+        "w": 0.2861328125,
+        "h": 0.16015625
+      },
+      "stats": {
+        "changedPct": 3.3,
+        "meanDelta": 57.2
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 1
+      }
+    },
+    {
+      "id": "photo-13-94517f-f1",
+      "photo": "photo-13-94517f",
+      "width": 1024,
+      "height": 768,
+      "createdAt": "2026-10-11T08:18:26.674Z",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 1,
+      "scene": "Wide sunny view of Schönbrunn Palace across a large cobblestone foreground plaza, with scattered visitors under a bright blue sky.",
+      "target_description": "The metal drain grate embedded in the lower right cobblestone plaza",
+      "description": "Change the metal drain grate in the lower right foreground of the cobblestone plaza to be a solid light gray cobblestone patch matching the surrounding paving.",
+      "tell": "The metal drain grate present in the lower right foreground of the original image is replaced with cobblestone paving matching the surrounding plaza.",
+      "hint": "Look at the very bottom right edge of the frame.",
+      "changeBox": {
+        "x": 0.8291015625,
+        "y": 0.9140625,
+        "w": 0.1630859375,
+        "h": 0.0859375
+      },
+      "stats": {
+        "changedPct": 1.13,
+        "meanDelta": 29.4
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 1
+      }
+    },
+    {
+      "id": "photo-13-94517f-real",
+      "photo": "photo-13-94517f",
+      "kind": "real",
+      "type": null,
+      "difficulty": null,
+      "width": 1024,
+      "height": 768,
+      "scene": "",
+      "target_description": "",
+      "description": "",
+      "tell": "",
+      "hint": "",
+      "changeBox": null,
+      "stats": null,
+      "verify": null,
+      "createdAt": "2026-10-11T08:02:34.605Z"
+    },
+    {
+      "id": "photo-14-6a2b65-f1",
+      "photo": "photo-14-6a2b65",
+      "kind": "forged",
+      "type": "lighting_shadow",
+      "difficulty": 4,
+      "width": 768,
+      "height": 1024,
+      "scene": "A high-angle daytime cityscape view of a dense European downtown, with varied rooftops, mid-rise buildings, a distant skyline under a clear bright blue sky.",
+      "target_description": "the cast shadow of the leftmost row of dormer windows on the dark brown tiled roof",
+      "description": "Adjust the cast shadow of the row of dormer windows on the dark brown tiled roof to shift 10 degrees clockwise to match a slightly later sun position, maintaining the same shadow softness and lighting tone.",
+      "tell": "The cast shadow from the row of dormer windows on the left dark brown tiled roof is rotated slightly clockwise compared to the original image.",
+      "hint": "Look near the lower left, on the dark brown roof with small gabled windows.",
+      "changeBox": {
+        "x": 0.020833333333333332,
+        "y": 0.705078125,
+        "w": 0.3658854166666667,
+        "h": 0.1455078125
+      },
+      "stats": {
+        "changedPct": 1.39,
+        "meanDelta": 20.6
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      },
+      "createdAt": "2026-10-11T08:02:05.524Z"
+    },
+    {
+      "id": "photo-14-6a2b65-f2",
+      "photo": "photo-14-6a2b65",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 3,
+      "width": 768,
+      "height": 1024,
+      "scene": "A high-angle daytime cityscape view of a dense European urban area, with varied historic and modern rooftops, a clear bright blue sky, and distant modern skyscrapers on the horizon.",
+      "target_description": "The row of dark blue solar panels mounted on the rooftop above the beige building",
+      "description": "Change the dark blue color of the rooftop solar panel array to a uniform matte dark grey, matching the material of the adjacent rooftop mechanical units.",
+      "tell": "The row of rooftop solar panels present in the original image has been replaced with a uniform dark grey surface matching adjacent rooftop mechanical units.",
+      "hint": "Look at the rooftop equipment on the light-colored mid-rise building.",
+      "changeBox": {
+        "x": 0.5338541666666666,
+        "y": 0.6376953125,
+        "w": 0.27734375,
+        "h": 0.0693359375
+      },
+      "stats": {
+        "changedPct": 1.26,
+        "meanDelta": 31.8
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      },
+      "createdAt": "2026-10-11T08:03:02.377Z"
+    },
+    {
+      "id": "photo-15-d953de-f1",
+      "photo": "photo-15-d953de",
+      "kind": "forged",
+      "type": "lighting_shadow",
+      "difficulty": 2,
+      "width": 1024,
+      "height": 768,
+      "scene": "A wide mountain range panorama under a clear, cloudless deep blue sky, with rocky peaks, forested slopes and alpine grassy terrain.",
+      "target_description": "The dark cast shadow on the right-facing slope of the central peak cluster",
+      "description": "Adjust the shape and position of the cast shadow on the right-facing central mountain slope to match a slightly shifted sun angle, making the shadow marginally narrower and shifted 2% toward the left ridge.",
+      "tell": "The cast shadow on the right-facing central mountain slope is slightly narrower and shifted left compared to the original image.",
+      "hint": "Look at the shaded slopes on the middle-right section of the mountain range.",
+      "changeBox": {
+        "x": 0.5849609375,
+        "y": 0.5989583333333334,
+        "w": 0.1572265625,
+        "h": 0.17578125
+      },
+      "stats": {
+        "changedPct": 0.29,
+        "meanDelta": 24.7
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      },
+      "createdAt": "2026-10-11T08:02:34.740Z"
+    },
+    {
+      "id": "photo-16-45d0c1-f1",
+      "photo": "photo-16-45d0c1",
+      "width": 576,
+      "height": 1024,
+      "createdAt": "2026-10-11T08:19:15.190Z",
+      "kind": "forged",
+      "type": "alter_text",
+      "difficulty": 3,
+      "scene": "Low-angle shot of Berlin's Fernsehturm rising behind a modern multi-story retail building under a clear pale blue sky at dusk. The building has glass windows and branded storefront signage.",
+      "target_description": "Red circular discount poster on the lower left of the retail building facade",
+      "description": "Change the percentage text on the left-side red circular store window promotion from 60% to 40%, keeping the same red circular graphic style, font, and lighting.",
+      "tell": "The left-side promotional graphic is overly bright, uses a different font, and has a glowing appearance inconsistent with the original store window signage lighting.",
+      "hint": "Look at the illuminated store windows on the lower left side of the building.",
+      "changeBox": {
+        "x": 0.19791666666666666,
+        "y": 0.8876953125,
+        "w": 0.0954861111111111,
+        "h": 0.0576171875
+      },
+      "stats": {
+        "changedPct": 0.36,
+        "meanDelta": 48.8
+      },
+      "verify": {
+        "plausibility": 2,
+        "obviousness": 4
+      }
+    },
+    {
+      "id": "photo-16-45d0c1-f2",
+      "photo": "photo-16-45d0c1",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 1,
+      "width": 576,
+      "height": 1024,
+      "scene": "Low-angle view of Berlin's Fernsehturm rising behind a modern multi-story TK Maxx building, set against a clear pale blue sky at dusk.",
+      "target_description": "The illuminated orange edge panels on the Fernsehturm's observation sphere",
+      "description": "Change the warm orange illuminated panels on the left side of the Fernsehturm observation sphere to match the unlit neutral gray tone of the rest of the sphere exterior, while preserving all other structural details of the tower.",
+      "tell": "The warm orange illuminated panels on the left side of the Fernsehturm observation sphere present in the original image are no longer visible in the edited version.",
+      "hint": "Look at the upper structure of the tall central tower.",
+      "changeBox": {
+        "x": 0.4079861111111111,
+        "y": 0.2646484375,
+        "w": 0.1701388888888889,
+        "h": 0.12890625
+      },
+      "stats": {
+        "changedPct": 0.86,
+        "meanDelta": 24.3
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      },
+      "createdAt": "2026-10-11T08:05:22.524Z"
+    },
+    {
+      "id": "photo-16-45d0c1-real",
+      "photo": "photo-16-45d0c1",
+      "kind": "real",
+      "type": null,
+      "difficulty": null,
+      "width": 576,
+      "height": 1024,
+      "scene": "",
+      "target_description": "",
+      "description": "",
+      "tell": "",
+      "hint": "",
+      "changeBox": null,
+      "stats": null,
+      "verify": null,
+      "createdAt": "2026-10-11T08:06:38.280Z"
+    },
+    {
+      "id": "photo-17-657dec-f1",
+      "photo": "photo-17-657dec",
+      "width": 768,
+      "height": 1024,
+      "createdAt": "2026-10-11T08:20:12.662Z",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 4,
+      "scene": "A sunny lakeside park features a vibrant formal flower bed, trimmed topiary bushes, a grass lawn, flags along a waterfront promenade, distant mountains, and scattered visitors.",
+      "target_description": "The leftmost conical trimmed topiary bush",
+      "description": "Change the leftmost fully visible conical topiary bush from its current dark green trimmed foliage color to a deep, saturated dark purple, matching the lighting and shadow of adjacent topiary bushes.",
+      "tell": "The leftmost conical topiary bush has a deep saturated purple color instead of the original dark green.",
+      "hint": "Look at the row of trimmed topiary bushes on the left side of the frame.",
+      "changeBox": {
+        "x": 0,
+        "y": 0.4833984375,
+        "w": 0.11067708333333333,
+        "h": 0.1376953125
+      },
+      "stats": {
+        "changedPct": 0.5,
+        "meanDelta": 29.1
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      }
+    },
+    {
+      "id": "photo-18-f62ce1-f1",
+      "photo": "photo-18-f62ce1",
+      "kind": "forged",
+      "type": "add_object",
+      "difficulty": 2,
+      "width": 1024,
+      "height": 768,
+      "scene": "Overcast daytime view of a city skyline with skyscrapers, foreground railway overhead lines, low-rise industrial and residential buildings, and bare trees. No people are visible.",
+      "target_description": "A small matching white rooftop vent on the grey sloped roof of the foreground industrial building",
+      "description": "Add one additional small white domed rooftop vent identical in size, shape and weathering to the three existing vents, placed evenly spaced between the existing vents on the foreground grey roof, with correct soft shadow matching the overcast lighting.",
+      "tell": "A fourth identical domed rooftop vent now sits between the leftmost and middle original rooftop vents on the foreground grey roof.",
+      "hint": "Look at the weathered grey roof in the lower portion of the frame.",
+      "changeBox": {
+        "x": 0.556640625,
+        "y": 0.8020833333333334,
+        "w": 0.146484375,
+        "h": 0.1171875
+      },
+      "stats": {
+        "changedPct": 1.05,
+        "meanDelta": 30.3
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      },
+      "createdAt": "2026-10-11T08:05:24.981Z"
+    },
+    {
+      "id": "photo-18-f62ce1-f2",
+      "photo": "photo-18-f62ce1",
+      "width": 1024,
+      "height": 768,
+      "createdAt": "2026-10-11T08:20:46.570Z",
+      "kind": "forged",
+      "type": "remove_object",
+      "difficulty": 3,
+      "scene": "Overcast urban view of Frankfurt's financial district skyline, with foreground industrial buildings, railway overhead lines, and sparse trees.",
+      "target_description": "The leftmost white domed skylight on the grey sloped industrial roof",
+      "description": "Remove the leftmost white domed rooftop skylight from the grey sloped industrial roof, and repair the surrounding roof surface to match the existing weathered grey roofing material.",
+      "tell": "The leftmost white domed rooftop skylight present in the original image is no longer visible, replaced by weathered grey roof material matching the surrounding sloped roof.",
+      "hint": "Look at the foreground sloped roof.",
+      "changeBox": {
+        "x": 0.5693359375,
+        "y": 0.8333333333333334,
+        "w": 0.09765625,
+        "h": 0.11979166666666667
+      },
+      "stats": {
+        "changedPct": 0.64,
+        "meanDelta": 27.6
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 1
+      }
+    },
+    {
+      "id": "photo-19-68be7e-f1",
+      "photo": "photo-19-68be7e",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 5,
+      "width": 768,
+      "height": 1024,
+      "scene": "A sunny daytime urban street with multi-story buildings, parked cars, a paved sidewalk, street signs, and bare trees under a partly cloudy sky.",
+      "target_description": "Blue P parking sign on the sidewalk pole",
+      "description": "Change the blue parking sign's symbol from a wheelchair accessibility icon to a motorcycle parking icon, keeping the blue background, white P letter, and original sign size, lighting, and perspective identical.",
+      "tell": "The symbol next to the P on the foreground blue parking sign is an incorrectly rendered distorted graphic instead of the original wheelchair icon.",
+      "hint": "Look at the street sign along the right sidewalk.",
+      "changeBox": {
+        "x": 0.40625,
+        "y": 0.5,
+        "w": 0.07161458333333333,
+        "h": 0.0791015625
+      },
+      "stats": {
+        "changedPct": 0.16,
+        "meanDelta": 35.7
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      },
+      "createdAt": "2026-10-11T08:06:38.489Z"
+    },
+    {
+      "id": "photo-21-6dba85-real",
+      "photo": "photo-21-6dba85",
+      "kind": "real",
+      "type": null,
+      "difficulty": null,
+      "width": 576,
+      "height": 1024,
+      "scene": "",
+      "target_description": "",
+      "description": "",
+      "tell": "",
+      "hint": "",
+      "changeBox": null,
+      "stats": null,
+      "verify": null,
+      "createdAt": "2026-10-11T08:08:28.251Z"
+    },
+    {
+      "id": "photo-22-1f11b0-f1",
+      "photo": "photo-22-1f11b0",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 3,
+      "width": 768,
+      "height": 1024,
+      "scene": "A sunset street lined with vibrant multi-story colored buildings, ground-floor food stalls, walking pedestrians, and distant trees under a pale gradient sky.",
+      "target_description": "One upper arched window on the facade of the red multi-story building",
+      "description": "Change the color of the selected arched window frame and shutters on the red building facade from dark gray to bright white, matching the white trim lines of the building.",
+      "tell": "The lower arched window frame and shutters on the left red building are bright white instead of the original dark gray.",
+      "hint": "Look at the upper facade of the large red building on the left.",
+      "changeBox": {
+        "x": 0.24088541666666666,
+        "y": 0.560546875,
+        "w": 0.12760416666666666,
+        "h": 0.1455078125
+      },
+      "stats": {
+        "changedPct": 1.36,
+        "meanDelta": 39.1
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      },
+      "createdAt": "2026-10-11T08:07:14.991Z"
+    },
+    {
+      "id": "photo-23-9c7ac0-f1",
+      "photo": "photo-23-9c7ac0",
+      "width": 576,
+      "height": 1024,
+      "createdAt": "2026-10-11T08:21:35.085Z",
+      "kind": "forged",
+      "type": "lighting_shadow",
+      "difficulty": 2,
+      "scene": "A wide pedestrian city street lined with historic buildings, mature trees, outdoor cafe seating, and people walking under a cloudy overcast sky.",
+      "target_description": "The cast shadow of the large foreground tree and its concrete planter onto the adjacent paved walkway",
+      "description": "Adjust the cast shadow of the large foreground tree and its planter on the right paved walkway to extend 30% further toward the camera, matching the overcast soft lighting direction of the scene.",
+      "tell": "The extended soft cast shadow from the foreground tree planter on the paved walkway is the only difference between the two otherwise identical images.",
+      "hint": "Look at the pavement next to the large tree planter on the right.",
+      "changeBox": {
+        "x": 0.5173611111111112,
+        "y": 0.548828125,
+        "w": 0.2569444444444444,
+        "h": 0.224609375
+      },
+      "stats": {
+        "changedPct": 2.6,
+        "meanDelta": 19.6
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      }
+    },
+    {
+      "id": "photo-24-caada5-f1",
+      "photo": "photo-24-caada5",
+      "kind": "forged",
+      "type": "lighting_shadow",
+      "difficulty": 1,
+      "width": 576,
+      "height": 1024,
+      "scene": "A sunny city public square with paved walkways, broadleaf trees, a S-Bahn kiosk, office buildings, street signs, and people sitting and walking in the distance.",
+      "target_description": "The cast shadow of the S-Bahn kiosk and adjacent cart on the paved plaza ground",
+      "description": "Adjust the cast shadow of the S-Bahn kiosk and cart on the paved plaza to be 30% lighter and shifted 10 centimeters to the left, matching the current sun angle from the upper left sky.",
+      "tell": "A new cast shadow of the kiosk and cart appears on the pavement that was not present in the original image.",
+      "hint": "Look at the ground next to the glass kiosk on the right side of the frame.",
+      "changeBox": {
+        "x": 0.5763888888888888,
+        "y": 0.798828125,
+        "w": 0.3819444444444444,
+        "h": 0.201171875
+      },
+      "stats": {
+        "changedPct": 6.74,
+        "meanDelta": 32
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      },
+      "createdAt": "2026-10-11T08:08:28.443Z"
+    },
+    {
+      "id": "photo-24-caada5-real",
+      "photo": "photo-24-caada5",
+      "kind": "real",
+      "type": null,
+      "difficulty": null,
+      "width": 576,
+      "height": 1024,
+      "scene": "",
+      "target_description": "",
+      "description": "",
+      "tell": "",
+      "hint": "",
+      "changeBox": null,
+      "stats": null,
+      "verify": null,
+      "createdAt": "2026-10-11T08:09:38.881Z"
+    }
+  ]
 }

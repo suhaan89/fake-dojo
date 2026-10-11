@@ -152,6 +152,10 @@ async function main(): Promise<number> {
   const counts = Object.fromEntries(MANIPULATION_TYPES.map((type) => [type, 0])) as Record<ManipulationType, number>;
   for (const card of deck.cards) if (card.type) counts[card.type]++;
   const usedTargets = new Map<string, string[]>();
+  // A resumed run must not pick a target that a card of the same photo already uses.
+  for (const card of deck.cards) {
+    if (card.target_description) usedTargets.set(card.photo, [...(usedTargets.get(card.photo) ?? []), card.target_description]);
+  }
   const prepared = new Map<string, Promise<PreparedImage>>();
   const prepare = (job: Job) => {
     let pendingImage = prepared.get(job.file);

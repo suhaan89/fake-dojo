@@ -28,7 +28,7 @@ Source of truth: `docs/BUILD_BRIEF.md`. Decisions: `docs/DECISIONS.md`. Next.js 
 - Gate after every milestone: typecheck, test, build all green, then commit and push.
 
 ## Conventions
-- Model ids are read only in `src/lib/server/env.ts`. `IMAGE_PROVIDER=seedream` plus `ARK_API_KEY` moves the edit step to Seedream on BytePlus (`src/lib/ai/seedream.ts`). `VISION_PROVIDER=ark` moves plan and verify to a ModelArk vision model (`src/lib/ai/ark-vision.ts`, not yet verified live).
+- Model ids are read only in `src/lib/server/env.ts`. `IMAGE_PROVIDER=seedream` plus `ARK_API_KEY` moves the edit step to Seedream on BytePlus (`src/lib/ai/seedream.ts`). `VISION_PROVIDER=ark` moves plan and verify to a ModelArk vision model (`src/lib/ai/ark-vision.ts`, verified live with `seed-2-0-lite-260428`).
 - Route handlers: `export const runtime = "nodejs"` and `export const maxDuration = 60`.
 - API errors: `{ error: { code, message } }` with codes RATE_LIMITED, LIVE_DISABLED, UPSTREAM, TIMEOUT, UNSAFE, NO_CANDIDATE, BAD_INPUT.
 - Image math is pure TypeScript on `{ width, height, data: Uint8ClampedArray }` RGBA in `src/lib/cv` and `src/lib/forensics`. Server uses sharp for decode and encode, browser uses canvas.
@@ -41,8 +41,8 @@ Source of truth: `docs/BUILD_BRIEF.md`. Decisions: `docs/DECISIONS.md`. Next.js 
 
 ## Milestones
 - [x] M0 Scaffold, M1 Core logic, M2 AI layer (mock verified), M3 Forge UI, M4 Deck modes, M5 Profile and polish, M6 Docs
-- [ ] Real-key smoke test: `npm run smoke -- <photo>`. The Gemini request shape is untested against the live API.
-- [ ] Real deck: `npm run seed`, check cards by eye, commit `public/deck` (currently an empty deck.json).
+- [x] Real smoke test: works with Seedream for the edit and `seed-2-0-lite-260428` on ModelArk for vision (about 40 to 90 s per forge).
+- [x] Real deck: 30 cards (23 forged, 7 real) from 20 photos, each checked by eye. Weak cards are removed from deck.json and their folder; `npm run seed` then retries them.
 - [ ] Open items in `docs/QA.md`, then stretch goals (brief section 19) only if everything else is done.
 
 Current state: feature complete in mock mode. Blocked on the human for key, photos and push.

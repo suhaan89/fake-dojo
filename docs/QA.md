@@ -28,8 +28,8 @@ Status on Oct 10, 2026. "Mock" means checked with the MockProvider; items that n
 ## Open, needs the human or the real key
 
 - [ ] Seedream edit path (`IMAGE_PROVIDER=seedream`): the request (endpoint, field names, size rule, base64 response) is written from the publicly known shape of the ModelArk images endpoint and is covered by tests with a fake server. The docs pages could not be read while building it, and it has never run against the real API. Expect to adjust it on the first real call.
-- [ ] `npm run smoke -- <photo>` with the real key: confirms the Interactions API request shape, the PNG output and the timings (target: median under 45 s).
-- [ ] `npm run seed` with 15 to 25 own photos, then commit `public/deck` (at least 15 cards, under 25 MB).
+- [x] `npm run smoke -- <photo>` with real keys (Seedream edit, ModelArk vision): works end to end. Timing is 40 to 90 s per forge, above the 45 s target, because planning alone takes about 30 s. The Gemini image model path is still untested against the live API.
+- [x] `npm run seed` with 22 own photos: 30 cards committed (23 forged, 7 real), 11 MB, every forged card checked by eye.
 - [ ] Keyboard hunt on a real forgery: arrow keys move the crosshair, Enter guesses.
 - [ ] Pinch zoom, tap and loupe on a real phone.
 - [ ] Slow network: forge loading states on a throttled connection.
