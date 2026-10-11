@@ -140,16 +140,18 @@ export function DojoClient() {
   const last = index + 1 >= session.length;
 
   return (
-    <div ref={topRef} className="mx-auto max-w-7xl scroll-mt-4 px-4 py-6 sm:px-6 sm:py-8">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="label">Daily Dojo</p>
-          <h1 className="mt-1 text-3xl font-semibold tracking-tight sm:text-4xl">
-            {finished ? "Session complete" : "Real or edited?"}
-          </h1>
-        </div>
+    <div
+      ref={topRef}
+      className="mx-auto max-w-7xl scroll-mt-4 px-4 pb-8 sm:px-6"
+      style={{ "--stage-top": "58px" } as React.CSSProperties}
+    >
+      <div className="sticky top-0 z-20 flex min-h-[50px] flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-line bg-paper py-1.5">
+        <h1 className="text-xl font-semibold leading-tight tracking-tight">
+          <span className="label mr-3 align-middle">Daily Dojo</span>
+          {finished ? "Session complete" : "Real or edited?"}
+        </h1>
         {session.length > 0 && !finished ? (
-          <div className="flex items-end gap-5" aria-live="polite">
+          <div className="flex items-center gap-4" aria-live="polite">
             <ol className="flex gap-1" aria-label={`Card ${index + 1} of ${session.length}`}>
               {session.map((entry, i) => {
                 const result = results[i];
@@ -164,16 +166,16 @@ export function DojoClient() {
               })}
             </ol>
             <p className="text-right leading-none">
-              <span key={running} className="bump mono block text-4xl font-semibold">
+              <span key={running} className="bump mono inline-block text-3xl font-semibold">
                 {running}
               </span>
-              <span className="label mt-1 block">points</span>
+              <span className="label ml-2">points</span>
             </p>
           </div>
         ) : null}
       </div>
 
-      <div className="mt-6">
+      <div className="mt-4">
         {deckState.state === "loading" ? <DeckNotice kind="loading" /> : null}
         {deckState.state === "error" ? <DeckNotice kind="error" /> : null}
         {deckState.state === "ready" && session.length === 0 ? <DeckNotice kind="empty" /> : null}
@@ -187,6 +189,7 @@ export function DojoClient() {
               height={card.height}
               alt="Training photo. It is either untouched or has one AI edit."
               loupe
+              fill
             />
             <div className="flex flex-col gap-4">
               <div className="panel p-4">
@@ -209,9 +212,9 @@ export function DojoClient() {
 
         {card && images && stage.name === "hunt" && images.mask ? (
           <div className="flex flex-col gap-4">
-            <Verdict compact tone="win" title="Correct, it is edited." points={CALL_POINTS} detail="Now find the edit." />
             <Hunt
               key={card.id}
+              banner={<Verdict compact tone="win" title="Correct. Edited." points={CALL_POINTS} detail="Now find the edit." />}
               imageUrl={images.shown}
               maskUrl={images.mask}
               width={card.width}

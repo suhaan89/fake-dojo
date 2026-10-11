@@ -98,7 +98,7 @@ export function Reveal({
 
       <section aria-label="Before and after">
         <h2 className="text-xl font-semibold tracking-tight">Before and after</h2>
-        <div className="mt-3 max-w-4xl">
+        <div className="mt-3" style={{ maxWidth: `min(56rem, calc(max(320px, 100vh - 150px) * ${width / height}))` }}>
           <BeforeAfterSlider before={originalUrl} after={forgedUrl} width={width} height={height} />
         </div>
       </section>

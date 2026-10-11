@@ -28,10 +28,12 @@ interface HuntProps {
   onDone: (result: HuntResult) => void;
   /** Label of the give-up button. */
   revealLabel?: string;
+  /** Shown above the hunt panel, for example the result of the call that led here. */
+  banner?: React.ReactNode;
 }
 
 /** The player sees only the forged image and gets two taps to find the edit. */
-export function Hunt({ imageUrl, maskUrl, width, height, difficulty, hint, onDone, revealLabel = "Reveal the answer" }: HuntProps) {
+export function Hunt({ imageUrl, maskUrl, width, height, difficulty, hint, onDone, revealLabel = "Reveal the answer", banner }: HuntProps) {
   const [mask, setMask] = useState<Uint8Array | null>(null);
   const [maskError, setMaskError] = useState(false);
   const [markers, setMarkers] = useState<StageMarker[]>([]);
@@ -109,6 +111,7 @@ export function Hunt({ imageUrl, maskUrl, width, height, difficulty, hint, onDon
         onPick={mask ? onPick : undefined}
         markers={markers}
         loupe={loupe}
+        fill
         toolbar={
           <button
             type="button"
@@ -122,6 +125,7 @@ export function Hunt({ imageUrl, maskUrl, width, height, difficulty, hint, onDon
       />
 
       <div className="flex flex-col gap-4">
+        {banner}
         <div className="panel p-4">
           <p className="label">The hunt</p>
           <p className="mt-2 text-lg font-medium leading-snug" aria-live="assertive">

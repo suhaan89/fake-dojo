@@ -25,6 +25,11 @@ interface ImageStageProps {
   box?: NormBox | null;
   loupe?: boolean;
   className?: string;
+  /**
+   * Play mode: the image takes all the height the screen has below `--stage-top`,
+   * and the page scrolls so that it is fully in view.
+   */
+  fill?: boolean;
   /** Extra controls rendered in the toolbar next to the zoom buttons. */
   toolbar?: React.ReactNode;
 }
@@ -71,9 +76,18 @@ export function ImageStage({
   box,
   loupe = false,
   className = "",
+  fill = false,
   toolbar,
 }: ImageStageProps) {
+  const rootRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!fill) return;
+    // Wait one frame so the layout has its final size before the page scrolls to it.
+    const frame = requestAnimationFrame(() => rootRef.current?.scrollIntoView({ block: "start" }));
+    return () => cancelAnimationFrame(frame);
+  }, [fill, src]);
   const [view, setView] = useState<View>({ scale: 1, tx: 0, ty: 0 });
   const viewRef = useRef(view);
   const [cross, setCross] = useState<{ x: number; y: number } | null>(null);
@@ -281,7 +295,19 @@ export function ImageStage({
   const zoomed = view.scale > 1.001;
 
   return (
-    <div className={className} style={{ maxWidth: `calc(max(62vh, 100vh - 190px) * ${width / height})` }}>
+    <div
+      ref={rootRef}
+      className={className}
+      style={
+        fill
+          ? {
+              // Room for the sticky bar above and the toolbar below, so the whole stage fits the screen.
+              maxWidth: `calc(max(320px, 100vh - var(--stage-top, 12px) - 60px) * ${width / height})`,
+              scrollMarginTop: "var(--stage-top, 12px)",
+            }
+          : { maxWidth: `calc(max(62vh, 100vh - 190px) * ${width / height})` }
+      }
+    >
       <div
         ref={frameRef}
         role="group"
@@ -392,7 +418,7 @@ export function ImageStage({
         ) : null}
       </div>
 
-      <div className="mt-2 flex flex-wrap items-center gap-2">
+      <div className={`flex flex-wrap items-center gap-2 ${fill ? "mt-1.5" : "mt-2"}`}>
         <div className="flex items-center" role="group" aria-label="Zoom">
           <button type="button" className="btn btn-quiet w-11 px-0" onClick={() => zoomCenter(1 / 1.5)} disabled={!zoomed} aria-label="Zoom out">
             <span aria-hidden className="text-lg leading-none">&minus;</span>
