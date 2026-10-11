@@ -3,7 +3,9 @@ import { rasterizeBox } from "../cv/polygon";
 import {
   buildSession,
   cardImages,
+  cardLevel,
   dailySeed,
+  deckForLevel,
   heroForgedOnLeft,
   parseDeck,
   pickHeroCard,
@@ -334,6 +336,19 @@ describe("deck", () => {
     expect(pickHeroCard({ ...deck, cards: deck.cards.filter((c) => c.kind === "real") }, "abc")).toBeNull();
     expect(typeof heroForgedOnLeft("abc")).toBe("boolean");
     expect(heroForgedOnLeft("abc")).toBe(heroForgedOnLeft("abc"));
+  });
+
+  it("splits the deck into an easy and a hard level and keeps real photos in both", () => {
+    expect(cardLevel({ difficulty: 2 })).toBe("easy");
+    expect(cardLevel({ difficulty: 3 })).toBe("hard");
+    expect(cardLevel({ difficulty: 1, level: "hard" })).toBe("hard");
+    const reals = deck.cards.filter((c) => c.kind === "real").length;
+    const easy = deckForLevel(deck, "easy");
+    const hard = deckForLevel(deck, "hard");
+    expect(easy.cards.filter((c) => c.kind === "real")).toHaveLength(reals);
+    expect(hard.cards.filter((c) => c.kind === "real")).toHaveLength(reals);
+    expect(easy.cards.every((c) => c.kind === "real" || cardLevel(c) === "easy")).toBe(true);
+    expect(easy.cards.length + hard.cards.length).toBe(deck.cards.length + reals);
   });
 
   it("derives image paths", () => {

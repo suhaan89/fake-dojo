@@ -236,6 +236,7 @@ async function main(): Promise<number> {
         kind: "forged",
         type: outcome.candidate.type,
         difficulty,
+        level: difficulty <= 2 ? "easy" : "hard",
         scene: outcome.scene,
         target_description: outcome.candidate.target_description,
         description: editSummary(outcome.candidate.edit_instruction),

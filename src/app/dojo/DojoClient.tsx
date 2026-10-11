@@ -9,7 +9,7 @@ import { ImageStage } from "@/components/ImageStage";
 import { Reveal } from "@/components/Reveal";
 import { useDeck } from "@/components/useDeck";
 import { Confetti, CountUp, Verdict } from "@/components/Verdict";
-import { buildSession, cardImages, dailySeed, type DeckCard } from "@/lib/game/deck";
+import { buildSession, cardImages, dailySeed, deckForLevel, type DeckCard, type DeckLevel } from "@/lib/game/deck";
 import { CALL_POINTS, callPoints } from "@/lib/game/scoring";
 import { recordRound } from "@/lib/game/store";
 import { MANIPULATION_TYPES, TYPE_LABELS, type ManipulationType } from "@/lib/game/types";
@@ -68,7 +68,11 @@ function summarize(results: readonly CardResult[]) {
 export function DojoClient() {
   const params = useSearchParams();
   const seedParam = params.get("seed");
+  const levelParam = params.get("level");
   const deckState = useDeck();
+  const [level, setLevel] = useState<DeckLevel | null>(
+    levelParam === "easy" || levelParam === "hard" ? levelParam : null,
+  );
   const [round, setRound] = useState(0);
   const [index, setIndex] = useState(0);
   const [stage, setStage] = useState<Stage>({ name: "call" });
@@ -79,8 +83,9 @@ export function DojoClient() {
   // The first session of the day is the same for everyone; later ones get their own order.
   const seed = round === 0 ? (seedParam ?? today) : `${seedParam ?? today}#${round}`;
   const session = useMemo(
-    () => (deckState.state === "ready" ? buildSession(deckState.deck, seed) : []),
-    [deckState, seed],
+    () =>
+      deckState.state === "ready" && level ? buildSession(deckForLevel(deckState.deck, level), `${seed}:${level}`) : [],
+    [deckState, seed, level],
   );
 
   const card = session[index] as DeckCard | undefined;
@@ -126,6 +131,14 @@ export function DojoClient() {
     scrollTop();
   };
 
+  const changeLevel = () => {
+    setLevel(null);
+    setIndex(0);
+    setResults([]);
+    setStage({ name: "call" });
+    scrollTop();
+  };
+
   const restart = () => {
     setRound((r) => r + 1);
     setIndex(0);
@@ -147,8 +160,8 @@ export function DojoClient() {
     >
       <div className="sticky top-0 z-20 flex min-h-[50px] flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-line bg-paper py-1.5">
         <h1 className="text-xl font-semibold leading-tight tracking-tight">
-          <span className="label mr-3 align-middle">Daily Dojo</span>
-          {finished ? "Session complete" : "Real or edited?"}
+          <span className="label mr-3 align-middle">Daily Dojo{level ? `, ${level}` : ""}</span>
+          {!level ? "Choose your level" : finished ? "Session complete" : "Real or edited?"}
         </h1>
         {session.length > 0 && !finished ? (
           <div className="flex items-center gap-4" aria-live="polite">
@@ -178,7 +191,39 @@ export function DojoClient() {
       <div className="mt-4">
         {deckState.state === "loading" ? <DeckNotice kind="loading" /> : null}
         {deckState.state === "error" ? <DeckNotice kind="error" /> : null}
-        {deckState.state === "ready" && session.length === 0 ? <DeckNotice kind="empty" /> : null}
+        {deckState.state === "ready" && level && session.length === 0 ? <DeckNotice kind="empty" /> : null}
+
+        {deckState.state === "ready" && !level ? (
+          <div className="grid gap-4 md:grid-cols-2">
+            {(
+              [
+                { id: "easy", title: "Easy", text: "Bold edits. A color changed, an object gone.", cls: "btn-real" },
+                { id: "hard", title: "Hard", text: "Subtle edits. Small signs, shadows, details.", cls: "btn-edited" },
+              ] as const
+            ).map((mode) => {
+              const count = deckForLevel(deckState.deck, mode.id).cards.filter((c) => c.kind === "forged").length;
+              return (
+                <button
+                  key={mode.id}
+                  type="button"
+                  disabled={count === 0}
+                  onClick={() => {
+                    setLevel(mode.id);
+                    setIndex(0);
+                    setResults([]);
+                    setStage({ name: "call" });
+                  }}
+                  className="panel flex flex-col items-start gap-3 p-6 text-left hover:border-ink disabled:opacity-45 sm:p-8"
+                >
+                  <span className="text-[clamp(2.5rem,7vw,4.5rem)] font-semibold leading-none tracking-tight">{mode.title}</span>
+                  <span className="text-lg text-ink-soft">{mode.text}</span>
+                  <span className="mono text-sm text-ink-soft">{count} forged cards in the deck</span>
+                  <span className={`btn ${mode.cls} mt-2 h-12 px-6 text-base`}>Play {mode.title.toLowerCase()}</span>
+                </button>
+              );
+            })}
+          </div>
+        ) : null}
 
         {card && images && stage.name === "call" ? (
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
@@ -282,13 +327,21 @@ export function DojoClient() {
           </div>
         ) : null}
 
-        {finished ? <Summary results={results} onRestart={restart} /> : null}
+        {finished ? <Summary results={results} onRestart={restart} onChangeLevel={changeLevel} /> : null}
       </div>
     </div>
   );
 }
 
-function Summary({ results, onRestart }: { results: readonly CardResult[]; onRestart: () => void }) {
+function Summary({
+  results,
+  onRestart,
+  onChangeLevel,
+}: {
+  results: readonly CardResult[];
+  onRestart: () => void;
+  onChangeLevel: () => void;
+}) {
   const summary = summarize(results);
   const types = MANIPULATION_TYPES.filter((type) => summary.perType.has(type));
   return (
@@ -352,6 +405,9 @@ function Summary({ results, onRestart }: { results: readonly CardResult[]; onRes
         </div>
         <button type="button" className="btn btn-quiet" onClick={onRestart}>
           Play another session
+        </button>
+        <button type="button" className="btn btn-quiet" onClick={onChangeLevel}>
+          Change level
         </button>
         <Link href="/profile" className="btn btn-quiet">
           See your profile

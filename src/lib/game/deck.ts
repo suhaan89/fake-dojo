@@ -23,6 +23,8 @@ export const DeckCardSchema = z.object({
   stats: z.object({ changedPct: z.number(), meanDelta: z.number() }).nullable(),
   verify: z.object({ plausibility: z.number(), obviousness: z.number() }).nullable(),
   createdAt: z.string(),
+  /** Which Daily Dojo mode the card belongs to. Without it the difficulty decides. */
+  level: z.enum(["easy", "hard"]).optional(),
 });
 
 export const DeckSchema = z.object({
@@ -35,6 +37,8 @@ export const DeckSchema = z.object({
 
 export type DeckCard = z.infer<typeof DeckCardSchema>;
 export type Deck = z.infer<typeof DeckSchema>;
+
+export type DeckLevel = "easy" | "hard";
 
 export const DECK_URL = "/deck/deck.json";
 export const SESSION_SIZE = 10;
@@ -52,6 +56,15 @@ export function parseDeck(value: unknown): Deck {
     (card) => card.kind === "real" || (card.type !== null && card.difficulty !== null && card.changeBox !== null),
   );
   return { ...deck, cards };
+}
+
+export function cardLevel(card: Pick<DeckCard, "level" | "difficulty">): DeckLevel {
+  return card.level ?? ((card.difficulty ?? 1) <= 2 ? "easy" : "hard");
+}
+
+/** The deck for one mode: the forged cards of that level plus every real photo. */
+export function deckForLevel(deck: Deck, level: DeckLevel): Deck {
+  return { ...deck, cards: deck.cards.filter((card) => card.kind === "real" || cardLevel(card) === level) };
 }
 
 export interface CardImages {
@@ -130,7 +143,7 @@ export function pickHeroCard(deck: Deck, seed: string): DeckCard | null {
     if (first) return first;
   }
   // Prefer edits that are findable at thumbnail size.
-  const friendly = forged.filter((card) => (card.difficulty ?? 5) <= 3);
+  const friendly = forged.filter((card) => cardLevel(card) === "easy");
   const pool = friendly.length ? friendly : forged;
   return shuffle(pool, seededRandom(`hero:${seed}`))[0];
 }

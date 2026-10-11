@@ -21,7 +21,7 @@ Anyone can edit any photo in seconds now. Media literacy is still taught with a 
 An AI agent forges one subtle, realistic edit into a real photo: your own, or one from the built-in deck. You hunt for it. Then a forensic reveal shows exactly which pixels changed, how a careful eye could have caught it, and what forensic tools would have shown. The dojo tracks which kinds of manipulation fool you and makes the next forgery target them.
 
 - **Forge** (live): upload or shoot a photo, watch the agent timeline (redacted so it does not spoil the answer), then hunt with zoom, pan and a loupe. Two guesses, an optional hint.
-- **Daily Dojo**: ten cards, about 70% forged and 30% untouched. Call each one Real or Edited, then locate the edit for bonus points. Zero API calls.
+- **Daily Dojo** (Easy or Hard level): ten cards, about 70% forged and 30% untouched. Call each one Real or Edited, then locate the edit for bonus points. Zero API calls.
 - **Classroom**: projector mode. Huge image, a 10 second countdown so the class can vote by raising hands, then a big reveal with the tell. Space reveals, Right arrow moves on, F toggles fullscreen. With "Vote by camera" the laptop camera counts raised hands: left half of the picture votes Real, right half votes Edited, the box lights up while hands are up, and after the countdown the class learns whether its majority was right. Hand detection runs in the browser (MediaPipe Hand Landmarker); video never leaves the device. No accounts, nothing stored.
 - **Profile**: belts from White to Black, a radar chart of the six manipulation types, recent rounds.
 

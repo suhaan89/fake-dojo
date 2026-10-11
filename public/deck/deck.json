@@ -29,7 +29,8 @@
         "plausibility": 5,
         "obviousness": 2
       },
-      "createdAt": "2026-10-11T07:51:43.355Z"
+      "createdAt": "2026-10-11T07:51:43.355Z",
+      "level": "hard"
     },
     {
       "id": "photo-02-5374fd-real",
@@ -76,7 +77,8 @@
         "plausibility": 5,
         "obviousness": 2
       },
-      "createdAt": "2026-10-11T07:53:07.192Z"
+      "createdAt": "2026-10-11T07:53:07.192Z",
+      "level": "hard"
     },
     {
       "id": "photo-03-0a5f98-f2",
@@ -105,7 +107,8 @@
         "plausibility": 5,
         "obviousness": 2
       },
-      "createdAt": "2026-10-11T07:54:25.330Z"
+      "createdAt": "2026-10-11T07:54:25.330Z",
+      "level": "hard"
     },
     {
       "id": "photo-04-ab3d9f-f1",
@@ -134,7 +137,8 @@
         "plausibility": 5,
         "obviousness": 2
       },
-      "createdAt": "2026-10-11T07:55:11.744Z"
+      "createdAt": "2026-10-11T07:55:11.744Z",
+      "level": "hard"
     },
     {
       "id": "photo-05-fdbb16-f2",
@@ -163,7 +167,8 @@
         "plausibility": 2,
         "obviousness": 4
       },
-      "createdAt": "2026-10-11T07:56:49.469Z"
+      "createdAt": "2026-10-11T07:56:49.469Z",
+      "level": "hard"
     },
     {
       "id": "photo-05-fdbb16-real",
@@ -210,7 +215,8 @@
       "verify": {
         "plausibility": 4,
         "obviousness": 3
-      }
+      },
+      "level": "easy"
     },
     {
       "id": "photo-07-811586-f1",
@@ -239,7 +245,8 @@
         "plausibility": 5,
         "obviousness": 2
       },
-      "createdAt": "2026-10-11T07:57:13.829Z"
+      "createdAt": "2026-10-11T07:57:13.829Z",
+      "level": "hard"
     },
     {
       "id": "photo-07-811586-f2",
@@ -268,7 +275,8 @@
         "plausibility": 5,
         "obviousness": 1
       },
-      "createdAt": "2026-10-11T07:58:19.309Z"
+      "createdAt": "2026-10-11T07:58:19.309Z",
+      "level": "hard"
     },
     {
       "id": "photo-08-f12651-f1",
@@ -297,7 +305,38 @@
       "verify": {
         "plausibility": 5,
         "obviousness": 2
-      }
+      },
+      "level": "easy"
+    },
+    {
+      "id": "photo-09-5242c0-f2",
+      "photo": "photo-09-5242c0",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 4,
+      "width": 768,
+      "height": 1024,
+      "scene": "Modern museum interior with a tall grey display wall covered in rows of small framed portraits, glass arched ceiling, curved concrete upper level, and visitors near the entrance doors.",
+      "target_description": "small empty lit display niche on the lower left section of the portrait wall",
+      "description": "Change the warm off-white interior color of the leftmost empty lit display niche on the lower display wall to match the cool grey tone of the surrounding wall panel, while keeping the frame border identical to adjacent niches.",
+      "tell": "The leftmost lower display niche interior is now cool grey rather than the warm off-white tone present in the original image.",
+      "hint": "Look at the row of empty display niches along the bottom edge of the large portrait wall.",
+      "changeBox": {
+        "x": 0.06770833333333333,
+        "y": 0.91796875,
+        "w": 0.14713541666666666,
+        "h": 0.08203125
+      },
+      "stats": {
+        "changedPct": 0.48,
+        "meanDelta": 23.3
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      },
+      "createdAt": "2026-10-11T07:59:58.548Z",
+      "level": "hard"
     },
     {
       "id": "photo-09-5242c0-real",
@@ -344,7 +383,8 @@
         "plausibility": 4,
         "obviousness": 2
       },
-      "createdAt": "2026-10-11T08:17:25.614Z"
+      "createdAt": "2026-10-11T08:17:25.614Z",
+      "level": "hard"
     },
     {
       "id": "photo-11-49d529-f1",
@@ -373,7 +413,8 @@
         "plausibility": 5,
         "obviousness": 1
       },
-      "createdAt": "2026-10-11T08:18:09.528Z"
+      "createdAt": "2026-10-11T08:18:09.528Z",
+      "level": "hard"
     },
     {
       "id": "photo-13-94517f-f1",
@@ -402,7 +443,8 @@
         "plausibility": 5,
         "obviousness": 1
       },
-      "createdAt": "2026-10-11T08:18:26.674Z"
+      "createdAt": "2026-10-11T08:18:26.674Z",
+      "level": "hard"
     },
     {
       "id": "photo-13-94517f-real",
@@ -421,6 +463,36 @@
       "stats": null,
       "verify": null,
       "createdAt": "2026-10-11T08:02:34.605Z"
+    },
+    {
+      "id": "photo-14-6a2b65-f1",
+      "photo": "photo-14-6a2b65",
+      "kind": "forged",
+      "type": "lighting_shadow",
+      "difficulty": 4,
+      "width": 768,
+      "height": 1024,
+      "scene": "A high-angle daytime cityscape view of a dense European downtown, with varied rooftops, mid-rise buildings, a distant skyline under a clear bright blue sky.",
+      "target_description": "the cast shadow of the leftmost row of dormer windows on the dark brown tiled roof",
+      "description": "Adjust the cast shadow of the row of dormer windows on the dark brown tiled roof to shift 10 degrees clockwise to match a slightly later sun position, maintaining the same shadow softness and lighting tone.",
+      "tell": "The cast shadow from the row of dormer windows on the left dark brown tiled roof is rotated slightly clockwise compared to the original image.",
+      "hint": "Look near the lower left, on the dark brown roof with small gabled windows.",
+      "changeBox": {
+        "x": 0.020833333333333332,
+        "y": 0.705078125,
+        "w": 0.3658854166666667,
+        "h": 0.1455078125
+      },
+      "stats": {
+        "changedPct": 1.39,
+        "meanDelta": 20.6
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      },
+      "createdAt": "2026-10-11T08:02:05.524Z",
+      "level": "hard"
     },
     {
       "id": "photo-14-6a2b65-f2",
@@ -449,7 +521,8 @@
         "plausibility": 5,
         "obviousness": 2
       },
-      "createdAt": "2026-10-11T08:03:02.377Z"
+      "createdAt": "2026-10-11T08:03:02.377Z",
+      "level": "hard"
     },
     {
       "id": "photo-15-d953de-f1",
@@ -478,7 +551,38 @@
       "verify": {
         "plausibility": 2,
         "obviousness": 5
-      }
+      },
+      "level": "easy"
+    },
+    {
+      "id": "photo-15-d953de-f3",
+      "photo": "photo-15-d953de",
+      "kind": "forged",
+      "type": "lighting_shadow",
+      "difficulty": 2,
+      "width": 1024,
+      "height": 768,
+      "scene": "A wide mountain range panorama under a clear, cloudless deep blue sky, with rocky peaks, forested slopes and alpine grassy terrain.",
+      "target_description": "The dark cast shadow on the right-facing slope of the central peak cluster",
+      "description": "Adjust the shape and position of the cast shadow on the right-facing central mountain slope to match a slightly shifted sun angle, making the shadow marginally narrower and shifted 2% toward the left ridge.",
+      "tell": "The cast shadow on the right-facing central mountain slope is slightly narrower and shifted left compared to the original image.",
+      "hint": "Look at the shaded slopes on the middle-right section of the mountain range.",
+      "changeBox": {
+        "x": 0.5849609375,
+        "y": 0.5989583333333334,
+        "w": 0.1572265625,
+        "h": 0.17578125
+      },
+      "stats": {
+        "changedPct": 0.29,
+        "meanDelta": 24.7
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      },
+      "createdAt": "2026-10-11T08:02:34.740Z",
+      "level": "hard"
     },
     {
       "id": "photo-16-45d0c1-f1",
@@ -507,7 +611,8 @@
         "plausibility": 2,
         "obviousness": 4
       },
-      "createdAt": "2026-10-11T08:19:15.190Z"
+      "createdAt": "2026-10-11T08:19:15.190Z",
+      "level": "hard"
     },
     {
       "id": "photo-16-45d0c1-f2",
@@ -536,7 +641,8 @@
         "plausibility": 5,
         "obviousness": 2
       },
-      "createdAt": "2026-10-11T08:05:22.524Z"
+      "createdAt": "2026-10-11T08:05:22.524Z",
+      "level": "hard"
     },
     {
       "id": "photo-16-45d0c1-real",
@@ -583,7 +689,8 @@
         "plausibility": 5,
         "obviousness": 2
       },
-      "createdAt": "2026-10-11T08:20:12.662Z"
+      "createdAt": "2026-10-11T08:20:12.662Z",
+      "level": "hard"
     },
     {
       "id": "photo-18-f62ce1-f1",
@@ -612,7 +719,8 @@
         "plausibility": 5,
         "obviousness": 2
       },
-      "createdAt": "2026-10-11T08:05:24.981Z"
+      "createdAt": "2026-10-11T08:05:24.981Z",
+      "level": "hard"
     },
     {
       "id": "photo-18-f62ce1-f2",
@@ -641,7 +749,38 @@
         "plausibility": 5,
         "obviousness": 1
       },
-      "createdAt": "2026-10-11T08:20:46.570Z"
+      "createdAt": "2026-10-11T08:20:46.570Z",
+      "level": "hard"
+    },
+    {
+      "id": "photo-19-68be7e-f1",
+      "photo": "photo-19-68be7e",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 5,
+      "width": 768,
+      "height": 1024,
+      "scene": "A sunny daytime urban street with multi-story buildings, parked cars, a paved sidewalk, street signs, and bare trees under a partly cloudy sky.",
+      "target_description": "Blue P parking sign on the sidewalk pole",
+      "description": "Change the blue parking sign's symbol from a wheelchair accessibility icon to a motorcycle parking icon, keeping the blue background, white P letter, and original sign size, lighting, and perspective identical.",
+      "tell": "The symbol next to the P on the foreground blue parking sign is an incorrectly rendered distorted graphic instead of the original wheelchair icon.",
+      "hint": "Look at the street sign along the right sidewalk.",
+      "changeBox": {
+        "x": 0.40625,
+        "y": 0.5,
+        "w": 0.07161458333333333,
+        "h": 0.0791015625
+      },
+      "stats": {
+        "changedPct": 0.16,
+        "meanDelta": 35.7
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      },
+      "createdAt": "2026-10-11T08:06:38.489Z",
+      "level": "hard"
     },
     {
       "id": "photo-21-6dba85-real",
@@ -688,7 +827,8 @@
         "plausibility": 5,
         "obviousness": 2
       },
-      "createdAt": "2026-10-11T08:07:14.991Z"
+      "createdAt": "2026-10-11T08:07:14.991Z",
+      "level": "hard"
     },
     {
       "id": "photo-23-9c7ac0-f1",
@@ -717,7 +857,8 @@
         "plausibility": 5,
         "obviousness": 2
       },
-      "createdAt": "2026-10-11T08:21:35.085Z"
+      "createdAt": "2026-10-11T08:21:35.085Z",
+      "level": "hard"
     },
     {
       "id": "photo-24-caada5-f1",
@@ -746,7 +887,8 @@
         "plausibility": 5,
         "obviousness": 2
       },
-      "createdAt": "2026-10-11T08:08:28.443Z"
+      "createdAt": "2026-10-11T08:08:28.443Z",
+      "level": "hard"
     },
     {
       "id": "photo-24-caada5-real",
@@ -793,7 +935,8 @@
       "verify": {
         "plausibility": 5,
         "obviousness": 2
-      }
+      },
+      "level": "easy"
     },
     {
       "id": "web-01-8292e8-f2",
@@ -822,7 +965,8 @@
       "verify": {
         "plausibility": 5,
         "obviousness": 1
-      }
+      },
+      "level": "easy"
     },
     {
       "id": "web-02-7f8da1-f1",
@@ -851,7 +995,8 @@
       "verify": {
         "plausibility": 2,
         "obviousness": 4
-      }
+      },
+      "level": "easy"
     },
     {
       "id": "web-03-96e534-f1",
@@ -880,7 +1025,8 @@
       "verify": {
         "plausibility": 5,
         "obviousness": 2
-      }
+      },
+      "level": "easy"
     },
     {
       "id": "web-03-96e534-f2",
@@ -909,7 +1055,8 @@
       "verify": {
         "plausibility": 2,
         "obviousness": 5
-      }
+      },
+      "level": "easy"
     },
     {
       "id": "web-03-96e534-real",
@@ -956,7 +1103,8 @@
       "verify": {
         "plausibility": 5,
         "obviousness": 1
-      }
+      },
+      "level": "easy"
     },
     {
       "id": "web-05-66030b-f1",
@@ -985,7 +1133,8 @@
       "verify": {
         "plausibility": 2,
         "obviousness": 4
-      }
+      },
+      "level": "easy"
     },
     {
       "id": "web-06-0c6062-f1",
@@ -1014,7 +1163,8 @@
       "verify": {
         "plausibility": 3,
         "obviousness": 4
-      }
+      },
+      "level": "easy"
     },
     {
       "id": "web-07-f697f6-f1",
@@ -1043,7 +1193,8 @@
       "verify": {
         "plausibility": 3,
         "obviousness": 4
-      }
+      },
+      "level": "easy"
     },
     {
       "id": "web-07-f697f6-real",
@@ -1090,7 +1241,8 @@
       "verify": {
         "plausibility": 4,
         "obviousness": 3
-      }
+      },
+      "level": "easy"
     },
     {
       "id": "web-09-269b82-f1",
@@ -1119,7 +1271,8 @@
       "verify": {
         "plausibility": 5,
         "obviousness": 2
-      }
+      },
+      "level": "easy"
     },
     {
       "id": "web-10-e88aab-real",
@@ -1166,7 +1319,8 @@
       "verify": {
         "plausibility": 5,
         "obviousness": 2
-      }
+      },
+      "level": "easy"
     }
   ]
 }
