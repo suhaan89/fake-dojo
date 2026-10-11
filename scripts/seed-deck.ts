@@ -1,5 +1,5 @@
 // Builds the committed training deck from seed/photos/*.
-// Usage: npm run seed [-- --limit N] [-- --dry-run] [-- --concurrency N] [-- --pace SECONDS] [-- --allow-mock]
+// Usage: npm run seed [-- --max-difficulty N] [-- --limit N] [-- --dry-run] [-- --concurrency N] [-- --pace SECONDS] [-- --allow-mock]
 // On a free model tier with a low requests-per-minute limit use: --concurrency 1 --pace 40
 //
 // Per photo: prepare, then 1 to 2 forged cards at varied difficulties, balanced across the
@@ -13,6 +13,7 @@ import path from "node:path";
 import { editSummary } from "../src/lib/ai/prompts";
 import { ForgeFailure, runForge } from "../src/lib/forge/run";
 import { DeckSchema, type Deck, type DeckCard } from "../src/lib/game/deck";
+import { toDifficulty } from "../src/lib/game/difficulty";
 import { MANIPULATION_TYPES, type ManipulationType } from "../src/lib/game/types";
 import type { PreparedImage } from "../src/lib/image/crop";
 import { prepareBuffer } from "../src/lib/image/prepare-node";
@@ -92,6 +93,7 @@ async function main(): Promise<number> {
   const dryRun = flag("--dry-run");
   const limit = Number(option("--limit") ?? Infinity);
   const concurrency = Math.max(1, Math.min(4, Number(option("--concurrency") ?? DEFAULT_CONCURRENCY) || DEFAULT_CONCURRENCY));
+  const maxDifficulty = toDifficulty(Number(option("--max-difficulty") ?? 5) || 5);
   const paceMs = Math.max(0, Number(option("--pace") ?? 0) || 0) * 1000;
 
   const files = existsSync(PHOTO_DIR)
@@ -212,9 +214,10 @@ async function main(): Promise<number> {
         return;
       }
 
+      const difficulty = toDifficulty(Math.min(job.difficulty, maxDifficulty));
       const outcome = await runForge(transport, {
         image: original.data,
-        difficulty: job.difficulty,
+        difficulty,
         weights: balanceWeights(counts),
         avoid: (usedTargets.get(job.photo) ?? []).map((target) => `${target}, it is already used by another card`),
       });
@@ -232,7 +235,7 @@ async function main(): Promise<number> {
         ...base,
         kind: "forged",
         type: outcome.candidate.type,
-        difficulty: job.difficulty,
+        difficulty,
         scene: outcome.scene,
         target_description: outcome.candidate.target_description,
         description: editSummary(outcome.candidate.edit_instruction),

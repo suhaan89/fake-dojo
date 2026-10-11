@@ -42,7 +42,7 @@ Source of truth: `docs/BUILD_BRIEF.md`. Decisions: `docs/DECISIONS.md`. Next.js 
 ## Milestones
 - [x] M0 Scaffold, M1 Core logic, M2 AI layer (mock verified), M3 Forge UI, M4 Deck modes, M5 Profile and polish, M6 Docs
 - [x] Real smoke test: works with Seedream for the edit and `seed-2-0-lite-260428` on ModelArk for vision (about 40 to 90 s per forge).
-- [x] Real deck: 30 cards (23 forged, 7 real) from 20 photos, each checked by eye. Weak cards are removed from deck.json and their folder; `npm run seed` then retries them.
+- [x] Real deck: 44 cards (34 forged, 10 real), own photos plus 12 CC0 photos from Wikimedia Commons (`seed/photos/web-*.jpg`, credited in README), each checked by eye. Weak cards are removed from deck.json and their folder; `npm run seed` then retries them.
 - [ ] Open items in `docs/QA.md`, then stretch goals (brief section 19) only if everything else is done.
 
 Current state: feature complete, real deck committed, live forging runs on the Ark key alone (`VISION_PROVIDER=ark`, `IMAGE_PROVIDER=seedream`).

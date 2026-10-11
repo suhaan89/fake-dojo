@@ -21,6 +21,10 @@ export function formatWeights(weights: Partial<Record<ManipulationType, number>>
 export function plannerPrompt({ difficulty, weights, avoid }: PlannerPromptInput): string {
   const [minPct, maxPct] = areaRange(difficulty);
   const avoidText = avoid.length ? avoid.join("; ") : "nothing specific";
+  const easy =
+    difficulty <= 2
+      ? "\n- This is an easy round. Choose a large, prominent object in plain view and make a bold change: remove it, replace it, or give it a clearly different color. Someone comparing the two photos must see the difference at once."
+      : "";
   return `You are the Forger in Fake Dojo, a media-literacy training game. A player will try to find a single edit in this photo. Plan ONE realistic, localized manipulation that a careful player could still find.
 
 Rules:
@@ -32,7 +36,7 @@ Rules:
 - List every person you can see in safety.people_boxes, even small or partly hidden ones. Use an empty list if there are none.
 - The edit must be photorealistic and physically plausible: scale, perspective, lighting direction and shadows must fit the scene.
 - Difficulty ${difficulty} of 5: the edit region (box_2d) should cover ${minPct}% to ${maxPct}% of the image area. It must never cover more than ${maxPct}% or less than 0.2%. Prefer targets near that size, but a smaller real object is fine if nothing bigger fits. Size the box to the region that will change, including any shadow or reflection that has to change with it.
-- Higher difficulty means a subtler change. At difficulty 4 and 5 prefer small text, shadow or attribute changes.
+- Higher difficulty means a subtler change. At difficulty 4 and 5 prefer small text, shadow or attribute changes.${easy}
 - Allowed manipulation types: remove_object, add_object, replace_object, alter_text (only if legible text exists), change_attribute (color, material or state), lighting_shadow (a shadow or reflection).
 - Preferred manipulation types with weights (higher means the player needs more practice): ${formatWeights(weights)}.
 - Avoid: ${avoidText}.

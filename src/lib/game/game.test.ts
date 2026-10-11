@@ -66,10 +66,11 @@ describe("scoring", () => {
     const w = 1000;
     const h = 500;
     const mask = rasterizeBox({ x0: 400, y0: 200, x1: 450, y1: 240 }, w, h);
-    // min side 500: hit within 10 px, close within 40 px.
+    // min side 500: hit within 20 px, close within 40 px.
     expect(classifyTap(mask, w, h, 420, 220)).toBe("hit");
     expect(classifyTap(mask, w, h, 458, 220)).toBe("hit");
-    expect(classifyTap(mask, w, h, 462, 220)).toBe("close");
+    expect(classifyTap(mask, w, h, 468, 220)).toBe("hit");
+    expect(classifyTap(mask, w, h, 472, 220)).toBe("close");
     expect(classifyTap(mask, w, h, 488, 220)).toBe("close");
     expect(classifyTap(mask, w, h, 495, 220)).toBe("miss");
     expect(classifyTap(mask, w, h, 5, 5)).toBe("miss");

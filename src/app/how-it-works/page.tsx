@@ -295,7 +295,7 @@ export default function HowItWorksPage() {
           <div className="text-sm leading-relaxed text-ink-soft">
             <p>
               Built with Next.js, React, TypeScript, Tailwind CSS, the Google Gen AI SDK, MediaPipe Hand Landmarker, zod, sharp and Vitest. Type set
-              in Geist Sans and Geist Mono. Deck photos by Suhan Nawaz.
+              in Geist Sans and Geist Mono. Deck photos by Suhan Nawaz and, for the cards named web, public-domain photos from Wikimedia Commons (listed in the README).
             </p>
             <p className="mt-3">
               AI disclosure: Claude Code wrote most of the code under Suhan&apos;s direction. Gemini models run at

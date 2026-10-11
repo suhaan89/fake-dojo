@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-11T08:23:09.958Z",
+  "generatedAt": "2026-10-11T11:16:10.038Z",
   "cards": [
     {
       "id": "photo-01-6e29f9-f1",
@@ -184,6 +184,35 @@
       "createdAt": "2026-10-11T07:58:23.280Z"
     },
     {
+      "id": "photo-06-d666b9-f1",
+      "photo": "photo-06-d666b9",
+      "width": 768,
+      "height": 1024,
+      "createdAt": "2026-10-11T10:58:44.650Z",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 2,
+      "scene": "An overcast Frankfurt city plaza with a historic central pavilion, modern skyscrapers in the skyline, pedestrians, seating, and street fixtures across the paved square.",
+      "target_description": "Dark sloped roof of the central historic pavilion building",
+      "description": "Change the color of the historic pavilion's dark sloped roof from dark gray to bright terracotta red, matching the roof's existing shape, perspective, and lighting.",
+      "tell": "The dark sloped roof of the central historic building has been recolored to bright terracotta red, with no other changes to the scene.",
+      "hint": "Look at the roof of the prominent central building.",
+      "changeBox": {
+        "x": 0.2630208333333333,
+        "y": 0.623046875,
+        "w": 0.4127604166666667,
+        "h": 0.1611328125
+      },
+      "stats": {
+        "changedPct": 2.98,
+        "meanDelta": 26.1
+      },
+      "verify": {
+        "plausibility": 4,
+        "obviousness": 3
+      }
+    },
+    {
       "id": "photo-07-811586-f1",
       "photo": "photo-07-811586",
       "kind": "forged",
@@ -242,33 +271,33 @@
       "createdAt": "2026-10-11T07:58:19.309Z"
     },
     {
-      "id": "photo-09-5242c0-f2",
-      "photo": "photo-09-5242c0",
-      "kind": "forged",
-      "type": "change_attribute",
-      "difficulty": 4,
+      "id": "photo-08-f12651-f1",
+      "photo": "photo-08-f12651",
       "width": 768,
       "height": 1024,
-      "scene": "Modern museum interior with a tall grey display wall covered in rows of small framed portraits, glass arched ceiling, curved concrete upper level, and visitors near the entrance doors.",
-      "target_description": "small empty lit display niche on the lower left section of the portrait wall",
-      "description": "Change the warm off-white interior color of the leftmost empty lit display niche on the lower display wall to match the cool grey tone of the surrounding wall panel, while keeping the frame border identical to adjacent niches.",
-      "tell": "The leftmost lower display niche interior is now cool grey rather than the warm off-white tone present in the original image.",
-      "hint": "Look at the row of empty display niches along the bottom edge of the large portrait wall.",
+      "createdAt": "2026-10-11T10:59:26.384Z",
+      "kind": "forged",
+      "type": "remove_object",
+      "difficulty": 2,
+      "scene": "A marmot sits on dark garden soil eating, with broken pretzel pieces nearby, surrounded by large leafy plants, yellow wildflowers, and a shed in the background.",
+      "target_description": "The cluster of broken, half-eaten pretzel pieces resting on dark soil to the right of the marmot",
+      "description": "Remove all broken pretzel pieces from the dark soil to the right of the marmot, replacing that area with matching dark dirt, small pebbles, and sparse tiny grass tufts consistent with the surrounding soil.",
+      "tell": "The former location of the pretzel pieces now has a small distinct clump of grass that was not present in the original scene.",
+      "hint": "Look at the ground to the right of the marmot.",
       "changeBox": {
-        "x": 0.06770833333333333,
-        "y": 0.91796875,
-        "w": 0.14713541666666666,
-        "h": 0.08203125
+        "x": 0.5963541666666666,
+        "y": 0.720703125,
+        "w": 0.18880208333333334,
+        "h": 0.15625
       },
       "stats": {
-        "changedPct": 0.48,
-        "meanDelta": 23.3
+        "changedPct": 2.01,
+        "meanDelta": 48.8
       },
       "verify": {
         "plausibility": 5,
         "obviousness": 2
-      },
-      "createdAt": "2026-10-11T07:59:58.548Z"
+      }
     },
     {
       "id": "photo-09-5242c0-real",
@@ -291,12 +320,11 @@
     {
       "id": "photo-10-bdc09b-f1",
       "photo": "photo-10-bdc09b",
-      "width": 768,
-      "height": 1024,
-      "createdAt": "2026-10-11T08:17:25.614Z",
       "kind": "forged",
       "type": "replace_object",
       "difficulty": 2,
+      "width": 768,
+      "height": 1024,
       "scene": "A sunlit grassy pasture with several cows, a line of mixed trees at the treeline, and a bright blue sky with wispy clouds. A wire fence runs along the foreground edge.",
       "target_description": "the light brown cow walking left across the sunlit pasture",
       "description": "Replace the solid light brown walking cow in the middle of the sunlit pasture with a brown-and-white patterned cow matching the coloration of the standing cow to its right, keeping the same walking pose, lighting, and grass shadow.",
@@ -315,17 +343,17 @@
       "verify": {
         "plausibility": 4,
         "obviousness": 2
-      }
+      },
+      "createdAt": "2026-10-11T08:17:25.614Z"
     },
     {
       "id": "photo-11-49d529-f1",
       "photo": "photo-11-49d529",
-      "width": 1024,
-      "height": 768,
-      "createdAt": "2026-10-11T08:18:09.528Z",
       "kind": "forged",
       "type": "remove_object",
       "difficulty": 3,
+      "width": 1024,
+      "height": 768,
       "scene": "Elevated sunny view of Schönbrunn Palace, with a foreground reflecting pool, tree-lined promenade, distant Vienna cityscape, rolling hills and a bright blue sky with scattered clouds.",
       "target_description": "The distinct fluffy white cumulus cloud in the top right corner of the sky",
       "description": "Remove the distinct fluffy white cumulus cloud located in the top right section of the sky, seamlessly blending the area to match the surrounding clear bright blue sky and thin cirrus streaks.",
@@ -344,17 +372,17 @@
       "verify": {
         "plausibility": 5,
         "obviousness": 1
-      }
+      },
+      "createdAt": "2026-10-11T08:18:09.528Z"
     },
     {
       "id": "photo-13-94517f-f1",
       "photo": "photo-13-94517f",
-      "width": 1024,
-      "height": 768,
-      "createdAt": "2026-10-11T08:18:26.674Z",
       "kind": "forged",
       "type": "change_attribute",
       "difficulty": 1,
+      "width": 1024,
+      "height": 768,
       "scene": "Wide sunny view of Schönbrunn Palace across a large cobblestone foreground plaza, with scattered visitors under a bright blue sky.",
       "target_description": "The metal drain grate embedded in the lower right cobblestone plaza",
       "description": "Change the metal drain grate in the lower right foreground of the cobblestone plaza to be a solid light gray cobblestone patch matching the surrounding paving.",
@@ -373,7 +401,8 @@
       "verify": {
         "plausibility": 5,
         "obviousness": 1
-      }
+      },
+      "createdAt": "2026-10-11T08:18:26.674Z"
     },
     {
       "id": "photo-13-94517f-real",
@@ -392,35 +421,6 @@
       "stats": null,
       "verify": null,
       "createdAt": "2026-10-11T08:02:34.605Z"
-    },
-    {
-      "id": "photo-14-6a2b65-f1",
-      "photo": "photo-14-6a2b65",
-      "kind": "forged",
-      "type": "lighting_shadow",
-      "difficulty": 4,
-      "width": 768,
-      "height": 1024,
-      "scene": "A high-angle daytime cityscape view of a dense European downtown, with varied rooftops, mid-rise buildings, a distant skyline under a clear bright blue sky.",
-      "target_description": "the cast shadow of the leftmost row of dormer windows on the dark brown tiled roof",
-      "description": "Adjust the cast shadow of the row of dormer windows on the dark brown tiled roof to shift 10 degrees clockwise to match a slightly later sun position, maintaining the same shadow softness and lighting tone.",
-      "tell": "The cast shadow from the row of dormer windows on the left dark brown tiled roof is rotated slightly clockwise compared to the original image.",
-      "hint": "Look near the lower left, on the dark brown roof with small gabled windows.",
-      "changeBox": {
-        "x": 0.020833333333333332,
-        "y": 0.705078125,
-        "w": 0.3658854166666667,
-        "h": 0.1455078125
-      },
-      "stats": {
-        "changedPct": 1.39,
-        "meanDelta": 20.6
-      },
-      "verify": {
-        "plausibility": 5,
-        "obviousness": 2
-      },
-      "createdAt": "2026-10-11T08:02:05.524Z"
     },
     {
       "id": "photo-14-6a2b65-f2",
@@ -454,41 +454,40 @@
     {
       "id": "photo-15-d953de-f1",
       "photo": "photo-15-d953de",
-      "kind": "forged",
-      "type": "lighting_shadow",
-      "difficulty": 2,
       "width": 1024,
       "height": 768,
-      "scene": "A wide mountain range panorama under a clear, cloudless deep blue sky, with rocky peaks, forested slopes and alpine grassy terrain.",
-      "target_description": "The dark cast shadow on the right-facing slope of the central peak cluster",
-      "description": "Adjust the shape and position of the cast shadow on the right-facing central mountain slope to match a slightly shifted sun angle, making the shadow marginally narrower and shifted 2% toward the left ridge.",
-      "tell": "The cast shadow on the right-facing central mountain slope is slightly narrower and shifted left compared to the original image.",
-      "hint": "Look at the shaded slopes on the middle-right section of the mountain range.",
+      "createdAt": "2026-10-11T11:02:20.056Z",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 2,
+      "scene": "A clear deep blue sky sits above a wide, rugged mountain range with rocky peaks, forested slopes, and alpine meadows under bright sunny conditions.",
+      "target_description": "the tallest, sharp rocky summit near the horizontal center of the mountain range",
+      "description": "Change the color and texture of the central sharp rocky mountain peak from gray bare rock to bright white, matching the appearance of a snow-covered summit, while keeping the surrounding slopes, lighting and shadows consistent with the sunny scene.",
+      "tell": "The central peak has been incorrectly reshaped into a taller, steeper snow-capped form with blurry, unnatural edges and an odd blue haze above it, rather than retaining its original rocky outline with added snow.",
+      "hint": "Look at the highest peak near the middle of the mountain range.",
       "changeBox": {
-        "x": 0.5849609375,
-        "y": 0.5989583333333334,
-        "w": 0.1572265625,
-        "h": 0.17578125
+        "x": 0.326171875,
+        "y": 0.51953125,
+        "w": 0.1162109375,
+        "h": 0.13932291666666666
       },
       "stats": {
-        "changedPct": 0.29,
-        "meanDelta": 24.7
+        "changedPct": 1.28,
+        "meanDelta": 46.5
       },
       "verify": {
-        "plausibility": 5,
-        "obviousness": 2
-      },
-      "createdAt": "2026-10-11T08:02:34.740Z"
+        "plausibility": 2,
+        "obviousness": 5
+      }
     },
     {
       "id": "photo-16-45d0c1-f1",
       "photo": "photo-16-45d0c1",
-      "width": 576,
-      "height": 1024,
-      "createdAt": "2026-10-11T08:19:15.190Z",
       "kind": "forged",
       "type": "alter_text",
       "difficulty": 3,
+      "width": 576,
+      "height": 1024,
       "scene": "Low-angle shot of Berlin's Fernsehturm rising behind a modern multi-story retail building under a clear pale blue sky at dusk. The building has glass windows and branded storefront signage.",
       "target_description": "Red circular discount poster on the lower left of the retail building facade",
       "description": "Change the percentage text on the left-side red circular store window promotion from 60% to 40%, keeping the same red circular graphic style, font, and lighting.",
@@ -507,7 +506,8 @@
       "verify": {
         "plausibility": 2,
         "obviousness": 4
-      }
+      },
+      "createdAt": "2026-10-11T08:19:15.190Z"
     },
     {
       "id": "photo-16-45d0c1-f2",
@@ -559,12 +559,11 @@
     {
       "id": "photo-17-657dec-f1",
       "photo": "photo-17-657dec",
-      "width": 768,
-      "height": 1024,
-      "createdAt": "2026-10-11T08:20:12.662Z",
       "kind": "forged",
       "type": "change_attribute",
       "difficulty": 4,
+      "width": 768,
+      "height": 1024,
       "scene": "A sunny lakeside park features a vibrant formal flower bed, trimmed topiary bushes, a grass lawn, flags along a waterfront promenade, distant mountains, and scattered visitors.",
       "target_description": "The leftmost conical trimmed topiary bush",
       "description": "Change the leftmost fully visible conical topiary bush from its current dark green trimmed foliage color to a deep, saturated dark purple, matching the lighting and shadow of adjacent topiary bushes.",
@@ -583,7 +582,8 @@
       "verify": {
         "plausibility": 5,
         "obviousness": 2
-      }
+      },
+      "createdAt": "2026-10-11T08:20:12.662Z"
     },
     {
       "id": "photo-18-f62ce1-f1",
@@ -617,12 +617,11 @@
     {
       "id": "photo-18-f62ce1-f2",
       "photo": "photo-18-f62ce1",
-      "width": 1024,
-      "height": 768,
-      "createdAt": "2026-10-11T08:20:46.570Z",
       "kind": "forged",
       "type": "remove_object",
       "difficulty": 3,
+      "width": 1024,
+      "height": 768,
       "scene": "Overcast urban view of Frankfurt's financial district skyline, with foreground industrial buildings, railway overhead lines, and sparse trees.",
       "target_description": "The leftmost white domed skylight on the grey sloped industrial roof",
       "description": "Remove the leftmost white domed rooftop skylight from the grey sloped industrial roof, and repair the surrounding roof surface to match the existing weathered grey roofing material.",
@@ -641,36 +640,8 @@
       "verify": {
         "plausibility": 5,
         "obviousness": 1
-      }
-    },
-    {
-      "id": "photo-19-68be7e-f1",
-      "photo": "photo-19-68be7e",
-      "kind": "forged",
-      "type": "change_attribute",
-      "difficulty": 5,
-      "width": 768,
-      "height": 1024,
-      "scene": "A sunny daytime urban street with multi-story buildings, parked cars, a paved sidewalk, street signs, and bare trees under a partly cloudy sky.",
-      "target_description": "Blue P parking sign on the sidewalk pole",
-      "description": "Change the blue parking sign's symbol from a wheelchair accessibility icon to a motorcycle parking icon, keeping the blue background, white P letter, and original sign size, lighting, and perspective identical.",
-      "tell": "The symbol next to the P on the foreground blue parking sign is an incorrectly rendered distorted graphic instead of the original wheelchair icon.",
-      "hint": "Look at the street sign along the right sidewalk.",
-      "changeBox": {
-        "x": 0.40625,
-        "y": 0.5,
-        "w": 0.07161458333333333,
-        "h": 0.0791015625
       },
-      "stats": {
-        "changedPct": 0.16,
-        "meanDelta": 35.7
-      },
-      "verify": {
-        "plausibility": 5,
-        "obviousness": 2
-      },
-      "createdAt": "2026-10-11T08:06:38.489Z"
+      "createdAt": "2026-10-11T08:20:46.570Z"
     },
     {
       "id": "photo-21-6dba85-real",
@@ -722,12 +693,11 @@
     {
       "id": "photo-23-9c7ac0-f1",
       "photo": "photo-23-9c7ac0",
-      "width": 576,
-      "height": 1024,
-      "createdAt": "2026-10-11T08:21:35.085Z",
       "kind": "forged",
       "type": "lighting_shadow",
       "difficulty": 2,
+      "width": 576,
+      "height": 1024,
       "scene": "A wide pedestrian city street lined with historic buildings, mature trees, outdoor cafe seating, and people walking under a cloudy overcast sky.",
       "target_description": "The cast shadow of the large foreground tree and its concrete planter onto the adjacent paved walkway",
       "description": "Adjust the cast shadow of the large foreground tree and its planter on the right paved walkway to extend 30% further toward the camera, matching the overcast soft lighting direction of the scene.",
@@ -746,7 +716,8 @@
       "verify": {
         "plausibility": 5,
         "obviousness": 2
-      }
+      },
+      "createdAt": "2026-10-11T08:21:35.085Z"
     },
     {
       "id": "photo-24-caada5-f1",
@@ -794,6 +765,408 @@
       "stats": null,
       "verify": null,
       "createdAt": "2026-10-11T08:09:38.881Z"
+    },
+    {
+      "id": "web-01-8292e8-f1",
+      "photo": "web-01-8292e8",
+      "width": 1024,
+      "height": 768,
+      "createdAt": "2026-10-11T11:05:06.916Z",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 2,
+      "scene": "A gray classic bicycle locked to a metal street rack on a paved city sidewalk, with a stone building facade and distant street traffic in the background.",
+      "target_description": "The tan leather bicycle seat mounted above the rear frame of the locked bicycle",
+      "description": "Change the color of the tan leather bicycle saddle to bright solid red, matching the saddle's existing shape, metal rivets, and attached black spring hardware.",
+      "tell": "The bicycle saddle has been recolored from the original tan leather to bright red while retaining all original saddle hardware and shape.",
+      "hint": "Look at the upper middle section of the main bicycle.",
+      "changeBox": {
+        "x": 0.2392578125,
+        "y": 0.036458333333333336,
+        "w": 0.1826171875,
+        "h": 0.11588541666666667
+      },
+      "stats": {
+        "changedPct": 1.17,
+        "meanDelta": 49.8
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      }
+    },
+    {
+      "id": "web-01-8292e8-f2",
+      "photo": "web-01-8292e8",
+      "width": 1024,
+      "height": 768,
+      "createdAt": "2026-10-11T11:05:53.875Z",
+      "kind": "forged",
+      "type": "remove_object",
+      "difficulty": 2,
+      "scene": "A uniquely framed light gray bicycle locked to a street bollard sits on a paved city sidewalk next to a stone building, with other bicycles visible in the background.",
+      "target_description": "The black plastic and metal rear rack mounted above the bicycle's rear wheel",
+      "description": "Remove the entire rear rack from above the bicycle's rear fender, leaving only the smooth light gray frame tubing in its place.",
+      "tell": "The only difference between the images is the absence of the rear rack assembly above the bicycle's rear fender, with the rest of the scene perfectly unchanged.",
+      "hint": "Look at the back of the bicycle near the seat.",
+      "changeBox": {
+        "x": 0.080078125,
+        "y": 0.24869791666666666,
+        "w": 0.2001953125,
+        "h": 0.11067708333333333
+      },
+      "stats": {
+        "changedPct": 1.19,
+        "meanDelta": 56.5
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 1
+      }
+    },
+    {
+      "id": "web-02-7f8da1-f1",
+      "photo": "web-02-7f8da1",
+      "width": 1024,
+      "height": 768,
+      "createdAt": "2026-10-11T11:05:37.926Z",
+      "kind": "forged",
+      "type": "add_object",
+      "difficulty": 2,
+      "scene": "Outdoor public area with a spiral white bike rack, black bike sign, patchy grass, parking lot with parked cars, and a building entrance in the background.",
+      "target_description": "a single parked bicycle locked to the spiral bike rack",
+      "description": "Add a realistic ordinary silver commuter bicycle locked into the middle of the spiral bike rack, with correct perspective, matching overcast lighting, and a small appropriate shadow cast on the concrete platform.",
+      "tell": "The added bicycle has warped, misaligned frame and wheel proportions that do not fit correctly with the spiral bike rack.",
+      "hint": "Look between the curved loops of the bike rack.",
+      "changeBox": {
+        "x": 0.3564453125,
+        "y": 0.33984375,
+        "w": 0.32421875,
+        "h": 0.3216145833333333
+      },
+      "stats": {
+        "changedPct": 7.28,
+        "meanDelta": 36.4
+      },
+      "verify": {
+        "plausibility": 2,
+        "obviousness": 4
+      }
+    },
+    {
+      "id": "web-03-96e534-f1",
+      "photo": "web-03-96e534",
+      "width": 1024,
+      "height": 768,
+      "createdAt": "2026-10-11T11:06:29.470Z",
+      "kind": "forged",
+      "type": "remove_object",
+      "difficulty": 2,
+      "scene": "A paved bike rack area holds several parked bicycles, surrounded by grassy park land, mature trees, and distant apartment buildings.",
+      "target_description": "The red bicycle parked in the middle bike racks",
+      "description": "Completely remove the red bicycle parked in the middle bike rack, leaving only the empty metal bike rack and the paved tile ground in its place.",
+      "tell": "The middle bike rack area that previously held the red bicycle now shows only empty rack and pavement matching the surrounding scene perfectly.",
+      "hint": "Look at the middle row of bike racks.",
+      "changeBox": {
+        "x": 0.4931640625,
+        "y": 0.2786458333333333,
+        "w": 0.275390625,
+        "h": 0.3125
+      },
+      "stats": {
+        "changedPct": 5.66,
+        "meanDelta": 47.5
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      }
+    },
+    {
+      "id": "web-03-96e534-f2",
+      "photo": "web-03-96e534",
+      "width": 1024,
+      "height": 768,
+      "createdAt": "2026-10-11T11:07:35.625Z",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 1,
+      "scene": "Paved bike parking area with silver metal racks, several parked bicycles, leafy trees, grassy park and distant apartment buildings in the background.",
+      "target_description": "The prominent blue parked bicycle in the lower left of the frame",
+      "description": "Change the entire frame, fenders and all painted parts of the foreground left bicycle from dark blue to bright solid red, matching the lighting, shadow and wear of the original bike.",
+      "tell": "The foreground left bicycle has inconsistent remaining dark blue patches, distorted wheel rendering, and mismatched lighting that does not match the original scene's lighting.",
+      "hint": "Look at the most prominent bicycle in the lower left area.",
+      "changeBox": {
+        "x": 0.0283203125,
+        "y": 0.2682291666666667,
+        "w": 0.3212890625,
+        "h": 0.6145833333333334
+      },
+      "stats": {
+        "changedPct": 9.6,
+        "meanDelta": 41.5
+      },
+      "verify": {
+        "plausibility": 2,
+        "obviousness": 5
+      }
+    },
+    {
+      "id": "web-03-96e534-real",
+      "photo": "web-03-96e534",
+      "width": 1024,
+      "height": 768,
+      "createdAt": "2026-10-11T11:08:51.743Z",
+      "kind": "real",
+      "type": null,
+      "difficulty": null,
+      "scene": "",
+      "target_description": "",
+      "description": "",
+      "tell": "",
+      "hint": "",
+      "changeBox": null,
+      "stats": null,
+      "verify": null
+    },
+    {
+      "id": "web-04-c84f6d-f1",
+      "photo": "web-04-c84f6d",
+      "width": 1024,
+      "height": 768,
+      "createdAt": "2026-10-11T11:07:36.562Z",
+      "kind": "forged",
+      "type": "remove_object",
+      "difficulty": 2,
+      "scene": "A sunny park scene with a wooden gazebo, blue bike racks, grass, paved paths, trees, distant playground equipment, and a parked bicycle.",
+      "target_description": "The tall slatted metal trash can standing between the third bike rack and the gazebo path",
+      "description": "Remove the slatted metal trash can standing on the paved path between the blue bike racks and the gazebo, leaving only the existing grass and path surface where the trash can was located.",
+      "tell": "The slatted metal trash can positioned between the bike racks and gazebo in the original image is no longer present in the edited image.",
+      "hint": "Look in the grassy strip between the gazebo and the paved path.",
+      "changeBox": {
+        "x": 0.5380859375,
+        "y": 0.4635416666666667,
+        "w": 0.1064453125,
+        "h": 0.16536458333333334
+      },
+      "stats": {
+        "changedPct": 1.39,
+        "meanDelta": 29.1
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 1
+      }
+    },
+    {
+      "id": "web-05-66030b-f1",
+      "photo": "web-05-66030b",
+      "width": 1024,
+      "height": 768,
+      "createdAt": "2026-10-11T11:08:25.412Z",
+      "kind": "forged",
+      "type": "remove_object",
+      "difficulty": 2,
+      "scene": "A quiet park playground with a green multi-slide play structure, gravel safety surface, concrete entry path, grass lawn, bare deciduous trees, and a small park bench under an overcast sky.",
+      "target_description": "The small black metal bench sitting on the grass to the right of the playground",
+      "description": "Remove the small black metal bench from the grassy area to the right of the playground, and fill the empty space with matching grass that matches the surrounding lawn texture and lighting.",
+      "tell": "A distinct, unnaturally uniform patch of grass sits where the bench was removed, with inconsistent color and texture compared to the rest of the lawn.",
+      "hint": "Look at the grassy area to the right of the main play structure.",
+      "changeBox": {
+        "x": 0.712890625,
+        "y": 0.4609375,
+        "w": 0.1044921875,
+        "h": 0.3580729166666667
+      },
+      "stats": {
+        "changedPct": 3.31,
+        "meanDelta": 29.1
+      },
+      "verify": {
+        "plausibility": 2,
+        "obviousness": 4
+      }
+    },
+    {
+      "id": "web-06-0c6062-f1",
+      "photo": "web-06-0c6062",
+      "width": 1024,
+      "height": 768,
+      "createdAt": "2026-10-11T11:08:51.926Z",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 2,
+      "scene": "A playground scene features a light green spring-rider jeep play structure, wood chip ground, leafless trees, a climbing frame, and a blue round spinner under a pale sky.",
+      "target_description": "The main light green body of the jeep play structure",
+      "description": "Change the main body color of the jeep play structure from pale light green to bright red, keeping all existing line art, grille, wheels and metal parts unchanged. Match the lighting and worn paint texture of the original.",
+      "tell": "Two small bright glowing circular lights appear on the front of the red jeep where only small orange non-illuminated dots existed on the original light green jeep.",
+      "hint": "Look at the large toy vehicle play structure in the center of the frame.",
+      "changeBox": {
+        "x": 0.2734375,
+        "y": 0.3606770833333333,
+        "w": 0.427734375,
+        "h": 0.2552083333333333
+      },
+      "stats": {
+        "changedPct": 6.27,
+        "meanDelta": 46.1
+      },
+      "verify": {
+        "plausibility": 3,
+        "obviousness": 4
+      }
+    },
+    {
+      "id": "web-07-f697f6-f1",
+      "photo": "web-07-f697f6",
+      "width": 1024,
+      "height": 768,
+      "createdAt": "2026-10-11T11:10:18.265Z",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 1,
+      "scene": "A sunny park splash pad with musical-themed play features sits next to a red brick building, backed by apartment buildings and mature leafy trees.",
+      "target_description": "Large curved yellow horn-shaped splash pad feature on the right side of the splash pad",
+      "description": "Change the bright yellow color of the large curved horn-shaped splash pad feature to a solid bright red, matching the lighting and shadow of the original object.",
+      "tell": "A portion of the curved splash pad horn remains yellow while the rest of the same object is incorrectly colored red.",
+      "hint": "Look at the prominent curved play feature on the right side of the water play area.",
+      "changeBox": {
+        "x": 0.52734375,
+        "y": 0.4453125,
+        "w": 0.3076171875,
+        "h": 0.33203125
+      },
+      "stats": {
+        "changedPct": 5.99,
+        "meanDelta": 35.9
+      },
+      "verify": {
+        "plausibility": 3,
+        "obviousness": 4
+      }
+    },
+    {
+      "id": "web-07-f697f6-real",
+      "photo": "web-07-f697f6",
+      "width": 1024,
+      "height": 768,
+      "createdAt": "2026-10-11T11:13:00.803Z",
+      "kind": "real",
+      "type": null,
+      "difficulty": null,
+      "scene": "",
+      "target_description": "",
+      "description": "",
+      "tell": "",
+      "hint": "",
+      "changeBox": null,
+      "stats": null,
+      "verify": null
+    },
+    {
+      "id": "web-08-ada896-f1",
+      "photo": "web-08-ada896",
+      "width": 1024,
+      "height": 819,
+      "createdAt": "2026-10-11T11:10:36.134Z",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 2,
+      "scene": "A yellow bus stop sign on a metal pole stands against a clear bright blue sky, with rolling hills, green foliage, and a distant street lamp in the background.",
+      "target_description": "the yellow rectangular bus stop sign mounted on the left metal pole",
+      "description": "Change the background color of the bus stop sign from bright yellow to solid red, keeping the black bus icon, black 'BUS STOP' text, white border, and metal mounting bolts completely unchanged.",
+      "tell": "The bus stop sign's background color changed from yellow to red while all other scene elements remain identical.",
+      "hint": "Look at the prominent traffic sign on the left side of the frame.",
+      "changeBox": {
+        "x": 0.2822265625,
+        "y": 0.21367521367521367,
+        "w": 0.0947265625,
+        "h": 0.2576312576312576
+      },
+      "stats": {
+        "changedPct": 1.95,
+        "meanDelta": 86.6
+      },
+      "verify": {
+        "plausibility": 4,
+        "obviousness": 3
+      }
+    },
+    {
+      "id": "web-09-269b82-f1",
+      "photo": "web-09-269b82",
+      "width": 1024,
+      "height": 768,
+      "createdAt": "2026-10-11T11:11:13.749Z",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 2,
+      "scene": "A street-side bus shelter with a blue overhead beam sits on a sidewalk, facing a multi-lane road lined with trees and distant urban buildings.",
+      "target_description": "The horizontal blue overhead beam at the very top of the bus shelter",
+      "description": "Change the color of the horizontal overhead shelter beam from bright blue to solid bright red, matching the existing worn scuff marks and texture on the beam.",
+      "tell": "The horizontal overhead shelter beam is solid bright red instead of the original bright blue, while all other scene elements remain unchanged.",
+      "hint": "Look at the very top edge of the shelter structure.",
+      "changeBox": {
+        "x": 0,
+        "y": 0.07682291666666667,
+        "w": 1,
+        "h": 0.1484375
+      },
+      "stats": {
+        "changedPct": 7.52,
+        "meanDelta": 37.3
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      }
+    },
+    {
+      "id": "web-10-e88aab-real",
+      "photo": "web-10-e88aab",
+      "width": 1024,
+      "height": 683,
+      "createdAt": "2026-10-11T11:14:20.977Z",
+      "kind": "real",
+      "type": null,
+      "difficulty": null,
+      "scene": "",
+      "target_description": "",
+      "description": "",
+      "tell": "",
+      "hint": "",
+      "changeBox": null,
+      "stats": null,
+      "verify": null
+    },
+    {
+      "id": "web-11-5a83b8-f2",
+      "photo": "web-11-5a83b8",
+      "width": 1024,
+      "height": 768,
+      "createdAt": "2026-10-11T11:15:09.867Z",
+      "kind": "forged",
+      "type": "change_attribute",
+      "difficulty": 2,
+      "scene": "A sunny marina scene with calm blue water, rows of docked sailboats and motor yachts, a distant breakwater, and a clear sky with wispy clouds.",
+      "target_description": "The dark hulled sailboat with a red canopy docked on the right side of the marina",
+      "description": "Change the bright red canopy covering the cockpit of the right-side docked sailboat to a solid bright blue color, matching the lighting and shadow of the original canopy.",
+      "tell": "The canopy on the right-side docked sailboat is bright blue instead of the original bright red, with consistent lighting matching the scene.",
+      "hint": "Look at the covered sailboat on the right side of the dock line.",
+      "changeBox": {
+        "x": 0.6796875,
+        "y": 0.6783854166666666,
+        "w": 0.1826171875,
+        "h": 0.16015625
+      },
+      "stats": {
+        "changedPct": 1.3,
+        "meanDelta": 29.4
+      },
+      "verify": {
+        "plausibility": 5,
+        "obviousness": 2
+      }
     }
   ]
 }

@@ -8,7 +8,7 @@ export const LAB_TOOL_COST = 20;
 export const CALL_POINTS = 50;
 
 /** A tap counts as a hit inside the change mask grown by this share of min(W, H). */
-export const HIT_MARGIN = 0.02;
+export const HIT_MARGIN = 0.04;
 /** Within this share it is reported as "close". */
 export const CLOSE_MARGIN = 0.08;
 
@@ -35,7 +35,7 @@ export function callPoints(correct: boolean): number {
 
 /**
  * Classifies a tap at (x, y) in natural image pixels against the 0/1 change mask.
- * Equivalent to testing the mask dilated by 2% (hit) and 8% (close) of min(W, H),
+ * Equivalent to testing the mask dilated by 4% (hit) and 8% (close) of min(W, H),
  * done as a nearest-set-pixel search so no large dilation is needed in the browser.
  */
 export function classifyTap(mask: Uint8Array, width: number, height: number, x: number, y: number): TapResult {

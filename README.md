@@ -210,7 +210,23 @@ docs/                    BUILD_BRIEF.md, DECISIONS.md, QA.md
 - [Geist](https://vercel.com/font) Sans and Mono (SIL Open Font License)
 - Gemini API by Google: `gemini-3.8-flash` and `gemini-nano-banana-2.1`
 - Seedream 4.0 and Seed 2.0 Lite by ByteDance through BytePlus ModelArk
-- Photos in the deck: by Suhan Nawaz
+- Photos in the deck: cards named `photo-…` are by Suhan Nawaz. Cards named `web-…` use photos from Wikimedia Commons that their authors released into the public domain (CC0):
+
+| Deck id | Photo | Author | License |
+| --- | --- | --- | --- |
+| `web-01` | [Fixed bollard bicycle stand.jpg](https://commons.wikimedia.org/wiki/File:Fixed_bollard_bicycle_stand.jpg) | Jeroen Hoek | CC0 |
+| `web-02` | [Bike Rack at Bandar Tropicana Aman.jpg](https://commons.wikimedia.org/wiki/File:Bike_Rack_at_Bandar_Tropicana_Aman.jpg) | Wiki Farazi | CC0 |
+| `web-03` | [Improved stands bicycle parking.jpg](https://commons.wikimedia.org/wiki/File:Improved_stands_bicycle_parking.jpg) | boototter.eu | CC0 |
+| `web-04` | [Three Style Of Bicycle Parking - Park Anička, Košica, SK.jpg](https://commons.wikimedia.org/wiki/File:Three_Style_Of_Bicycle_Parking_-_Park_Ani%C4%8Dka,_Ko%C5%A1ica,_SK.jpg) | Wkmdjay | CC0 |
+| `web-05` | [Playground at William Henry Harrison Park.jpg](https://commons.wikimedia.org/wiki/File:Playground_at_William_Henry_Harrison_Park.jpg) | SnugPancake | CC0 |
+| `web-06` | [Playground Spring Jeep Soltau.jpg](https://commons.wikimedia.org/wiki/File:Playground_Spring_Jeep_Soltau.jpg) | RogerWiki | CC0 |
+| `web-07` | [Harrison Playground 2.jpg](https://commons.wikimedia.org/wiki/File:Harrison_Playground_2.jpg) | Kurt Kaiser | CC0 |
+| `web-08` | [Bus stop sign with sky in the backround.jpg](https://commons.wikimedia.org/wiki/File:Bus_stop_sign_with_sky_in_the_backround.jpg) | C.M.B. | CC0 |
+| `web-09` | [CARTA bus stop - October 2025 - Sarah Stierch.jpg](https://commons.wikimedia.org/wiki/File:CARTA_bus_stop_-_October_2025_-_Sarah_Stierch.jpg) | Missvain | CC0 |
+| `web-10` | [Yangdong Village 05.jpg](https://commons.wikimedia.org/wiki/File:Yangdong_Village_05.jpg) | Bernard Gagnon | CC0 |
+| `web-11` | [Valenica Mar Harbour Spain - Image with boats in line up.jpg](https://commons.wikimedia.org/wiki/File:Valenica_Mar_Harbour_Spain_-_Image_with_boats_in_line_up.jpg) | Yannick Sl | CC0 |
+| `web-12` | [Some Boats in harbour.jpg](https://commons.wikimedia.org/wiki/File:Some_Boats_in_harbour.jpg) | Maneesh4242 | CC0 |
+
 
 ## AI disclosure
 
