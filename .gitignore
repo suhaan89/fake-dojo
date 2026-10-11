@@ -49,3 +49,6 @@ next-env.d.ts
 # source photos stay local; the deck in public/deck holds the published versions
 /seed/photos/*
 !/seed/photos/README.md
+
+# MediaPipe runtime, copied from node_modules by scripts/copy-wasm.mjs
+/public/mediapipe/

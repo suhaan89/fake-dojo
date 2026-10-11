@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { BeltUpOverlay } from "@/components/ScoreHud";
 import { SiteHeader } from "@/components/SiteHeader";
 import { ToastProvider } from "@/components/Toasts";
 import "./globals.css";
@@ -47,6 +48,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <main id="main" className="flex-1">
             {children}
           </main>
+          <BeltUpOverlay />
         </ToastProvider>
       </body>
     </html>

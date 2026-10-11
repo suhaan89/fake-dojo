@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useDeck } from "@/components/useDeck";
+import { Verdict } from "@/components/Verdict";
 import { cardImages, DEMO_SEED, heroForgedOnLeft, pickHeroCard } from "@/lib/game/deck";
 
 /**
@@ -58,7 +59,7 @@ export function Hero() {
   ];
 
   return (
-    <section className="mx-auto max-w-6xl px-4 pb-10 pt-10 sm:px-6 sm:pt-14">
+    <section className="mx-auto max-w-7xl px-4 pb-10 pt-8 sm:px-6 sm:pt-10">
       <p className="label">Train your eye for AI fakes. On your own photos.</p>
       <h1 className="mt-3 max-w-5xl text-[clamp(2.1rem,6.2vw,4.5rem)] font-semibold leading-[1.03] tracking-tight">
         One of these photos was edited by AI. Which one?
@@ -66,7 +67,7 @@ export function Hero() {
 
       <div
         className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4"
-        style={{ maxWidth: `max(560px, calc(${(2 * card.width) / card.height} * 58vh))` }}
+        style={{ maxWidth: `max(560px, calc(${(2 * card.width) / card.height} * 66vh))` }}
       >
         {sides.map(({ side, forged }) => {
           const chosen = picked === side;
@@ -118,20 +119,17 @@ export function Hero() {
 
       <div className="mt-5 min-h-[7.5rem]" aria-live="polite">
         {picked === null ? (
-          <p className="max-w-2xl text-lg leading-relaxed text-ink-soft">
-            Same scene, one difference. Tap the photo you think is the fake.
-          </p>
+          <p className="max-w-2xl text-lg text-ink-soft">Same scene, one difference. Tap the fake.</p>
         ) : (
           <div className="rise">
-            <p className="text-2xl font-semibold tracking-tight">
-              {correct ? "Right. That one is the fake." : "Not quite. The other one is the fake."}
-            </p>
-            <p className="mt-2 max-w-3xl leading-relaxed">
-              {card.description} <span className="text-ink-soft">The tell: {card.tell}</span>
-            </p>
-            <p className="mt-1 text-sm text-ink-soft">
-              The red area is the exact set of changed pixels, measured, not guessed.
-            </p>
+            <div className="max-w-3xl">
+              <Verdict
+                compact
+                tone={correct ? "win" : "lose"}
+                title={correct ? "Right. That is the fake." : "Fooled. The other one is the fake."}
+              />
+            </div>
+            <p className="mt-3 max-w-3xl text-lg leading-snug">{card.tell}</p>
             <div className="mt-4 flex flex-wrap gap-3">
               <Link href="/forge" className="btn">
                 Try it on your own photo

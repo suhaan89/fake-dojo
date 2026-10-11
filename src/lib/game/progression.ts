@@ -86,6 +86,16 @@ export function weakestType(profile: Profile): ManipulationType | null {
   return weakest;
 }
 
+/** How many of the most recent rounds were hits in a row. */
+export function hitStreak(profile: Pick<Profile, "rounds">): number {
+  let streak = 0;
+  for (const round of profile.rounds) {
+    if (!round.hit) break;
+    streak++;
+  }
+  return streak;
+}
+
 export function emptyProfile(): Profile {
   const skills = {} as Record<ManipulationType, TypeSkill>;
   for (const type of MANIPULATION_TYPES) skills[type] = { hits: 0, misses: 0 };

@@ -8,6 +8,7 @@ import { Hunt, type HuntResult } from "@/components/Hunt";
 import { ImageStage } from "@/components/ImageStage";
 import { Reveal } from "@/components/Reveal";
 import { useDeck } from "@/components/useDeck";
+import { Confetti, CountUp, Verdict } from "@/components/Verdict";
 import { buildSession, cardImages, dailySeed, type DeckCard } from "@/lib/game/deck";
 import { CALL_POINTS, callPoints } from "@/lib/game/scoring";
 import { recordRound } from "@/lib/game/store";
@@ -138,7 +139,7 @@ export function DojoClient() {
   const last = index + 1 >= session.length;
 
   return (
-    <div ref={topRef} className="mx-auto max-w-6xl scroll-mt-4 px-4 py-8 sm:px-6 sm:py-10">
+    <div ref={topRef} className="mx-auto max-w-7xl scroll-mt-4 px-4 py-6 sm:px-6 sm:py-8">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="label">Daily Dojo</p>
@@ -147,13 +148,31 @@ export function DojoClient() {
           </h1>
         </div>
         {session.length > 0 && !finished ? (
-          <p className="mono text-sm text-ink-soft" aria-live="polite">
-            Card {index + 1} of {session.length}, {running} points
-          </p>
+          <div className="flex items-end gap-5" aria-live="polite">
+            <ol className="flex gap-1" aria-label={`Card ${index + 1} of ${session.length}`}>
+              {session.map((entry, i) => {
+                const result = results[i];
+                return (
+                  <li
+                    key={entry.id}
+                    className={`h-6 w-3.5 border border-ink ${
+                      result ? (result.callCorrect ? "bg-real" : "bg-edited") : i === index ? "bg-ink" : "bg-transparent"
+                    }`}
+                  />
+                );
+              })}
+            </ol>
+            <p className="text-right leading-none">
+              <span key={running} className="bump mono block text-4xl font-semibold">
+                {running}
+              </span>
+              <span className="label mt-1 block">points</span>
+            </p>
+          </div>
         ) : null}
       </div>
 
-      <div className="mt-8">
+      <div className="mt-6">
         {deckState.state === "loading" ? <DeckNotice kind="loading" /> : null}
         {deckState.state === "error" ? <DeckNotice kind="error" /> : null}
         {deckState.state === "ready" && session.length === 0 ? <DeckNotice kind="empty" /> : null}
@@ -171,12 +190,8 @@ export function DojoClient() {
             <div className="flex flex-col gap-4">
               <div className="panel p-4">
                 <p className="label">Your call</p>
-                <p className="mt-2 text-lg font-medium leading-snug">
-                  Is this photo untouched, or did an AI change one thing in it?
-                </p>
-                <p className="mt-2 text-sm text-ink-soft">
-                  A correct call is worth {CALL_POINTS} points. If it is edited, you can then locate the edit for more.
-                </p>
+                <p className="mt-2 text-lg font-medium leading-snug">Untouched, or did AI change one thing?</p>
+                <p className="mono mt-2 text-sm text-ink-soft">{CALL_POINTS} points for the right call</p>
                 <div className="mt-4 grid grid-cols-2 gap-2">
                   <button type="button" className="btn btn-real h-14 text-base" onClick={() => onCall("real")}>
                     Real
@@ -186,19 +201,14 @@ export function DojoClient() {
                   </button>
                 </div>
               </div>
-              <p className="text-sm leading-relaxed text-ink-soft">
-                Zoom in, pan around, hover or press and hold for the loupe. Take your time: about three in ten photos
-                are untouched.
-              </p>
+              <p className="text-sm text-ink-soft">Zoom, pan, hover for the loupe. About 3 in 10 photos are untouched.</p>
             </div>
           </div>
         ) : null}
 
         {card && images && stage.name === "hunt" && images.mask ? (
           <div className="flex flex-col gap-4">
-            <p className="border-l-4 border-real bg-card px-4 py-3 text-lg font-medium" aria-live="polite">
-              Correct, it was edited. {CALL_POINTS} points. Now find the edit.
-            </p>
+            <Verdict compact tone="win" title="Correct, it is edited." points={CALL_POINTS} detail="Now find the edit." />
             <Hunt
               key={card.id}
               imageUrl={images.shown}
@@ -227,7 +237,7 @@ export function DojoClient() {
             changeBox={card.changeBox}
             hunt={stage.hunt}
             bonusPoints={stage.call === "edited" ? CALL_POINTS : 0}
-            headline={stage.call === "real" ? "This one was edited. It got past you." : undefined}
+            headline={stage.call === "real" ? "Edited. It got past you." : undefined}
             facts={{
               type: card.type,
               difficulty: card.difficulty ?? 1,
@@ -246,26 +256,24 @@ export function DojoClient() {
         ) : null}
 
         {card && images && stage.name === "real" ? (
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+          <div className="flex flex-col gap-6">
+            <Verdict
+              tone={stage.call === "real" ? "win" : "lose"}
+              title={stage.call === "real" ? "Correct. Untouched." : "This one was real."}
+              points={callPoints(stage.call === "real")}
+              detail={
+                stage.call === "real"
+                  ? "Trusting a real photo is half of the skill."
+                  : "Once you expect fakes, real photos look suspicious too."
+              }
+            />
+            <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
             <ImageStage key={card.id} src={images.original} width={card.width} height={card.height} alt="Untouched photo" />
             <div className="flex flex-col gap-4">
-              <div
-                className={`rise border-l-4 bg-card px-4 py-4 ${stage.call === "real" ? "border-real" : "border-edited"}`}
-                aria-live="polite"
-              >
-                <p className="text-2xl font-semibold tracking-tight">
-                  {stage.call === "real" ? "Correct. This photo is untouched." : "This one was real."}
-                </p>
-                <p className="mono mt-1.5 text-sm text-ink-soft">{callPoints(stage.call === "real")} points</p>
-              </div>
-              <p className="leading-relaxed text-ink-soft">
-                {stage.call === "real"
-                  ? "Nothing was changed here. Trusting a real photo is half of the skill."
-                  : "Nothing was changed here. Once you expect fakes, real photos start to look suspicious too. Odd details are normal in real scenes."}
-              </p>
               <button type="button" className="btn h-14 text-base" onClick={next}>
                 {last ? "See your results" : "Next card"}
               </button>
+            </div>
             </div>
           </div>
         ) : null}
@@ -282,10 +290,13 @@ function Summary({ results, onRestart }: { results: readonly CardResult[]; onRes
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
       <div className="panel self-start">
-        <div className="border-b border-line px-5 py-5">
-          <p className="label">Score</p>
-          <p className="mt-1 text-5xl font-semibold tracking-tight">{summary.score} points</p>
-          <p className="mono mt-2 text-sm text-ink-soft">
+        <div className="verdict relative border-b border-line bg-ink px-5 py-7 text-paper">
+          {summary.callsCorrect * 2 >= results.length ? <Confetti count={40} /> : null}
+          <p className="label text-paper/70">Session score</p>
+          <p className="verdict-points mt-1 text-[clamp(3.5rem,10vw,7rem)] font-semibold leading-none tracking-tight">
+            <CountUp value={summary.score} />
+          </p>
+          <p className="mono mt-3 text-sm text-paper/80">
             {summary.callsCorrect} of {results.length} calls correct
             {summary.realSeen ? `, ${summary.realCorrect} of ${summary.realSeen} real photos trusted` : ""}
           </p>
@@ -321,19 +332,14 @@ function Summary({ results, onRestart }: { results: readonly CardResult[]; onRes
           {summary.weakest ? (
             <>
               <p className="mt-2 text-xl font-semibold tracking-tight">{TYPE_LABELS[summary.weakest]}</p>
-              <p className="mt-1 text-sm leading-relaxed text-ink-soft">
-                This is where edits got past you most often. Forge mode can build fresh examples of exactly this type on
-                your own photos.
-              </p>
+              <p className="mt-1 text-sm text-ink-soft">Edits of this type got past you most often.</p>
               <Link href={`/forge?type=${summary.weakest}`} className="btn mt-4 w-full">
                 Train this in Forge
               </Link>
             </>
           ) : (
             <>
-              <p className="mt-2 leading-relaxed">
-                No weak spot in this session. Forge mode raises the difficulty until you find one.
-              </p>
+              <p className="mt-2 leading-relaxed">No weak spot in this session.</p>
               <Link href="/forge" className="btn mt-4 w-full">
                 Open Forge
               </Link>

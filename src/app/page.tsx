@@ -8,21 +8,21 @@ const MODES = [
     href: "/forge",
     label: "Live",
     title: "Forge your photo",
-    text: "Upload or shoot a photo. An AI agent plans and hides one realistic edit in it. You get two taps to find it.",
+    text: "An AI hides one edit in your own photo. Two taps to find it.",
     action: "Open Forge",
   },
   {
     href: "/dojo",
     label: "Ten cards",
     title: "Daily Dojo",
-    text: "A deck of real and forged photos. Call each one real or edited, then locate the edit for bonus points.",
+    text: "Real or edited? Call it, then find the edit for bonus points.",
     action: "Play the deck",
   },
   {
     href: "/classroom",
     label: "Projector",
     title: "Classroom",
-    text: "Full screen, big type, a ten second countdown. The class votes by raising hands, then comes the reveal.",
+    text: "Projector mode. The class votes by raising hands, and the camera counts them.",
     action: "Start a class round",
   },
 ];
@@ -30,15 +30,15 @@ const MODES = [
 const STEPS = [
   {
     title: "The agent forges",
-    text: "A vision model reads the scene and plans one small edit. An image model carries it out. A verifier checks it and rejects sloppy attempts.",
+    text: "An AI agent plans one small edit, renders it and checks its own work.",
   },
   {
     title: "You hunt",
-    text: "You only see the forged photo. Zoom, pan, use the loupe, then tap where you think the edit is. Two guesses.",
+    text: "You see only the forged photo. Two taps to find the edit.",
   },
   {
     title: "The reveal teaches",
-    text: "A pixel-exact heatmap, a before and after slider, the tell you could have spotted, and forensic lenses such as error level analysis.",
+    text: "A pixel-exact heatmap, before and after, and the tell you could have spotted.",
   },
 ];
 
@@ -50,7 +50,7 @@ export default function Home() {
       </Suspense>
 
       <section aria-labelledby="modes" className="border-t border-line">
-        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
           <h2 id="modes" className="label">
             Three ways to train
           </h2>
@@ -99,17 +99,11 @@ export default function Home() {
               Companies train staff with simulated phishing mails. Nobody trains people with simulated image fakes.
             </p>
           </div>
-          <div className="leading-relaxed text-ink-soft">
-            <p>
-              When AI can image everything, seeing is no longer believing. Fake Dojo turns image AI against itself to
-              train the human eye, with fakes made from your own photos so the lesson sticks.
-            </p>
-            <p className="mt-3">
-              The guardrails are strict. People are never edited. IDs, receipts, chat screenshots and other sensitive
-              documents are refused. Live forgeries cannot be downloaded, photos are not stored, and location data is
-              removed in your browser before anything is sent.
-            </p>
-          </div>
+          <ul className="grid gap-3 text-lg leading-snug">
+            <li className="border-l-4 border-ink pl-4">People are never edited.</li>
+            <li className="border-l-4 border-ink pl-4">IDs, receipts and chats are refused.</li>
+            <li className="border-l-4 border-ink pl-4">Nothing is stored. Forgeries cannot be downloaded.</li>
+          </ul>
         </div>
       </section>
 

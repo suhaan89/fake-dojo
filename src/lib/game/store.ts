@@ -1,7 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { applyRound, clearProfile, emptyProfile, loadProfile, saveProfile } from "./progression";
+import { applyRound, beltFor, clearProfile, emptyProfile, loadProfile, saveProfile, type Belt } from "./progression";
 import type { Profile, RoundRecord } from "./types";
 
 // A tiny external store for the player profile. The profile lives in localStorage;
@@ -10,6 +10,8 @@ import type { Profile, RoundRecord } from "./types";
 const SERVER_PROFILE = emptyProfile();
 let current: Profile | null = null;
 let persisted = true;
+/** The belt the player has just reached, until the celebration is dismissed. */
+let beltUp: Belt | null = null;
 const listeners = new Set<() => void>();
 
 function read(): Profile {
@@ -30,12 +32,30 @@ function subscribe(listener: () => void): () => void {
 
 /** Applies a finished round and returns the updated profile. */
 export function recordRound(round: RoundRecord): Profile {
-  const next = applyRound(read(), round);
+  const before = read();
+  const next = applyRound(before, round);
+  const belt = beltFor(next.points);
+  if (belt.points > beltFor(before.points).points) beltUp = belt;
   write(next);
   return next;
 }
 
+export function useBeltUp(): Belt | null {
+  return useSyncExternalStore(
+    subscribe,
+    () => beltUp,
+    () => null,
+  );
+}
+
+export function dismissBeltUp(): void {
+  if (!beltUp) return;
+  beltUp = null;
+  for (const listener of listeners) listener();
+}
+
 export function resetProfile(): void {
+  beltUp = null;
   clearProfile();
   write(emptyProfile());
 }

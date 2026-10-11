@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ScoreHud } from "@/components/ScoreHud";
 
 const LINKS = [
   { href: "/forge", label: "Forge" },
@@ -16,7 +17,7 @@ export function SiteHeader() {
   if (pathname === "/classroom") return null;
   return (
     <header className="border-b border-line bg-paper">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 px-4 sm:px-6">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-6 px-4 sm:px-6">
         <Link
           href="/"
           className="flex min-h-[44px] items-center gap-2 text-[1.05rem] font-semibold tracking-tight"
@@ -43,6 +44,9 @@ export function SiteHeader() {
             );
           })}
         </nav>
+        <div className="py-1.5">
+          <ScoreHud />
+        </div>
       </div>
     </header>
   );

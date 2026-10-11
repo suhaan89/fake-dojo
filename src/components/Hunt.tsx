@@ -127,14 +127,23 @@ export function Hunt({ imageUrl, maskUrl, width, height, difficulty, hint, onDon
           <p className="mt-2 text-lg font-medium leading-snug" aria-live="assertive">
             {maskError ? "The answer key could not be loaded." : message}
           </p>
-          <dl className="mono mt-4 grid grid-cols-2 gap-y-1 text-[13px]">
-            <dt className="text-ink-soft">Guesses left</dt>
-            <dd className="text-right">{left}</dd>
-            <dt className="text-ink-soft">Difficulty</dt>
-            <dd className="text-right">{difficulty} of 5</dd>
-            <dt className="text-ink-soft">Next hit is worth</dt>
-            <dd className="text-right">{worth} points</dd>
-          </dl>
+          <div className="mt-4 flex items-end justify-between gap-3 border-t border-line pt-4">
+            <div>
+              <p className="label">A hit is worth</p>
+              <p key={worth} className="bump mono mt-1 text-5xl font-semibold leading-none">
+                {worth}
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="label">Guesses</p>
+              <p className="mt-2 flex justify-end gap-1.5" aria-label={`${left} guesses left`}>
+                {Array.from({ length: MAX_GUESSES }, (_, i) => (
+                  <span key={i} className={`block h-5 w-5 border-2 border-ink ${i < left ? "bg-ink" : "bg-transparent"}`} />
+                ))}
+              </p>
+            </div>
+          </div>
+          <p className="mono mt-3 text-xs text-ink-soft">Difficulty {difficulty} of 5</p>
         </div>
 
         <div className="panel p-4">
@@ -143,7 +152,7 @@ export function Hunt({ imageUrl, maskUrl, width, height, difficulty, hint, onDon
             <p className="mt-2 leading-relaxed">{hint}</p>
           ) : (
             <button type="button" className="btn btn-quiet mt-2 w-full" onClick={() => setHintShown(true)}>
-              Show a hint, costs {HINT_COST} points
+              Hint, costs {HINT_COST} points
             </button>
           )}
         </div>
@@ -151,9 +160,7 @@ export function Hunt({ imageUrl, maskUrl, width, height, difficulty, hint, onDon
         {labTools ? (
           <div className="panel p-4">
             <p className="label">Lab tools</p>
-            <p className="mb-3 mt-2 text-sm text-ink-soft">
-              Each forensic lens costs {LAB_TOOL_COST} points the first time you open it.
-            </p>
+            <p className="mb-3 mt-2 text-sm text-ink-soft">Each lens costs {LAB_TOOL_COST} points once.</p>
             <LensSwitcher
               value={lenses.lens}
               onChange={lenses.select}

@@ -281,7 +281,7 @@ export function ImageStage({
   const zoomed = view.scale > 1.001;
 
   return (
-    <div className={className} style={{ maxWidth: `calc(76vh * ${width / height})` }}>
+    <div className={className} style={{ maxWidth: `calc(84vh * ${width / height})` }}>
       <div
         ref={frameRef}
         role="group"

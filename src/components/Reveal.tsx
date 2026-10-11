@@ -7,6 +7,7 @@ import { ImageStage } from "@/components/ImageStage";
 import { LensSwitcher } from "@/components/LensSwitcher";
 import { ResultCard, type ResultFacts } from "@/components/ResultCard";
 import { useLenses } from "@/components/useLenses";
+import { Verdict } from "@/components/Verdict";
 import type { NormBox } from "@/lib/cv/types";
 
 interface RevealProps {
@@ -27,10 +28,10 @@ interface RevealProps {
 
 function verdictLine(hunt: HuntResult | null): string {
   if (!hunt) return "Here is what was changed.";
-  if (hunt.hitOnGuess === 1) return "Found it on the first guess.";
-  if (hunt.hitOnGuess === 2) return "Found it on the second guess.";
+  if (hunt.hitOnGuess === 1) return "Found it. First guess.";
+  if (hunt.hitOnGuess === 2) return "Found it. Second guess.";
   if (hunt.gaveUp && hunt.guesses === 0) return "Here is the edit you were looking for.";
-  return "Missed. Here is the edit.";
+  return "Missed it.";
 }
 
 /** The forensic reveal: exact heatmap, before and after, the tell, and the forensic lenses. */
@@ -54,19 +55,21 @@ export function Reveal({
 
   return (
     <div className="flex flex-col gap-8">
-      <div
-        className={`rise border-l-4 bg-card px-4 py-4 sm:px-5 ${hit === false ? "border-edited" : "border-real"}`}
-        aria-live="polite"
-      >
-        <p className="text-2xl font-semibold tracking-tight sm:text-3xl">{headline ?? verdictLine(hunt)}</p>
-        <p className="mono mt-1.5 text-sm text-ink-soft">
-          {points} points
-          {hunt && hunt.hints > 0 ? `, hint used` : ""}
-          {hunt && hunt.labUses > 0 ? `, ${hunt.labUses} lab tool${hunt.labUses === 1 ? "" : "s"} used` : ""}
-        </p>
-      </div>
+      <Verdict
+        tone={hit === true ? "win" : "lose"}
+        title={headline ?? verdictLine(hunt)}
+        points={points}
+        detail={
+          [
+            hunt && hunt.hints > 0 ? "Hint used" : "",
+            hunt && hunt.labUses > 0 ? `${hunt.labUses} lab tool${hunt.labUses === 1 ? "" : "s"} used` : "",
+          ]
+            .filter(Boolean)
+            .join(", ") || undefined
+        }
+      />
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
         <div className="flex flex-col gap-4">
           <ImageStage
             src={lenses.src}
@@ -83,10 +86,7 @@ export function Reveal({
               </button>
             }
           />
-          <p className="text-sm leading-relaxed text-ink-soft">
-            The red heatmap is the ground truth: every pixel that differs from the original. It is exact, because the
-            edit was composited into the original by our own code and then measured.
-          </p>
+          <p className="text-sm text-ink-soft">Red marks every pixel that differs from the original. Measured, not guessed.</p>
           <LensSwitcher value={lenses.lens} onChange={lenses.select} busy={lenses.busy} label="Forensic lens" />
           {lenses.error ? <p className="text-sm text-edited-ink">{lenses.error}</p> : null}
         </div>
@@ -98,8 +98,7 @@ export function Reveal({
 
       <section aria-label="Before and after">
         <h2 className="text-xl font-semibold tracking-tight">Before and after</h2>
-        <p className="mb-3 mt-1 text-sm text-ink-soft">Drag the handle to wipe between the original and the forgery.</p>
-        <div className="max-w-3xl">
+        <div className="mt-3 max-w-4xl">
           <BeforeAfterSlider before={originalUrl} after={forgedUrl} width={width} height={height} />
         </div>
       </section>

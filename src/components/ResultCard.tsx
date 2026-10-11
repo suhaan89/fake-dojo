@@ -34,12 +34,15 @@ export function ResultCard({ facts }: { facts: ResultFacts }) {
           {facts.description ? <span className="mt-1 block text-ink-soft">{facts.description}</span> : null}
         </Row>
         <Row term="The tell">
-          {facts.tell}
+          <span className="text-lg font-medium leading-snug">{facts.tell}</span>
           <span className="mt-2 block text-sm text-ink-soft">{TELLS[facts.type]}</span>
         </Row>
-        <Row term="Forensic traces">{post.note}</Row>
-        <Row term="Measurements">
-          <span className="mono block text-[13px] leading-6">
+      </dl>
+      <details className="border-t border-line">
+        <summary className="label flex min-h-[44px] cursor-pointer items-center px-4">Forensics and numbers</summary>
+        <div className="px-4 pb-4">
+          <p className="leading-relaxed">{post.note}</p>
+          <p className="mono mt-3 text-[13px] leading-6">
             Difficulty {facts.difficulty} of 5
             {facts.changedPct !== null ? (
               <>
@@ -56,9 +59,9 @@ export function ResultCard({ facts }: { facts: ResultFacts }) {
             <br />
             Saved as JPEG quality {post.jpegQuality}
             {post.noiseSigma > 0 ? `, noise sigma ${post.noiseSigma}` : ""}
-          </span>
-        </Row>
-      </dl>
+          </p>
+        </div>
+      </details>
     </section>
   );
 }
