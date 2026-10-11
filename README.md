@@ -121,7 +121,7 @@ Each step can run on Gemini instead. Without `VISION_PROVIDER=ark` the vision ca
 
 ## Running cost
 
-One forge is one image output (about 0.034 USD) plus two cheap vision calls. A retry adds one more image output, with a hard limit of three per forge. Daily Dojo, Classroom and the landing page cost nothing: they run from the committed deck.
+One forge is one Seedream 4.0 image output (0.03 USD per image once the free quota is used up) plus two cheap vision calls on Seed 2.0 Lite (0.25 USD per million input tokens, 2 USD per million output tokens). A retry adds one more image output, with a hard limit of three per forge. Daily Dojo, Classroom and the landing page cost nothing: they run from the committed deck.
 
 ## Run locally
 

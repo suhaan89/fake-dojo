@@ -16,7 +16,7 @@ We never show the raw model output. We take only the planned region from it and 
 
 ### 4. What does it cost to run?
 
-One forge is one image output, about 0.034 USD, plus two cheap vision calls. Retries are capped at three image calls. Daily Dojo, Classroom and the landing page cost nothing because they run from a pre-forged deck. There is a per-IP hourly limit, a daily cap and a kill switch.
+One forge is one image output, 0.03 USD on Seedream 4.0, plus two cheap vision calls on Seed 2.0 Lite. Retries are capped at three image calls. Daily Dojo, Classroom and the landing page cost nothing because they run from a pre-forged deck. There is a per-IP hourly limit, a daily cap and a kill switch.
 
 ### 5. What happens to my photos?
 
