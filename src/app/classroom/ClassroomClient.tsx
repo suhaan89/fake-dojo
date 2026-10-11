@@ -8,7 +8,7 @@ import { useDeck } from "@/components/useDeck";
 import { useHandVote } from "@/components/useHandVote";
 import { Verdict } from "@/components/Verdict";
 import { decide, type VoteSide } from "@/lib/vision/votes";
-import { buildSession, cardImages, dailySeed } from "@/lib/game/deck";
+import { buildSession, cardImages, dailySeed, deckForLevel, type DeckLevel } from "@/lib/game/deck";
 import { TYPE_LABELS } from "@/lib/game/types";
 
 const VOTE_SECONDS = 10;
@@ -41,6 +41,10 @@ export function ClassroomClient() {
   const seedParam = params.get("seed");
   const deckState = useDeck();
   const [today] = useState(() => dailySeed());
+  const levelParam = params.get("level");
+  const [level, setLevel] = useState<DeckLevel | null>(
+    levelParam === "easy" || levelParam === "hard" ? levelParam : null,
+  );
   const [round, setRound] = useState(0);
   const [index, setIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
@@ -60,10 +64,10 @@ export function ClassroomClient() {
   const [vote, setVote] = useState<VoteSide | null | undefined>(undefined);
   const [score, setScore] = useState({ right: 0, voted: 0 });
 
-  const seed = `classroom:${seedParam ?? today}${round ? `#${round}` : ""}`;
+  const seed = `classroom:${seedParam ?? today}:${level}${round ? `#${round}` : ""}`;
   const session = useMemo(
-    () => (deckState.state === "ready" ? buildSession(deckState.deck, seedParam === "demo" && !round ? "demo" : seed) : []),
-    [deckState, seed, seedParam, round],
+    () => (deckState.state === "ready" && level ? buildSession(deckForLevel(deckState.deck, level), seed) : []),
+    [deckState, seed, level],
   );
   const card = session[index];
   const finished = session.length > 0 && index >= session.length;
@@ -89,6 +93,17 @@ export function ClassroomClient() {
     setIndex((i) => i + 1);
     setRevealed(false);
   }, [cameraReset, finished, session.length]);
+
+  const chooseLevel = useCallback(
+    (next: DeckLevel | null) => {
+      cameraReset();
+      setScore({ right: 0, voted: 0 });
+      setLevel(next);
+      setIndex(0);
+      setRevealed(false);
+    },
+    [cameraReset],
+  );
 
   const restart = useCallback(() => {
     cameraReset();
@@ -161,7 +176,7 @@ export function ClassroomClient() {
           <span className="font-semibold tracking-tight">Fake Dojo Classroom</span>
           {session.length && !finished ? (
             <span className="mono text-sm text-ink-soft">
-              Card {index + 1} of {session.length}
+              {level === "hard" ? "Hard" : "Easy"}, card {index + 1} of {session.length}
             </span>
           ) : null}
           {score.voted > 0 ? (
@@ -199,7 +214,26 @@ export function ClassroomClient() {
       <div className="flex flex-1 flex-col items-center justify-center gap-5 px-4 py-5 sm:px-8">
         {deckState.state === "loading" ? <DeckNotice kind="loading" /> : null}
         {deckState.state === "error" ? <DeckNotice kind="error" /> : null}
-        {deckState.state === "ready" && session.length === 0 ? <DeckNotice kind="empty" /> : null}
+        {deckState.state === "ready" && level && session.length === 0 ? <DeckNotice kind="empty" /> : null}
+
+        {deckState.state === "ready" && !level ? (
+          <div className="flex w-full max-w-5xl flex-col items-center gap-6 text-center">
+            <p className="text-[clamp(2rem,6vw,4.5rem)] font-semibold leading-none tracking-tight">Choose the level</p>
+            <div className="grid w-full gap-4 sm:grid-cols-2">
+              <button type="button" className="border-4 border-real px-4 py-8 text-real hover:bg-real hover:text-white" onClick={() => chooseLevel("easy")}>
+                <span className="block text-[clamp(2.5rem,8vw,6rem)] font-semibold leading-none tracking-tight">Easy</span>
+                <span className="mt-3 block text-[clamp(1rem,2vw,1.5rem)]">Bold edits</span>
+              </button>
+              <button type="button" className="border-4 border-edited px-4 py-8 text-edited-ink hover:bg-edited-ink hover:text-white" onClick={() => chooseLevel("hard")}>
+                <span className="block text-[clamp(2.5rem,8vw,6rem)] font-semibold leading-none tracking-tight">Hard</span>
+                <span className="mt-3 block text-[clamp(1rem,2vw,1.5rem)]">Subtle edits</span>
+              </button>
+            </div>
+            <p className="text-[clamp(0.95rem,1.6vw,1.3rem)] text-ink-soft">
+              Switch on &quot;Vote by camera&quot; and the class votes with raised hands: left for Real, right for Edited.
+            </p>
+          </div>
+        ) : null}
 
         {card && images ? (
           <>
@@ -315,6 +349,9 @@ export function ClassroomClient() {
             <div className="flex flex-wrap justify-center gap-3">
               <button type="button" className="btn h-14 px-8 text-lg" onClick={restart}>
                 Play another round
+              </button>
+              <button type="button" className="btn btn-quiet h-14 px-8 text-lg" onClick={() => chooseLevel(null)}>
+                Change level
               </button>
               <Link href="/forge" className="btn btn-quiet h-14 px-8 text-lg">
                 Forge a photo live

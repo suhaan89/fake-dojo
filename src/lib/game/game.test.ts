@@ -9,6 +9,7 @@ import {
   heroForgedOnLeft,
   parseDeck,
   pickHeroCard,
+  pickHeroDecoy,
   type Deck,
   type DeckCard,
 } from "./deck";
@@ -349,6 +350,15 @@ describe("deck", () => {
     expect(hard.cards.filter((c) => c.kind === "real")).toHaveLength(reals);
     expect(easy.cards.every((c) => c.kind === "real" || cardLevel(c) === "easy")).toBe(true);
     expect(easy.cards.length + hard.cards.length).toBe(deck.cards.length + reals);
+  });
+
+  it("pairs the hero card with an untouched photo of another scene", () => {
+    const hero = pickHeroCard(deck, "abc")!;
+    const decoy = pickHeroDecoy(deck, hero, "abc");
+    expect(decoy).not.toBeNull();
+    expect(decoy!.photo).not.toBe(hero.photo);
+    expect(pickHeroDecoy(deck, hero, "abc")?.id).toBe(decoy!.id);
+    expect(pickHeroDecoy({ ...deck, cards: [hero] }, hero, "abc")).toBeNull();
   });
 
   it("derives image paths", () => {

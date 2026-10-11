@@ -148,6 +148,20 @@ export function pickHeroCard(deck: Deck, seed: string): DeckCard | null {
   return shuffle(pool, seededRandom(`hero:${seed}`))[0];
 }
 
+/**
+ * The untouched photo shown next to the hero card: the original of a card from another
+ * photo, with the same shape when the deck has one, so both pictures sit side by side.
+ */
+export function pickHeroDecoy(deck: Deck, hero: DeckCard, seed: string): DeckCard | null {
+  const others = shuffle(
+    deck.cards.filter((card) => card.photo !== hero.photo),
+    seededRandom(`decoy:${seed}`),
+  );
+  const sameShape = others.find((card) => card.width === hero.width && card.height === hero.height);
+  const sameOrientation = others.find((card) => card.width > card.height === hero.width > hero.height);
+  return sameShape ?? sameOrientation ?? others[0] ?? null;
+}
+
 /** Whether the forged image sits on the left for this seed. */
 export function heroForgedOnLeft(seed: string): boolean {
   return seededRandom(`side:${seed}`)() < 0.5;

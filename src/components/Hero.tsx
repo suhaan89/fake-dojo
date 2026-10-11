@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useDeck } from "@/components/useDeck";
 import { Verdict } from "@/components/Verdict";
-import { cardImages, DEMO_SEED, heroForgedOnLeft, pickHeroCard } from "@/lib/game/deck";
+import { cardImages, DEMO_SEED, heroForgedOnLeft, pickHeroCard, pickHeroDecoy } from "@/lib/game/deck";
 
 /**
  * Landing hero: two versions of one photo from the committed deck, one real and one forged.
@@ -21,6 +21,7 @@ export function Hero() {
 
   const seed = demo && attempt === 0 ? DEMO_SEED : `${visit}:${attempt}`;
   const card = deckState.state === "ready" ? pickHeroCard(deckState.deck, seed) : null;
+  const decoy = deckState.state === "ready" && card ? pickHeroDecoy(deckState.deck, card, seed) : null;
 
   if (deckState.state === "loading") {
     return <section className="mx-auto min-h-[70vh] max-w-6xl px-4 sm:px-6" aria-busy="true" />;
@@ -50,6 +51,8 @@ export function Hero() {
   }
 
   const images = cardImages(card);
+  // The untouched picture is a different photo, so the two pictures never look the same.
+  const realUrl = decoy ? cardImages(decoy).original : images.original;
   const forgedLeft = heroForgedOnLeft(seed);
   const forgedSide = forgedLeft ? "left" : "right";
   const correct = picked === forgedSide;
@@ -89,9 +92,9 @@ export function Hero() {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={forged ? images.forged! : images.original}
+                src={forged ? images.forged! : realUrl}
                 alt=""
-                className="absolute inset-0 h-full w-full"
+                className="absolute inset-0 h-full w-full object-cover"
                 fetchPriority="high"
               />
               {picked !== null && forged && images.heat ? (
@@ -119,7 +122,7 @@ export function Hero() {
 
       <div className="mt-5 min-h-[7.5rem]" aria-live="polite">
         {picked === null ? (
-          <p className="max-w-2xl text-lg text-ink-soft">Same scene, one difference. Tap the fake.</p>
+          <p className="max-w-2xl text-lg text-ink-soft">One photo is untouched, one has an AI edit. Tap the fake.</p>
         ) : (
           <div className="rise">
             <div className="max-w-3xl">
